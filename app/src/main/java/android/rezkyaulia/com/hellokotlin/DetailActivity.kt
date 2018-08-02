@@ -8,7 +8,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import org.jetbrains.anko.*
+import java.awt.font.TextAttribute
 
 class DetailActivity : AppCompatActivity() {
     lateinit var ui:DetailActivityUi
@@ -18,10 +20,18 @@ class DetailActivity : AppCompatActivity() {
         ui = DetailActivityUi()
         ui.setContentView(this)
 
+        val item : Item = intent.getParcelableExtra("item")
+
+        ui.textName.text = item.name
+        ui.textDesc.text = item.desc
+        Glide.with(this).load(item.image).into(ui.imageView)
+
+
 
     }
 
     class DetailActivityUi : AnkoComponent<DetailActivity>{
+        lateinit var textName : TextView
         lateinit var textDesc : TextView
         lateinit var imageView : ImageView
 
@@ -38,10 +48,17 @@ class DetailActivity : AppCompatActivity() {
                         image = ContextCompat.getDrawable(context,R.drawable.img_barca)
                     }.lparams(width = dip(64), height = dip(64))
 
+                    textName = textView {
+                        id = Ids.name
+                    }.lparams(width = wrapContent, height = wrapContent) {
+                        gravity = Gravity.CENTER_HORIZONTAL
+                        margin = dip(5)
+                    }
+
                     textDesc = textView {
                         id = Ids.desc
                     }.lparams(width = wrapContent, height = wrapContent) {
-                        gravity = Gravity.CENTER_VERTICAL
+                        gravity = Gravity.CENTER_HORIZONTAL
                         margin = dip(10)
                     }
                 }
@@ -50,7 +67,8 @@ class DetailActivity : AppCompatActivity() {
         }
         private object Ids {
             val image = 1
-            val desc = 2
+            val name = 2
+            val desc = 3
         }
 
 
