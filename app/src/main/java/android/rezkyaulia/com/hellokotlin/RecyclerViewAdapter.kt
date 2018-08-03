@@ -9,6 +9,7 @@ import ListItemUi
 import android.widget.ImageView
 import android.widget.TextView
 import org.jetbrains.anko.AnkoContext
+import org.w3c.dom.Text
 
 class RecyclerViewAdapter(private val context: Context, private val items: List<Item>, private val listener: (Item) -> Unit)
     : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {

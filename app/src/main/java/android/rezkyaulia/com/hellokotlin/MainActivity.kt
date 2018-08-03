@@ -23,19 +23,22 @@ class MainActivity : AppCompatActivity() {
         initData()
 
         view.rv.adapter = RecyclerViewAdapter(this, items) {
-            toast("Hi ${it.name}")
+            startActivity<DetailActivity>("item" to it)
+
         }
     }
 
     private fun initData() {
         val name = resources.getStringArray(R.array.club_name)
+        val desc = resources.getStringArray(R.array.club_description)
         val image = resources.obtainTypedArray(R.array.club_image)
 
         items.clear()
 
         for (i in name.indices) {
             items.add(Item(name[i],
-                    image.getResourceId(i, 0)))
+                    image.getResourceId(i, 0),
+                    desc[i]))
         }
 
         image.recycle()
