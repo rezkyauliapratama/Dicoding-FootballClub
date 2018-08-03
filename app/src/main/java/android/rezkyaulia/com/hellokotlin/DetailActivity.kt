@@ -10,21 +10,20 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import org.jetbrains.anko.*
-import java.awt.font.TextAttribute
 
 class DetailActivity : AppCompatActivity() {
-    lateinit var ui:DetailActivityUi
+    lateinit var ankoUi:DetailActivityUi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ui = DetailActivityUi()
-        ui.setContentView(this)
+        ankoUi = DetailActivityUi()
+        ankoUi.setContentView(this)
 
         val item : Item = intent.getParcelableExtra("item")
 
-        ui.textName.text = item.name
-        ui.textDesc.text = item.desc
-        Glide.with(this).load(item.image).into(ui.imageView)
+        ankoUi.textName.text = item.name
+        ankoUi.textDesc.text = item.desc
+        Glide.with(this).load(item.image).into(ankoUi.imageView)
 
 
 
