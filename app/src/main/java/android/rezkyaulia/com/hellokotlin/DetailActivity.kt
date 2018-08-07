@@ -19,11 +19,8 @@ class DetailActivity : AppCompatActivity() {
         ankoUi = DetailActivityUi()
         ankoUi.setContentView(this)
 
-        val item : Item = intent.getParcelableExtra("item")
+//        val item : Item = intent.getParcelableExtra("item")
 
-        ankoUi.textName.text = item.name
-        ankoUi.textDesc.text = item.desc
-        Glide.with(this).load(item.image).into(ankoUi.imageView)
 
 
 

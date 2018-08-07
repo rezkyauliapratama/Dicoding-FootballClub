@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin
+package android.rezkyaulia.com.hellokotlin.data
 
 import com.google.gson.annotations.SerializedName
 
