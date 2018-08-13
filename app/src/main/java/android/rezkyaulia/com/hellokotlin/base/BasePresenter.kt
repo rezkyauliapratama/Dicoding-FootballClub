@@ -4,7 +4,6 @@ import android.rezkyaulia.com.hellokotlin.BaseApplication
 import android.rezkyaulia.com.hellokotlin.data.ApiRepository
 import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.di.NetworkModule
-import android.rezkyaulia.com.hellokotlin.di.presenter.ContextModule
 import android.rezkyaulia.com.hellokotlin.di.presenter.DaggerPresenterComponent
 import android.rezkyaulia.com.hellokotlin.di.presenter.PresenterComponent
 import android.rezkyaulia.com.hellokotlin.main.MainPresenter
@@ -31,11 +30,12 @@ abstract class BasePresenter<out View: BaseView>(protected val view : View) : An
     lateinit var apiRepository: ApiRepository*/
 
     init {
-        inject()
+        Log.e("BasePresenter","init")
     }
 
     open fun start(){
-
+        Log.e("BasePresenter","init")
+        inject()
     }
 
     open fun stop(){
@@ -45,12 +45,14 @@ abstract class BasePresenter<out View: BaseView>(protected val view : View) : An
 
     private val injector: PresenterComponent = DaggerPresenterComponent
             .builder()
-            .networkModule(NetworkModule())
+            .applicationComponent((BaseApplication.component))
+
             .build()
 
     private fun inject(){
         when(this){
             is MainPresenter -> {if (injector != null){
+                injector.inject(this)
                 Log.e("pres","injector != null")
             }}
         }

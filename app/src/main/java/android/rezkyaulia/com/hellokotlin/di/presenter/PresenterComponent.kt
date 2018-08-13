@@ -12,10 +12,8 @@ import javax.inject.Singleton
 /**
  * Created by Rezky Aulia Pratama on 6/8/18.
  */
-@Singleton
-@Component(modules = [NetworkModule::class])
+@PerPresenter
+@Component(dependencies = [ApplicationComponent::class], modules = [ContextModule::class])
 interface PresenterComponent{
     fun inject(mainPresenter: MainPresenter)
-
-    fun getDataManager():DataManager
 }
