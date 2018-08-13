@@ -7,7 +7,7 @@ import javax.inject.Inject
 class ApiRepository{
 
     fun doRequest(url: String) : String{
-
+        Log.e("ApiRepository", url);
         return URL(url).readText()
     }
 

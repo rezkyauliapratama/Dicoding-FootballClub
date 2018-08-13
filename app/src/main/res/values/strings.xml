@@ -66,6 +66,14 @@
         <item>Spanish La Liga</item>
     </array>
 
+    <array name="league_id">
+        <item>4328</item>
+        <item>4329</item>
+        <item>4331</item>
+        <item>4332</item>
+        <item>4334</item>
+        <item>4335</item>
+    </array>
 
     <string name="app_name">Football Club</string>
 </resources>

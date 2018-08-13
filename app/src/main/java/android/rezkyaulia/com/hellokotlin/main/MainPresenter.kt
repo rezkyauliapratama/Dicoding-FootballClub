@@ -11,6 +11,13 @@ import com.google.gson.Gson
 import org.jetbrains.anko.*
 import java.util.logging.Logger
 import javax.inject.Inject
+import com.androidnetworking.error.ANError
+import org.json.JSONArray
+import com.androidnetworking.interfaces.JSONArrayRequestListener
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.common.Priority
+import com.androidnetworking.interfaces.ParsedRequestListener
+
 
 /**
  * Created by Rezky Aulia Pratama on 5/8/18.
@@ -20,28 +27,25 @@ class MainPresenter(view : MainView
 
 
     fun getTeamList(league: String){
-        error { "test" }
         view.showLoading()
-        error { "show loading" }
 
-        if (dataManager.getRepo() != null) {
-            Log.e("presenter","!= null")
-        }else{
-            Log.e("presenter","== null")
 
-        }
-        doAsync {
+        AndroidNetworking.get(TheSportDBApi.getTeams(league))
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsObject(TeamResponse::class.java, object : ParsedRequestListener<TeamResponse>{
+                    override fun onResponse(response: TeamResponse) {
+                        view.hideLoading()
+                        error {Gson().toJson(response.teams)}
+                        view.showTeamList(response.teams)
+                    }
 
-            val data = Gson().fromJson(dataManager.getRepo()
-                    .doRequest(TheSportDBApi.getTeams(league)),
-                    TeamResponse::class.java
-            )
+                    override fun onError(anError: ANError) {
+                        error { Gson().toJson(anError) }
+                    }
 
-            uiThread {
-                view.hideLoading()
-                error {Gson().toJson(data.teams)}
-                view.showTeamList(data.teams)
-            }
-        }
+                });
+
+
     }
 }

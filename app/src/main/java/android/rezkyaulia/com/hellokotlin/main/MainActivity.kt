@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.R.array.league
 import android.rezkyaulia.com.hellokotlin.base.BaseActivity
-import android.rezkyaulia.com.hellokotlin.data.ApiRepository
 import android.rezkyaulia.com.hellokotlin.data.Team
 import android.view.View
 import android.widget.*
@@ -28,9 +27,8 @@ class MainActivity : BaseActivity<MainPresenter>(),MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        presenter.start()
 
-        adapter = MainAdapter(teams)
-        rvListTeam.adapter = adapter
 
         val spinnerItems = resources.getStringArray(league)
         val spinnerAdapter = ArrayAdapter(ctx, R.layout.support_simple_spinner_dropdown_item, spinnerItems)
@@ -44,7 +42,6 @@ class MainActivity : BaseActivity<MainPresenter>(),MainView {
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-        presenter.start()
 
     }
 
@@ -64,10 +61,9 @@ class MainActivity : BaseActivity<MainPresenter>(),MainView {
     }
 
     override fun showTeamList(data: List<Team>) {
-        swipeRefresh.isRefreshing = false
-        teams.clear()
-        teams.addAll(data)
-        adapter.notifyDataSetChanged()    }
+
+
+    }
 
 
 }
