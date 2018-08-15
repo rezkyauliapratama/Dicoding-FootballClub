@@ -23,11 +23,6 @@ abstract class BasePresenter<out View: BaseView>(protected val view : View) : An
 
     @Inject
     lateinit var dataManager: DataManager
-  /*  @Inject
-    lateinit var gson: Gson
-
-    @Inject
-    lateinit var apiRepository: ApiRepository*/
 
     init {
         Log.e("BasePresenter","init")
@@ -46,7 +41,6 @@ abstract class BasePresenter<out View: BaseView>(protected val view : View) : An
     private val injector: PresenterComponent = DaggerPresenterComponent
             .builder()
             .applicationComponent((BaseApplication.component))
-
             .build()
 
     private fun inject(){
