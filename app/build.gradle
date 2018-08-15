@@ -28,6 +28,15 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
     androidExtensions {
         experimental = true
     }
@@ -86,6 +95,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'recyclerview-v7'
         exclude group: 'com.android.support', module: 'cardview-v7'
     }
+
+    //architecture component
+    implementation "android.arch.lifecycle:extensions:$rootProject.arcCompVersion"
+    implementation "android.arch.work:work-runtime:1.0.0-alpha06"
 
     //test
     testImplementation "junit:junit:$rootProject.junitVersion"
