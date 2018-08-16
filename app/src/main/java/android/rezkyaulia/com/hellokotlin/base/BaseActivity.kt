@@ -51,9 +51,7 @@ abstract class BaseActivity<T : ViewDataBinding, V: ViewModel> : AppCompatActivi
     abstract fun inject()
 
 
-    fun getBinding(): T {
-        return mViewDataBinding
-    }
+
 
 
     var activityComponent: ActivityComponent? = null
