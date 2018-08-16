@@ -21,7 +21,7 @@ import javax.inject.Inject
  * Created by Rezky Aulia Pratama on 15/8/18.
  */
 
-abstract class BaseActivity<T : ViewDataBinding, V: ViewModel> :  AppCompatActivity(), BaseFragment.Callback{
+abstract class BaseActivity<T : ViewDataBinding, V: ViewModel> :  AppCompatActivity(){
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
