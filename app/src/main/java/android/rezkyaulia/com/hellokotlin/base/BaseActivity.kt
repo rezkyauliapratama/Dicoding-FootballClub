@@ -1,5 +1,6 @@
 package android.rezkyaulia.com.hellokotlin.base
 
+import android.app.Fragment
 import android.arch.lifecycle.ViewModel
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -13,12 +14,14 @@ import android.rezkyaulia.com.hellokotlin.di.activity.DaggerActivityComponent
 import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelFactory
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
+import android.telecom.Call
 import javax.inject.Inject
 
 /**
  * Created by Rezky Aulia Pratama on 15/8/18.
  */
-abstract class BaseActivity<T : ViewDataBinding, V: ViewModel> : AppCompatActivity() {
+
+abstract class BaseActivity<T : ViewDataBinding, V: ViewModel> :  AppCompatActivity(), BaseFragment.Callback{
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -26,8 +29,8 @@ abstract class BaseActivity<T : ViewDataBinding, V: ViewModel> : AppCompatActivi
     @Inject
     lateinit var dataManager: DataManager
 
-    lateinit var mViewDataBinding: T
-    var mViewModel : V? = null
+    lateinit var viewDataBinding: T
+    var viewModel : V? = null
 
     @Inject
     @ActivityContext
@@ -44,15 +47,11 @@ abstract class BaseActivity<T : ViewDataBinding, V: ViewModel> : AppCompatActivi
      *
      * @return view model instance
      */
-    abstract fun getViewModel(): V
+    abstract fun initViewModel(): V
 
-    abstract fun getBindingVariable() : Int
+    abstract fun initBindingVariable() : Int
 
     abstract fun inject()
-
-
-
-
 
     var activityComponent: ActivityComponent? = null
 
@@ -79,11 +78,15 @@ abstract class BaseActivity<T : ViewDataBinding, V: ViewModel> : AppCompatActivi
     }
 
     private fun performDataBinding() {
-        mViewDataBinding = DataBindingUtil.setContentView(this,getLayoutId())
-        this.mViewModel = if (mViewModel == null) getViewModel() else mViewModel
+        viewDataBinding = DataBindingUtil.setContentView(this,getLayoutId())
+        this.viewModel = if (viewModel == null) initViewModel() else viewModel
 
-        mViewDataBinding.setVariable(getBindingVariable(), mViewModel)
-        mViewDataBinding.executePendingBindings()
+        viewDataBinding.setVariable(initBindingVariable(), viewModel)
+        viewDataBinding.executePendingBindings()
 
+    }
+
+    override fun onAttachFragment(fragment: Fragment?) {
+        super.onAttachFragment(fragment)
     }
 }
