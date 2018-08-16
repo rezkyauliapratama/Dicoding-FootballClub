@@ -1,13 +1,12 @@
-package android.rezkyaulia.com.hellokotlin.di.presenter
+package android.rezkyaulia.com.hellokotlin.di.application
 
 import java.lang.annotation.Documented
 import javax.inject.Qualifier
-import javax.inject.Scope
 
 /**
  * Created by Rezky Aulia Pratama on 6/8/18.
  */
 @MustBeDocumented
-@Scope
+@Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class PerPresenter
+annotation class ApplicationContext

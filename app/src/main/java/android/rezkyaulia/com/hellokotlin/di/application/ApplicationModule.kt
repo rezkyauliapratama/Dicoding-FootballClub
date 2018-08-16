@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.di
+package android.rezkyaulia.com.hellokotlin.di.application
 
 import android.app.Application
 import android.content.Context

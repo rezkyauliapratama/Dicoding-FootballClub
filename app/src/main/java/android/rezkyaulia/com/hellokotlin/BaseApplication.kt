@@ -1,10 +1,11 @@
 package android.rezkyaulia.com.hellokotlin
 
 import android.app.Application
-import android.content.Context
-import android.rezkyaulia.com.hellokotlin.di.*
+import android.rezkyaulia.com.hellokotlin.di.application.ApplicationComponent
+import android.rezkyaulia.com.hellokotlin.di.application.ApplicationModule
+import android.rezkyaulia.com.hellokotlin.di.application.DaggerApplicationComponent
+import android.rezkyaulia.com.hellokotlin.di.application.NetworkModule
 import com.androidnetworking.AndroidNetworking
-import javax.inject.Inject
 
 /**
  * Created by Rezky Aulia Pratama on 6/8/18.
@@ -29,6 +30,7 @@ class BaseApplication : Application() {
                     .applicationModule(ApplicationModule(app))
                     .networkModule(NetworkModule())
                     .build()
+
 
 
 }
