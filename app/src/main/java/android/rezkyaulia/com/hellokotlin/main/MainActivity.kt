@@ -1,9 +1,13 @@
 package android.rezkyaulia.com.hellokotlin.main
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.R.array.league
+import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.data.Team
+import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -18,7 +22,20 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_activity_main.view.*
 import org.jetbrains.anko.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
+    override fun getLayoutId() = R.layout.activity_main
+
+
+    override fun initViewModel() = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+
+
+
+    override fun initBindingVariable() = BR.viewModel
+
+
+    override fun inject() {
+        initActivityComponent()?.inject(this)
+    }
 
     lateinit var fragments: MutableList<Fragment>
     lateinit var fragment: Fragment
@@ -32,7 +49,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
 
         val spinnerItems = resources.getStringArray(league)
@@ -41,7 +57,8 @@ class MainActivity : AppCompatActivity() {
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-
+                error("itemselected : "+ spinner.selectedItem as String)
+                viewModel.retrieveData(spinner.selectedItem as String)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
