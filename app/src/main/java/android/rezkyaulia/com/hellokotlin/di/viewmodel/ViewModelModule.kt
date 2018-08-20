@@ -1,5 +1,8 @@
 package android.rezkyaulia.com.hellokotlin.di.viewmodel
 
+import android.arch.lifecycle.ViewModel
+import android.rezkyaulia.com.hellokotlin.main.MainViewModel
+import android.rezkyaulia.com.hellokotlin.main.MainViewModel_Factory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -10,8 +13,11 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class ViewModelModule{
 
-   /* @Binds
+    @Binds
     @IntoMap
-    @ViewModelKey()*/
+    @ViewModelKey(MainViewModel::class)
+    abstract fun bindMainViewModel(mainViewModel : MainViewModel) : ViewModel
+
+
 
 }

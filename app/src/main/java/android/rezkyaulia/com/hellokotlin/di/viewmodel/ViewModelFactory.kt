@@ -10,17 +10,27 @@ import javax.inject.Singleton
 /**
  * Created by Rezky Aulia Pratama on 15/8/18.
  */
+class ViewModelFactory @Inject constructor(
+private val creators: Map<Class<out ViewModel>,
+        @JvmSuppressWildcards Provider<ViewModel>>)
+: ViewModelProvider.Factory {
 
-@Singleton
-class ViewModelFactory @Inject constructor(val viewModels: Map<Class<out ViewModel>,Provider<ViewModel>>) : ViewModelProvider.Factory{
-
-
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        try{
-            return viewModels.get(modelClass)?.get() as T
-        }catch (e : Exception){
-            throw RuntimeException("Error creating view model for class : $modelClass.simpleName ",e)
+        var creator: Provider<ViewModel>? = creators[modelClass]
+        if (creator == null) {
+            for ((key, value) in creators) {
+                if (modelClass.isAssignableFrom(key)) {
+                    creator = value
+                    break
+                }
+            }
+        }
+        if (creator == null) throw IllegalArgumentException("unknown model class " + modelClass)
+        try {
+            return creator.get() as T
+        } catch (e: Exception) {
+            throw RuntimeException(e)
         }
     }
-
 }
