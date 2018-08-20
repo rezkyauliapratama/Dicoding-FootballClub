@@ -104,4 +104,10 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
+    //library
+    implementation project(path: ':light-optimization-data')
+
+    //preferences manager
+    implementation "com.scottyab:secure-preferences-lib:$rootProject.secureprefVersion"
 }
