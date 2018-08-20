@@ -5,19 +5,20 @@ import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.R.array.league
+import android.rezkyaulia.com.hellokotlin.R.array.league_id
 import android.rezkyaulia.com.hellokotlin.base.BaseActivity
-import android.rezkyaulia.com.hellokotlin.data.Team
+import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.View
 import android.widget.*
 import com.app.infideap.stylishwidget.view.ATextView
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_activity_main.view.*
 import org.jetbrains.anko.*
@@ -52,13 +53,15 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
 
 
         val spinnerItems = resources.getStringArray(league)
+        val arrLeagueId = resources.getStringArray(league_id)
         val spinnerAdapter = ArrayAdapter(ctx, R.layout.support_simple_spinner_dropdown_item, spinnerItems)
         spinner.adapter = spinnerAdapter
 
+        error { Gson().toJson(arrLeagueId) }
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 error("itemselected : "+ spinner.selectedItem as String)
-                viewModel.retrieveData(spinner.selectedItem as String)
+                viewModel.retrieveData(arrLeagueId[position])
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}

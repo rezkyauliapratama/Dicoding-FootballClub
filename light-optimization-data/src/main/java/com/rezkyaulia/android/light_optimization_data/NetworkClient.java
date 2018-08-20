@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
@@ -43,6 +44,18 @@ public class NetworkClient {
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .build();
     }
+
+    public void cancelAllRequest(){
+        for(Call call : sHttpClient.dispatcher().queuedCalls()) {
+            call.cancel();
+        }
+
+        for(Call call : sHttpClient.dispatcher().runningCalls()) {
+//                if(call.request().tag().equals("sss"))
+            call.cancel();
+        }
+    }
+
 
 
     public InitHttpCore withUrl(String url){
@@ -93,6 +106,8 @@ public class NetworkClient {
             HttpCore<T> core = new HttpCore<T>(sHttpClient,t,mURL,method);
             return core;
         }
+
+
 
     }
 }
