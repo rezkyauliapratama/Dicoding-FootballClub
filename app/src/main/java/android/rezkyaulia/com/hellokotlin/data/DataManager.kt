@@ -1,6 +1,6 @@
 package android.rezkyaulia.com.hellokotlin.data
 
-import android.util.Log
+import android.rezkyaulia.com.hellokotlin.data.network.ApiRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -10,13 +10,8 @@ import javax.inject.Singleton
 @Singleton
 class DataManager @Inject constructor(private val apiRepository: ApiRepository){
 
-    fun getRepo(): ApiRepository{
-        if (apiRepository != null){
-            Log.e("datamanager", "repo != null")
-        }else{
-            Log.e("datamanager", "repo == null")
+    fun getRepo(): ApiRepository {
 
-        }
         return apiRepository
     }
 }

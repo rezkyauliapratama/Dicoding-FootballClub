@@ -1,1 +1,1 @@
-include ':app'
+include ':app',':light-optimization-data'
