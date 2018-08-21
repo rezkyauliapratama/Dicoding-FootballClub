@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_nextEvent"
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="android.rezkyaulia.com.hellokotlin.main.next_event.NextEventViewModel" />
+
+    </data>
+
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_nextEvent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
-</FrameLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_nextEvent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_nextEvent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </FrameLayout>
+</layout>

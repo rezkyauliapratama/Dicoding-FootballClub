@@ -1,5 +1,6 @@
 package android.rezkyaulia.com.hellokotlin.main
 
+import android.arch.lifecycle.MutableLiveData
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
 import android.rezkyaulia.com.hellokotlin.data.DataManager
 import com.google.gson.Gson
@@ -14,11 +15,8 @@ import javax.inject.Inject
  */
 class MainViewModel @Inject constructor(val dataManager: DataManager) : BaseViewModel(){
 
+    val leagueIdLD : MutableLiveData<String> = MutableLiveData()
 
-    init {
-        error { "init mainviewModel" }
-
-    }
 
     fun retrieveData(s: String) {
         compositeDisposable.add(dataManager.getRepo().eventApi

@@ -60,8 +60,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
         error { Gson().toJson(arrLeagueId) }
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                error("itemselected : "+ spinner.selectedItem as String)
-                viewModel.retrieveData(arrLeagueId[position])
+                viewModel.leagueIdLD.value = arrLeagueId[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -73,9 +72,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
+
 
 
     /*init view pager*/
