@@ -9,6 +9,7 @@ import android.rezkyaulia.com.hellokotlin.R.array.league_id
 import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
+import android.rezkyaulia.com.hellokotlin.main.last_event.LastEventFragment
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -43,7 +44,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
 
 
     private var teams: MutableList<Team> = mutableListOf()
-    private lateinit var adapter: MainAdapter
+
     private lateinit var tabAdapter: LfPagerAdapter
 
     private lateinit var leagueName: String
@@ -115,7 +116,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
     }
 
     private fun initViewPager() {
-        fragments.add(Fragment())
+        fragments.add(LastEventFragment.newInstance())
         fragments.add(Fragment())
 
         fragment = fragments.get(0)

@@ -13,36 +13,34 @@ import javax.inject.Singleton
 @Suppress("UNREACHABLE_CODE")
 class EventApi @Inject constructor(val networkClient: NetworkClient) : AnkoLogger{
 
-    fun eventPastByLeagueId(leagueId: String): Single<EventResponse> {
+    fun eventPastByLeagueId(leagueId: String,tag : String): Single<EventResponse> {
         return Single.create<EventResponse> { emitter ->
             try {
-                val response = getEventPastByLeagueId(leagueId)
+                val response = getEventPastByLeagueId(leagueId,tag)
                 error { Gson().toJson(response) }
                 response?.let { emitter.onSuccess(it) }
 
             } catch (e: Exception) {
                 emitter.onError(e)
             }
-
-
         }
     }
 
-    private fun getEventPastByLeagueId(leagueId : String) : EventResponse?
+    private fun getEventPastByLeagueId(leagueId : String, tag: String) : EventResponse?
     {
         if (networkClient == null) {
             throw NullPointerException("Network client == null")
         }
-        try {
-            networkClient.cancelAllRequest()
-            error { TheSportDBApi.getPastEvent(leagueId) }
+        try
+        {
+            networkClient.cancelByTag(tag)
             return networkClient.withUrl(TheSportDBApi.getPastEvent(leagueId))
                     .init(EventResponse::class.java)
+                    .setTag(tag)
                     .getSyncFuture()
         } catch (e: Exception) {
             error{ "getEventPastByLeagueId Error "}
         }
-
 
         return null
     }
