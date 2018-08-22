@@ -1,5 +1,6 @@
 package android.rezkyaulia.com.hellokotlin.main
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
@@ -10,6 +11,7 @@ import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.rezkyaulia.com.hellokotlin.main.last_event.LastEventFragment
+import android.rezkyaulia.com.hellokotlin.main.next_event.NextEventFragment
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -70,10 +72,14 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
         fragments = mutableListOf()
         initTab()
         initViewPager()
-
+        initObserver()
     }
 
-
+    private fun initObserver() {
+        viewModel.eventLD.observe(this, Observer {
+            //TODO add logic to start detail activity
+        })
+    }
 
 
     /*init view pager*/
@@ -117,7 +123,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
 
     private fun initViewPager() {
         fragments.add(LastEventFragment.newInstance())
-        fragments.add(Fragment())
+        fragments.add(NextEventFragment.newInstance())
 
         fragment = fragments.get(0)
         this.tabAdapter = LfPagerAdapter(supportFragmentManager,fragments)
