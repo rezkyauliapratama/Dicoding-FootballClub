@@ -56,6 +56,18 @@ public class NetworkClient {
         }
     }
 
+    public void cancelByTag(String tag){
+        for(Call call : sHttpClient.dispatcher().queuedCalls()) {
+            if(call.request().tag().equals(tag))
+                call.cancel();
+        }
+
+        for(Call call : sHttpClient.dispatcher().runningCalls()) {
+            if(call.request().tag().equals(tag))
+                call.cancel();
+        }
+    }
+
 
 
     public InitHttpCore withUrl(String url){

@@ -18,22 +18,4 @@ class MainViewModel @Inject constructor(val dataManager: DataManager) : BaseView
     val leagueIdLD : MutableLiveData<String> = MutableLiveData()
 
 
-    fun retrieveData(s: String) {
-        compositeDisposable.add(dataManager.getRepo().eventApi
-                .eventPastByLeagueId(s).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    error { Gson().toJson(response) }
-                    if (response != null){
-
-
-                    }
-
-                }, { throwable ->
-                    error { "error : "+ Gson().toJson(throwable) }
-
-
-                }))
-
-    }
 }

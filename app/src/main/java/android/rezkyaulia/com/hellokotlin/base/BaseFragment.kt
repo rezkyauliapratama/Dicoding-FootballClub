@@ -18,18 +18,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.AnkoLogger
 import javax.inject.Inject
 
 /**
  * Created by Rezky Aulia Pratama on 16/8/18.
  */
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment(){
+abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment() , AnkoLogger{
 
     @Inject
     lateinit var viewModelFactory : ViewModelFactory
 
     lateinit var viewDataBinding: T
-    var viewModel : V? = null
+    lateinit var viewModel : V
+
 
     lateinit var activity: Activity
 
@@ -72,7 +74,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = if (viewModel == null) initViewModel() else viewModel
+        viewModel = initViewModel()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
