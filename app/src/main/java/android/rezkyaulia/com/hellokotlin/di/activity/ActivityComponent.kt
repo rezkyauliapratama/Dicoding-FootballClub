@@ -5,6 +5,7 @@ import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelFactory
 import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelModule
 import android.rezkyaulia.com.hellokotlin.main.MainActivity
 import android.rezkyaulia.com.hellokotlin.main.last_event.LastEventFragment
+import android.rezkyaulia.com.hellokotlin.main.next_event.NextEventFragment
 import dagger.Component
 
 /**
@@ -16,4 +17,5 @@ interface ActivityComponent{
 
     fun inject(activity:MainActivity)
     fun inject(activity: LastEventFragment)
+    fun inject(nextEventFragment: NextEventFragment)
 }
