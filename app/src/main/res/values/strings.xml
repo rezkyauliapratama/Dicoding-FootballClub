@@ -78,4 +78,5 @@
     <string name="app_name">Football Club</string>
     <string name="vs">vs</string>
     <string name="lineups">Lineups</string>
+    <string name="match_detail">Match Detail</string>
 </resources>

@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
+import android.rezkyaulia.com.hellokotlin.Util.TimeUtility
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.databinding.FragmentPrevEventBinding
@@ -18,9 +19,13 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_prev_event.*
 import org.jetbrains.anko.error
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewModel>() {
+
+    @Inject
+    lateinit var timeUtility: TimeUtility
 
     lateinit var mainViewModel : MainViewModel
     lateinit var adapter : EventRvAdapter
@@ -53,7 +58,7 @@ class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewMo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = EventRvAdapter(eventList) { event: Event -> eventClicked(event) }
+        adapter = EventRvAdapter(eventList,timeUtility = timeUtility) { event: Event -> eventClicked(event) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

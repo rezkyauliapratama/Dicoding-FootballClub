@@ -149,7 +149,11 @@ public class HttpCore<T> {
                 requestBuilder.post(requestBody).build();
             }
         }else{
-            requestBuilder.method(mMethod.toUpperCase(), requestBody).build();
+            if (!mMethod.equals(NetworkClient.GET))
+                requestBuilder.method(mMethod.toUpperCase(), requestBody).build();
+            else
+                requestBuilder.get().build();
+
         }
 
         Timber.e("REQUEST : "+new Gson().toJson(requestBuilder));
