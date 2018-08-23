@@ -2,6 +2,7 @@ package android.rezkyaulia.com.hellokotlin.ui.main
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
@@ -10,6 +11,7 @@ import android.rezkyaulia.com.hellokotlin.R.array.league_id
 import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
+import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventFragment
 import android.support.design.widget.TabLayout
@@ -79,6 +81,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun initObserver() {
         viewModel.eventLD.observe(this, Observer {
             //TODO add logic to start detail activity
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("event",it)
+            startActivity(intent)
         })
     }
 

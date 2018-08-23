@@ -5,8 +5,8 @@
     <data>
         <import type="android.view.View" />
         <variable
-            name="viewModel"
-            type="android.rezkyaulia.com.hellokotlin.ui.detail.DetailViewModel" />
+            name="event"
+            type="android.rezkyaulia.com.hellokotlin.data.model.Event" />
 
     </data>
 
@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="@dimen/margin_normal"
-                android:text="@{viewModel.event.dateEvent}"
+                android:text="@{event.dateEvent}"
                 android:textAppearance="@style/TextStyle.Small"
                 android:textColor="@color/colorPrimaryDark"
                 />
@@ -46,7 +46,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_normal"
                     android:gravity="right"
-                    android:text="@{viewModel.event.intHomeScore}"
+                    android:text="@{event.intHomeScore}"
                     android:textAppearance="@style/TextStyle.Display2"
                     android:textStyle="bold"
                     android:textColor="@color/primaryTextColor"
@@ -69,7 +69,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/margin_normal"
                     android:gravity="left"
-                    android:text="@{viewModel.event.intAwayScore}"
+                    android:text="@{event.intAwayScore}"
                     android:textAppearance="@style/TextStyle.Display2"
                     android:textStyle="bold"
                     android:textColor="@color/primaryTextColor"
@@ -101,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@{viewModel.event.strHomeTeam}"
+                        android:text="@{event.strHomeTeam}"
                         android:textAppearance="@style/TextStyle.Small"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimaryDark"/>
@@ -111,7 +111,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@{viewModel.event.strHomeFormation}"
+                        android:text="@{event.strHomeFormation}"
                         android:textAppearance="@style/TextStyle.Small"
                         android:textColor="@color/primaryTextColor"/>
 
@@ -130,7 +130,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@{viewModel.event.strAwayTeam}"
+                        android:text="@{event.strAwayTeam}"
                         android:textAppearance="@style/TextStyle.Small"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimaryDark"/>
@@ -140,7 +140,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@{viewModel.event.strAwayFormation}"
+                        android:text="@{event.strAwayFormation}"
                         android:textAppearance="@style/TextStyle.Small"
                         android:textColor="@color/primaryTextColor"/>
 
@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strHomeGoalDetails}"
+                    android:text="@{event.strHomeGoalDetails}"
                     android:textAppearance="@style/TextStyle.Small"/>
 
 
@@ -187,7 +187,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strAwayGoalDetails}"
+                    android:text="@{event.strAwayGoalDetails}"
                     android:textAppearance="@style/TextStyle.Small"/>
             </LinearLayout>
 
@@ -207,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.intHomeShots}"
+                    android:text="@{event.intHomeShots}"
                     android:textAppearance="@style/TextStyle.Small"/>
 
 
@@ -228,7 +228,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.intAwayShots}"
+                    android:text="@{event.intAwayShots}"
                     android:textAppearance="@style/TextStyle.Small"/>
             </LinearLayout>
 
@@ -262,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strHomeLineupGoalkeeper}"
+                    android:text="@{event.strHomeLineupGoalkeeper}"
                     android:textAppearance="@style/TextStyle.Small"/>
 
 
@@ -283,7 +283,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strAwayLineupGoalkeeper}"
+                    android:text="@{event.strAwayLineupGoalkeeper}"
                     android:textAppearance="@style/TextStyle.Small"/>
             </LinearLayout>
 
@@ -299,7 +299,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strHomeLineupDefense}"
+                    android:text="@{event.strHomeLineupDefense}"
                     android:textAppearance="@style/TextStyle.Small"/>
 
 
@@ -320,7 +320,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strAwayLineupDefense}"
+                    android:text="@{event.strAwayLineupDefense}"
                     android:textAppearance="@style/TextStyle.Small"/>
             </LinearLayout>
 
@@ -337,7 +337,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strHomeLineupMidfield}"
+                    android:text="@{event.strHomeLineupMidfield}"
                     android:textAppearance="@style/TextStyle.Small"/>
 
 
@@ -358,7 +358,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strAwayLineupMidfield}"
+                    android:text="@{event.strAwayLineupMidfield}"
                     android:textAppearance="@style/TextStyle.Small"/>
             </LinearLayout>
 
@@ -375,7 +375,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strHomeLineupForward}"
+                    android:text="@{event.strHomeLineupForward}"
                     android:textAppearance="@style/TextStyle.Small"/>
 
 
@@ -396,7 +396,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strAwayLineupForward}"
+                    android:text="@{event.strAwayLineupForward}"
                     android:textAppearance="@style/TextStyle.Small"/>
             </LinearLayout>
 
@@ -412,7 +412,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strHomeLineupSubstitutes}"
+                    android:text="@{event.strHomeLineupSubstitutes}"
                     android:textAppearance="@style/TextStyle.Small"/>
 
 
@@ -433,7 +433,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:textColor="@color/primaryTextColor"
-                    android:text="@{viewModel.event.strAwayLineupSubstitutes}"
+                    android:text="@{event.strAwayLineupSubstitutes}"
                     android:textAppearance="@style/TextStyle.Small"/>
             </LinearLayout>
 

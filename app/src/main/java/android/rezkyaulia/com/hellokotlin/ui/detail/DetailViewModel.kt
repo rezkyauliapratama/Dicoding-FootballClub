@@ -8,9 +8,5 @@ import javax.inject.Inject
 
 class DetailViewModel @Inject constructor(val dataManager: DataManager): BaseViewModel(){
 
-    lateinit var event: Event
 
-    init {
-
-    }
 }
