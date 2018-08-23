@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="android.rezkyaulia.com.hellokotlin.ui.detail.DetailViewModel" />
+
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/margin_normal"
+                android:text="@{viewModel.event.dateEvent}"
+                android:textAppearance="@style/TextStyle.Small"
+                android:textColor="@color/colorPrimaryDark"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_homeTeam"
+                    android:layout_width="@dimen/size_image_92dp"
+                    android:layout_height="@dimen/size_image_92dp"
+                    android:scaleType="centerInside"/>
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_scoreHome"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/margin_normal"
+                    android:gravity="right"
+                    android:text="@{viewModel.event.intHomeScore}"
+                    android:textAppearance="@style/TextStyle.Display2"
+                    android:textStyle="bold"
+                    android:textColor="@color/primaryTextColor"
+                    />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_normal"
+                    android:text="@string/vs"
+                    android:textAppearance="@style/TextStyle.Medium"
+                    android:textStyle="bold"
+                    android:textColor="@color/primaryTextColor"
+                    />
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_scoreAway"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/margin_normal"
+                    android:gravity="left"
+                    android:text="@{viewModel.event.intAwayScore}"
+                    android:textAppearance="@style/TextStyle.Display2"
+                    android:textStyle="bold"
+                    android:textColor="@color/primaryTextColor"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/iv_awaTeamTeam"
+                    android:layout_width="@dimen/size_image_92dp"
+                    android:layout_height="@dimen/size_image_92dp"
+                    android:scaleType="centerInside"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/margin_small"
+                    android:orientation="vertical">
+
+                    <com.app.infideap.stylishwidget.view.ATextView
+                        android:id="@+id/tv_homeTeam"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{viewModel.event.strHomeTeam}"
+                        android:textAppearance="@style/TextStyle.Small"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"/>
+
+                    <com.app.infideap.stylishwidget.view.ATextView
+                        android:id="@+id/tv_homeFormation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{viewModel.event.strHomeFormation}"
+                        android:textAppearance="@style/TextStyle.Small"
+                        android:textColor="@color/primaryTextColor"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/margin_small"
+                    android:orientation="vertical">
+
+                    <com.app.infideap.stylishwidget.view.ATextView
+                        android:id="@+id/tv_awayTeam"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{viewModel.event.strAwayTeam}"
+                        android:textAppearance="@style/TextStyle.Small"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"/>
+
+                    <com.app.infideap.stylishwidget.view.ATextView
+                        android:id="@+id/tv_awayFormation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{viewModel.event.strAwayFormation}"
+                        android:textAppearance="@style/TextStyle.Small"
+                        android:textColor="@color/primaryTextColor"/>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_small">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_homeGoals"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strHomeGoalDetails}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingLeft="@dimen/margin_small"
+                    android:paddingRight="@dimen/margin_small"
+                    android:text="Goals"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_awayGoals"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strAwayGoalDetails}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_normal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_small">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_homeShots"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.intHomeShots}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingLeft="@dimen/margin_small"
+                    android:paddingRight="@dimen/margin_small"
+                    android:text="Shots"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_awayShots"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.intAwayShots}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLine"
+                />
+
+            <com.app.infideap.stylishwidget.view.ATextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_normal"
+                android:text="@string/lineups"
+                android:layout_gravity="center"
+                android:textAppearance="@style/TextStyle.Medium"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_small">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_homeKeeper"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strHomeLineupGoalkeeper}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingLeft="@dimen/margin_small"
+                    android:paddingRight="@dimen/margin_small"
+                    android:text="Goal Keeper"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_awayKeeper"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strAwayLineupGoalkeeper}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_small">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_homeDefense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strHomeLineupDefense}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingLeft="@dimen/margin_small"
+                    android:paddingRight="@dimen/margin_small"
+                    android:text="Defense"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_awayDefense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strAwayLineupDefense}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_small">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_homeMidfield"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strHomeLineupMidfield}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingLeft="@dimen/margin_small"
+                    android:paddingRight="@dimen/margin_small"
+                    android:text="Midfield"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_awayMidfield"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strAwayLineupMidfield}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_small">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_homeForward"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strHomeLineupForward}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingLeft="@dimen/margin_small"
+                    android:paddingRight="@dimen/margin_small"
+                    android:text="Forward"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_awayForward"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strAwayLineupForward}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_small">
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_homeSubstitute"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strHomeLineupSubstitutes}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingLeft="@dimen/margin_small"
+                    android:paddingRight="@dimen/margin_small"
+                    android:text="Substitute"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextStyle.Small"/>
+
+                <com.app.infideap.stylishwidget.view.ATextView
+                    android:id="@+id/tv_awaySubstitute"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/primaryTextColor"
+                    android:text="@{viewModel.event.strAwayLineupSubstitutes}"
+                    android:textAppearance="@style/TextStyle.Small"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</layout>

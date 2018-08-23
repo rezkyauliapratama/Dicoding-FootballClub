@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.main.last_event
+package android.rezkyaulia.com.hellokotlin.ui.main.last_event
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.databinding.FragmentPrevEventBinding
-import android.rezkyaulia.com.hellokotlin.main.EventRvAdapter
-import android.rezkyaulia.com.hellokotlin.main.MainViewModel
+import android.rezkyaulia.com.hellokotlin.ui.main.EventRvAdapter
+import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -28,7 +28,7 @@ class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewMo
     var leagueId : String = ""
 
     companion object {
-        fun newInstance (): LastEventFragment{
+        fun newInstance (): LastEventFragment {
             val lastEventFragment = LastEventFragment()
             return lastEventFragment
         }

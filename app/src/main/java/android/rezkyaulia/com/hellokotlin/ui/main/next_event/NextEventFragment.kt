@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.main.next_event
+package android.rezkyaulia.com.hellokotlin.ui.main.next_event
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.databinding.FragmentNextEventBinding
-import android.rezkyaulia.com.hellokotlin.main.EventRvAdapter
-import android.rezkyaulia.com.hellokotlin.main.MainViewModel
+import android.rezkyaulia.com.hellokotlin.ui.main.EventRvAdapter
+import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -26,7 +26,7 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
     var leagueId : String = ""
 
     companion object {
-        fun newInstance (): NextEventFragment{
+        fun newInstance (): NextEventFragment {
             val lastEventFragment = NextEventFragment()
             return lastEventFragment
         }

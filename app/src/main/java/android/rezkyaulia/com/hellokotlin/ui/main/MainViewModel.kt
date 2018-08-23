@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.main
+package android.rezkyaulia.com.hellokotlin.ui.main
 
 import android.arch.lifecycle.MutableLiveData
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel

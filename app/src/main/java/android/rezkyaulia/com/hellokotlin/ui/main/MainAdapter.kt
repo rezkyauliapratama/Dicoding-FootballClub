@@ -1,7 +1,7 @@
-package android.rezkyaulia.com.hellokotlin.main
+package android.rezkyaulia.com.hellokotlin.ui.main
 
-import android.rezkyaulia.com.hellokotlin.main.TeamUI.Ids.team_badge
-import android.rezkyaulia.com.hellokotlin.main.TeamUI.Ids.team_name
+import android.rezkyaulia.com.hellokotlin.ui.main.TeamUI.Ids.team_badge
+import android.rezkyaulia.com.hellokotlin.ui.main.TeamUI.Ids.team_name
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.support.v7.widget.RecyclerView
 import android.view.View

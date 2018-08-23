@@ -3,9 +3,10 @@ package android.rezkyaulia.com.hellokotlin.di.activity
 import android.rezkyaulia.com.hellokotlin.di.application.ApplicationComponent
 import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelFactory
 import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelModule
-import android.rezkyaulia.com.hellokotlin.main.MainActivity
-import android.rezkyaulia.com.hellokotlin.main.last_event.LastEventFragment
-import android.rezkyaulia.com.hellokotlin.main.next_event.NextEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.main.MainActivity
+import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventFragment
 import dagger.Component
 
 /**
@@ -15,7 +16,8 @@ import dagger.Component
 @Component(dependencies = [ApplicationComponent::class], modules = [ActivityModule::class])
 interface ActivityComponent{
 
-    fun inject(activity:MainActivity)
+    fun inject(activity: MainActivity)
     fun inject(activity: LastEventFragment)
     fun inject(nextEventFragment: NextEventFragment)
+    fun inject(detailActivity: DetailActivity)
 }
