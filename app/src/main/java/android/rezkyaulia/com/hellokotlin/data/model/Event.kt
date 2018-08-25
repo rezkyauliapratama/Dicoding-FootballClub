@@ -1,10 +1,12 @@
 package android.rezkyaulia.com.hellokotlin.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 
-
+@Parcelize
 data class Event (
 
         @SerializedName("idEvent")
@@ -41,76 +43,76 @@ data class Event (
         var strAwayTeam: String? = null,
 
         @SerializedName("intHomeScore")
-        var intHomeScore: Any? = null,
+        var intHomeScore: String? = null,
 
         @SerializedName("intRound")
         var intRound: String? = null,
 
         @SerializedName("intAwayScore")
-        var intAwayScore: Any? = null,
+        var intAwayScore: String? = null,
 
         @SerializedName("intSpectators")
-        var intSpectators: Any? = null,
+        var intSpectators: String? = null,
 
         @SerializedName("strHomeGoalDetails")
-        var strHomeGoalDetails: Any? = null,
+        var strHomeGoalDetails: String? = null,
 
         @SerializedName("strHomeRedCards")
-        var strHomeRedCards: Any? = null,
+        var strHomeRedCards: String? = null,
 
         @SerializedName("strHomeYellowCards")
-        var strHomeYellowCards: Any? = null,
+        var strHomeYellowCards: String? = null,
 
         @SerializedName("strHomeLineupGoalkeeper")
-        var strHomeLineupGoalkeeper: Any? = null,
+        var strHomeLineupGoalkeeper: String? = null,
 
         @SerializedName("strHomeLineupDefense")
-        var strHomeLineupDefense: Any? = null,
+        var strHomeLineupDefense: String? = null,
 
         @SerializedName("strHomeLineupMidfield")
-        var strHomeLineupMidfield: Any? = null,
+        var strHomeLineupMidfield: String? = null,
 
         @SerializedName("strHomeLineupForward")
-        var strHomeLineupForward: Any? = null,
+        var strHomeLineupForward: String? = null,
 
         @SerializedName("strHomeLineupSubstitutes")
-        var strHomeLineupSubstitutes: Any? = null,
+        var strHomeLineupSubstitutes: String? = null,
         
         @SerializedName("strHomeFormation")
-        var strHomeFormation: Any? = null,
+        var strHomeFormation: String? = null,
         
         @SerializedName("strAwayRedCards")
-        var strAwayRedCards: Any? = null,
+        var strAwayRedCards: String? = null,
         
         @SerializedName("strAwayYellowCards")
-        var strAwayYellowCards: Any? = null,
+        var strAwayYellowCards: String? = null,
         
         @SerializedName("strAwayGoalDetails")
-        var strAwayGoalDetails: Any? = null,
+        var strAwayGoalDetails: String? = null,
         
         @SerializedName("strAwayLineupGoalkeeper")
-        var strAwayLineupGoalkeeper: Any? = null,
+        var strAwayLineupGoalkeeper: String? = null,
         
         @SerializedName("strAwayLineupDefense")
-        var strAwayLineupDefense: Any? = null,
+        var strAwayLineupDefense: String? = null,
         
         @SerializedName("strAwayLineupMidfield")
-        var strAwayLineupMidfield: Any? = null,
+        var strAwayLineupMidfield: String? = null,
         
         @SerializedName("strAwayLineupForward")
-        var strAwayLineupForward: Any? = null,
+        var strAwayLineupForward: String? = null,
         
         @SerializedName("strAwayLineupSubstitutes")
-        var strAwayLineupSubstitutes: Any? = null,
+        var strAwayLineupSubstitutes: String? = null,
         
         @SerializedName("strAwayFormation")
-        var strAwayFormation: Any? = null,
+        var strAwayFormation: String? = null,
         
         @SerializedName("intHomeShots")
-        var intHomeShots: Any? = null,
+        var intHomeShots: String? = null,
         
         @SerializedName("intAwayShots")
-        var intAwayShots: Any? = null,
+        var intAwayShots: String? = null,
         
         @SerializedName("dateEvent")
         var dateEvent: String? = null,
@@ -122,7 +124,7 @@ data class Event (
         var strTime: String? = null,
         
         @SerializedName("strTVStation")
-        var strTVStation: Any? = null,
+        var strTVStation: String? = null,
         
         @SerializedName("idHomeTeam")
         var idHomeTeam: String? = null,
@@ -134,30 +136,30 @@ data class Event (
         var strResult: String? = null,
         
         @SerializedName("strCircuit")
-        var strCircuit: Any? = null,
+        var strCircuit: String? = null,
         
         @SerializedName("strCountry")
-        var strCountry: Any? = null,
+        var strCountry: String? = null,
         
         @SerializedName("strCity")
-        var strCity: Any? = null,
+        var strCity: String? = null,
         
         @SerializedName("strPoster")
-        var strPoster: Any? = null,
+        var strPoster: String? = null,
         
         @SerializedName("strFanart")
-        var strFanart: Any? = null,
+        var strFanart: String? = null,
        
         @SerializedName("strThumb")
-        var strThumb: Any? = null,
+        var strThumb: String? = null,
         
         @SerializedName("strBanner")
-        var strBanner: Any? = null,
+        var strBanner: String? = null,
         
         @SerializedName("strMap")
-        var strMap: Any? = null,
+        var strMap: String? = null,
         
         @SerializedName("strLocked")
         var strLocked: String? = null
 
-)
+) : Parcelable

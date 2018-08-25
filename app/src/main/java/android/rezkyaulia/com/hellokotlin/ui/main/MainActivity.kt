@@ -1,7 +1,8 @@
-package android.rezkyaulia.com.hellokotlin.main
+package android.rezkyaulia.com.hellokotlin.ui.main
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
@@ -10,8 +11,9 @@ import android.rezkyaulia.com.hellokotlin.R.array.league_id
 import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
-import android.rezkyaulia.com.hellokotlin.main.last_event.LastEventFragment
-import android.rezkyaulia.com.hellokotlin.main.next_event.NextEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventFragment
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -26,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_activity_main.view.*
 import org.jetbrains.anko.*
 
-class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun getLayoutId() = R.layout.activity_main
 
 
@@ -39,6 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
 
     override fun inject() {
         initActivityComponent()?.inject(this)
+
     }
 
     lateinit var fragments: MutableList<Fragment>
@@ -78,6 +81,9 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
     private fun initObserver() {
         viewModel.eventLD.observe(this, Observer {
             //TODO add logic to start detail activity
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("event",it)
+            startActivity(intent)
         })
     }
 
@@ -126,7 +132,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
         fragments.add(NextEventFragment.newInstance())
 
         fragment = fragments.get(0)
-        this.tabAdapter = LfPagerAdapter(supportFragmentManager,fragments)
+        this.tabAdapter = LfPagerAdapter(supportFragmentManager, fragments)
 
         content_layout.viewPager.setAdapter(tabAdapter)
         content_layout.viewPager.setPagingEnabled(false)

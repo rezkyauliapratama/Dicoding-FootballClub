@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.main.next_event
+package android.rezkyaulia.com.hellokotlin.ui.main.next_event
 
 import android.arch.lifecycle.MutableLiveData
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel

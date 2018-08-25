@@ -4,7 +4,7 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="android.rezkyaulia.com.hellokotlin.main.last_event.LastEventViewModel" />
+            type="android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventViewModel" />
 
     </data>
 

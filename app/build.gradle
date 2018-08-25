@@ -60,7 +60,7 @@ dependencies {
     //anko
     implementation "org.jetbrains.anko:anko:$rootProject.ankoVersion"
     implementation "org.jetbrains.anko:anko-design:$rootProject.ankoVersion"
-
+    implementation "org.jetbrains.anko:anko-sqlite:$rootProject.ankoVersion"
     // RecyclerView-v7
     implementation "org.jetbrains.anko:anko-recyclerview-v7:$rootProject.ankoVersion"
     implementation "org.jetbrains.anko:anko-recyclerview-v7-coroutines:$rootProject.ankoVersion"
@@ -107,6 +107,8 @@ dependencies {
 
     //library
     implementation project(path: ':light-optimization-data')
+
+
 
     //preferences manager
     implementation "com.scottyab:secure-preferences-lib:$rootProject.secureprefVersion"

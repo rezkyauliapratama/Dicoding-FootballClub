@@ -8,7 +8,7 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="android.rezkyaulia.com.hellokotlin.main.MainViewModel" />
+            type="android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel" />
 
     </data>
 
