@@ -23,7 +23,7 @@ class DatabaseModule{
     @Provides
     @DatabaseInfo
     fun provideDatabaseVersion():Int{
-        return 1
+        return 2
     }
 
     @Singleton

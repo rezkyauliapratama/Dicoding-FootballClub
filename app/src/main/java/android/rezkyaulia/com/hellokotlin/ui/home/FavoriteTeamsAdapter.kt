@@ -1,6 +1,6 @@
 package android.rezkyaulia.com.hellokotlin.ui.home
 
-import android.rezkyaulia.com.hellokotlin.data.model.Favorite
+import android.rezkyaulia.com.hellokotlin.data.database.entity.FavoriteTeam
 import android.rezkyaulia.com.hellokotlin.ui.main.TeamUI.Ids.team_badge
 import android.rezkyaulia.com.hellokotlin.ui.main.TeamUI.Ids.team_name
 import android.support.v7.widget.RecyclerView
@@ -16,7 +16,7 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 /**
  * Created by Rezky Aulia Pratama on 25/8/18.
  */
-class FavoriteTeamsAdapter(private val favorite: List<Favorite>, private val listener: (Favorite) -> Unit)
+class FavoriteTeamsAdapter(private val favoriteTeam: List<FavoriteTeam>, private val listener: (FavoriteTeam) -> Unit)
     : RecyclerView.Adapter<FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
@@ -24,10 +24,10 @@ class FavoriteTeamsAdapter(private val favorite: List<Favorite>, private val lis
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        holder.bindItem(favorite[position], listener)
+        holder.bindItem(favoriteTeam[position], listener)
     }
 
-    override fun getItemCount(): Int = favorite.size
+    override fun getItemCount(): Int = favoriteTeam.size
 
 }
 
@@ -64,9 +64,9 @@ class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view){
     private val teamBadge: ImageView = view.find(team_badge)
     private val teamName: TextView = view.find(team_name)
 
-    fun bindItem(favorite: Favorite, listener: (Favorite) -> Unit) {
-        Picasso.get().load(favorite.teamBadge).into(teamBadge)
-        teamName.text = favorite.teamName
-        itemView.onClick { listener(favorite) }
+    fun bindItem(favoriteTeam: FavoriteTeam, listener: (FavoriteTeam) -> Unit) {
+        Picasso.get().load(favoriteTeam.teamBadge).into(teamBadge)
+        teamName.text = favoriteTeam.teamName
+        itemView.onClick { listener(favoriteTeam) }
     }
 }

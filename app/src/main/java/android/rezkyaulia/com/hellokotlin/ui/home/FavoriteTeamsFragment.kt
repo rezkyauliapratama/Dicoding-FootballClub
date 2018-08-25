@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BaseApplication
 import android.rezkyaulia.com.hellokotlin.R.color.colorAccent
 import android.rezkyaulia.com.hellokotlin.data.DataManager
-import android.rezkyaulia.com.hellokotlin.data.model.Favorite
+import android.rezkyaulia.com.hellokotlin.data.database.entity.FavoriteTeam
 import android.rezkyaulia.com.hellokotlin.di.activity.ActivityModule
 import android.rezkyaulia.com.hellokotlin.di.activity.DaggerActivityComponent
 import android.support.v4.app.Fragment
@@ -28,7 +28,7 @@ class FavoriteTeamsFragment : Fragment(), AnkoComponent<Context> {
     @Inject
     lateinit var dataManager: DataManager
 
-    private var favorites: MutableList<Favorite> = mutableListOf()
+    private var favoriteTeams: MutableList<FavoriteTeam> = mutableListOf()
     private lateinit var adapter: FavoriteTeamsAdapter
     private lateinit var listEvent: RecyclerView
     private lateinit var swipeRefresh: SwipeRefreshLayout
@@ -42,14 +42,14 @@ class FavoriteTeamsFragment : Fragment(), AnkoComponent<Context> {
                 .build().inject(this)
 
 
-        adapter = FavoriteTeamsAdapter(favorites){
+        adapter = FavoriteTeamsAdapter(favoriteTeams){
             ctx.startActivity<HomeDetailActivity>("id" to "${it.teamId}")
         }
 
         listEvent.adapter = adapter
         showFavorite()
         swipeRefresh.onRefresh {
-            favorites.clear()
+            favoriteTeams.clear()
             showFavorite()
         }
 
@@ -60,9 +60,9 @@ class FavoriteTeamsFragment : Fragment(), AnkoComponent<Context> {
     private fun showFavorite(){
         dataManager.getDb().use {
             swipeRefresh.isRefreshing = false
-            val result = select(Favorite.TABLE_FAVORITE)
-            val favorite = result.parseList(classParser<Favorite>())
-            favorites.addAll(favorite)
+            val result = select(FavoriteTeam.TABLE_FAVORITE)
+            val favorite = result.parseList(classParser<FavoriteTeam>())
+            favoriteTeams.addAll(favorite)
             adapter.notifyDataSetChanged()
         }
     }

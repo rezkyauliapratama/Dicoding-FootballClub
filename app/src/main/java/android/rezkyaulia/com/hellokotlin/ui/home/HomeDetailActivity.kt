@@ -11,7 +11,7 @@ import android.rezkyaulia.com.hellokotlin.R.drawable.ic_added_to_favorites
 import android.rezkyaulia.com.hellokotlin.R.id.add_to_favorite
 import android.rezkyaulia.com.hellokotlin.R.menu.detail_menu
 import android.rezkyaulia.com.hellokotlin.data.DataManager
-import android.rezkyaulia.com.hellokotlin.data.model.Favorite
+import android.rezkyaulia.com.hellokotlin.data.database.entity.FavoriteTeam
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.di.activity.ActivityModule
 import android.rezkyaulia.com.hellokotlin.di.activity.DaggerActivityComponent
@@ -188,10 +188,10 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
     private fun addToFavorite(){
         try {
             dataManager.getDb().use {
-                insert(Favorite.TABLE_FAVORITE,
-                        Favorite.TEAM_ID to teams.teamId,
-                        Favorite.TEAM_NAME to teams.teamName,
-                        Favorite.TEAM_BADGE to teams.teamBadge)
+                insert(FavoriteTeam.TABLE_FAVORITE,
+                        FavoriteTeam.TEAM_ID to teams.teamId,
+                        FavoriteTeam.TEAM_NAME to teams.teamName,
+                        FavoriteTeam.TEAM_BADGE to teams.teamBadge)
             }
             snackbar(swipeRefresh, "Added to favorite").show()
         } catch (e: SQLiteConstraintException){
@@ -202,7 +202,7 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
     private fun removeFromFavorite(){
         try {
             dataManager.getDb().use {
-                delete(Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})",
+                delete(FavoriteTeam.TABLE_FAVORITE, "(TEAM_ID = {id})",
                         "id" to id)
             }
             snackbar(swipeRefresh, "Removed to favorite").show()
@@ -220,10 +220,10 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
 
     private fun favoriteState(){
         dataManager.getDb().use {
-            val result = select(Favorite.TABLE_FAVORITE)
+            val result = select(FavoriteTeam.TABLE_FAVORITE)
                     .whereArgs("(TEAM_ID = {id})",
                             "id" to id)
-            val favorite = result.parseList(classParser<Favorite>())
+            val favorite = result.parseList(classParser<FavoriteTeam>())
             if (!favorite.isEmpty()) isFavorite = true
         }
     }
