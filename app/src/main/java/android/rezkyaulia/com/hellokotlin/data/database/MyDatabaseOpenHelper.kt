@@ -8,8 +8,8 @@ import org.jetbrains.anko.db.*
 /**
  * Created by Rezky Aulia Pratama on 25/8/18.
  */
-class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeam.db", null, 1) {
-    companion object {
+class MyDatabaseOpenHelper (ctx: Context, name :String, version : Int) : ManagedSQLiteOpenHelper(ctx, name, null, version) {
+    /*companion object {
         private var instance: MyDatabaseOpenHelper? = null
 
         @Synchronized
@@ -19,7 +19,7 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
             }
             return instance as MyDatabaseOpenHelper
         }
-    }
+    }*/
 
     override fun onCreate(db: SQLiteDatabase) {
         // Here you create tables
@@ -37,5 +37,6 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
 }
 
 // Access property for Context
+/*
 val Context.database: MyDatabaseOpenHelper
-    get() = MyDatabaseOpenHelper.getInstance(applicationContext)
+    get() = MyDatabaseOpenHelper.getInstance(applicationContext)*/

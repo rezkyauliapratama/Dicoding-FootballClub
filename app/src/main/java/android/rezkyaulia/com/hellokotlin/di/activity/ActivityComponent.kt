@@ -4,6 +4,8 @@ import android.rezkyaulia.com.hellokotlin.di.application.ApplicationComponent
 import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelFactory
 import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelModule
 import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.home.FavoriteTeamsFragment
+import android.rezkyaulia.com.hellokotlin.ui.home.HomeDetailActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.MainActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventFragment
@@ -20,4 +22,6 @@ interface ActivityComponent{
     fun inject(activity: LastEventFragment)
     fun inject(nextEventFragment: NextEventFragment)
     fun inject(detailActivity: DetailActivity)
+    fun inject(homeDetailActivity: HomeDetailActivity)
+    fun inject(favoriteTeamsFragment: FavoriteTeamsFragment)
 }

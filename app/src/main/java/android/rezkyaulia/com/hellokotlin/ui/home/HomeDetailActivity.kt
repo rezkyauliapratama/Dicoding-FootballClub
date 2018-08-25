@@ -3,15 +3,18 @@ package android.rezkyaulia.com.hellokotlin.ui.home
 import android.database.sqlite.SQLiteConstraintException
 import android.graphics.Color
 import android.os.Bundle
+import android.rezkyaulia.com.hellokotlin.BaseApplication
 import android.rezkyaulia.com.hellokotlin.R.color.colorAccent
 import android.rezkyaulia.com.hellokotlin.R.color.primaryTextColor
 import android.rezkyaulia.com.hellokotlin.R.drawable.ic_add_to_favorites
 import android.rezkyaulia.com.hellokotlin.R.drawable.ic_added_to_favorites
 import android.rezkyaulia.com.hellokotlin.R.id.add_to_favorite
 import android.rezkyaulia.com.hellokotlin.R.menu.detail_menu
-import android.rezkyaulia.com.hellokotlin.data.database.database
+import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.data.model.Favorite
 import android.rezkyaulia.com.hellokotlin.data.model.Team
+import android.rezkyaulia.com.hellokotlin.di.activity.ActivityModule
+import android.rezkyaulia.com.hellokotlin.di.activity.DaggerActivityComponent
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
@@ -33,6 +36,7 @@ import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
+import javax.inject.Inject
 
 /**
  * Created by Rezky Aulia Pratama on 25/8/18.
@@ -40,6 +44,8 @@ import org.jetbrains.anko.support.v4.swipeRefreshLayout
 class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
 
 
+    @Inject
+    lateinit var dataManager: DataManager
     private lateinit var presenter: TeamDetailPresenter
     private lateinit var teams: Team
     private lateinit var id: String
@@ -58,6 +64,11 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        DaggerActivityComponent.builder()
+                .applicationComponent(BaseApplication.component)
+                .activityModule(ActivityModule(this))
+                .build().inject(this)
 
         linearLayout {
             lparams(width = matchParent, height = wrapContent)
@@ -176,7 +187,7 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
 
     private fun addToFavorite(){
         try {
-            database.use {
+            dataManager.getDb().use {
                 insert(Favorite.TABLE_FAVORITE,
                         Favorite.TEAM_ID to teams.teamId,
                         Favorite.TEAM_NAME to teams.teamName,
@@ -190,7 +201,7 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
 
     private fun removeFromFavorite(){
         try {
-            database.use {
+            dataManager.getDb().use {
                 delete(Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})",
                         "id" to id)
             }
@@ -208,7 +219,7 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
     }
 
     private fun favoriteState(){
-        database.use {
+        dataManager.getDb().use {
             val result = select(Favorite.TABLE_FAVORITE)
                     .whereArgs("(TEAM_ID = {id})",
                             "id" to id)
