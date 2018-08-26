@@ -109,6 +109,12 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(){
             }
         })
 
+        viewModel.boolFavoriteLD.observe(this, Observer { it ->
+            isFavorite = it!!
+            error { "bool isfavorite : " + isFavorite }
+
+        })
+
 
     }
 
@@ -122,6 +128,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(){
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.detail_menu, menu)
         menuItem = menu
+
+        error { "oncreateoptionmenu" }
+        setFavorite()
+
         return true
     }
 
@@ -157,15 +167,13 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(){
     }
 
     private fun setFavorite() {
+        error { "set favorite : "+isFavorite }
         if (isFavorite)
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_to_favorites)
         else
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_to_favorites)
     }
 
-    private fun favoriteState(){
 
-
-    }
 
 }

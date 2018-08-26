@@ -20,6 +20,7 @@ class DetailViewModel @Inject constructor(val dataManager: DataManager): BaseVie
     val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
     val strHomeBdgLD : MutableLiveData<String> = MutableLiveData()
     val strAwayBdgLD : MutableLiveData<String> = MutableLiveData()
+    val boolFavoriteLD : MutableLiveData<Boolean> = MutableLiveData()
 
 
     fun retrieveEvent(id : String){
@@ -37,6 +38,8 @@ class DetailViewModel @Inject constructor(val dataManager: DataManager): BaseVie
                     uiStatusLD.value = UiStatus.HIDE_LOADER
 
                 }))
+
+        favoriteState(id)
     }
 
     fun setupImage(event: Event?) {
@@ -95,5 +98,18 @@ class DetailViewModel @Inject constructor(val dataManager: DataManager): BaseVie
                         subscribe())
     }
 
+
+    private fun favoriteState(id : String){
+        error { id }
+        compositeDisposable.add(dataManager.db.manageFavoriteEvent.loadByEventId(id).
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).
+                doOnNext { events ->
+                    error { "fav state: ${Gson().toJson(events)}" }
+                    boolFavoriteLD.value = !events.isEmpty()
+                }.
+                subscribe())
+
+    }
 
 }

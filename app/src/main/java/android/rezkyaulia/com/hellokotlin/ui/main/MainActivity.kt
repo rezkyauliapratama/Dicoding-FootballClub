@@ -115,8 +115,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
         content_layout.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+
                 fragment = fragments.get(tab.position)
                 content_layout.viewPager.setCurrentItem(tab.position)
+
+                if (fragment is FavoriteEventFragment){
+                    spinner.visibility = View.GONE
+                }else{
+                    spinner.visibility = View.VISIBLE
+                }
+
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {

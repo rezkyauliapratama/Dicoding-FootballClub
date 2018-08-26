@@ -86,6 +86,11 @@ class FavoriteEventFragment : BaseFragment<FragmentFavoriteEventBinding, Favorit
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.retrieveData()
+
+    }
 
     fun initObserver(){
 
@@ -110,7 +115,7 @@ class FavoriteEventFragment : BaseFragment<FragmentFavoriteEventBinding, Favorit
     }
 
     private fun eventClicked(favoriteEvent: FavoriteEvent){
-//        mainViewModel.eventLD.value = favoriteEvent
+        mainViewModel.idLD.value = favoriteEvent.eventId
     }
 
 
