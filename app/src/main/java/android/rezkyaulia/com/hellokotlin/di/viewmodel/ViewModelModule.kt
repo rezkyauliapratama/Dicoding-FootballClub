@@ -3,6 +3,7 @@ package android.rezkyaulia.com.hellokotlin.di.viewmodel
 import android.arch.lifecycle.ViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
 import android.rezkyaulia.com.hellokotlin.ui.detail.DetailViewModel
+import android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent.FavoriteEventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventViewModel
 import dagger.Binds
@@ -35,6 +36,12 @@ abstract class ViewModelModule{
     @IntoMap
     @ViewModelKey(DetailViewModel::class)
     abstract fun bindDetailViewModel(detailViewModel: DetailViewModel) : ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteEventViewModel::class)
+    abstract fun bindFavoriteEventViewModel(favoriteEventViewModel: FavoriteEventViewModel) : ViewModel
 
 
 

@@ -12,6 +12,7 @@ import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent.FavoriteEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventFragment
 import android.support.design.widget.TabLayout
@@ -90,7 +91,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     /*init view pager*/
     private fun initTab() {
-        val tabs = arrayOf(content_layout.tabLayout.newTab().setText("Prev Match"), content_layout.tabLayout.newTab().setText("Next Match"))
+        val tabs = arrayOf(content_layout.tabLayout.newTab().setText("Prev Match"), content_layout.tabLayout.newTab().setText("Next Match"), content_layout.tabLayout.newTab().setText("Favorite"))
 
         for (tab in tabs) {
             val layout = LinearLayout(this)
@@ -130,6 +131,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun initViewPager() {
         fragments.add(LastEventFragment.newInstance())
         fragments.add(NextEventFragment.newInstance())
+        fragments.add(FavoriteEventFragment.newInstance())
 
         fragment = fragments.get(0)
         this.tabAdapter = LfPagerAdapter(supportFragmentManager, fragments)
@@ -142,7 +144,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     class LfPagerAdapter (fm: FragmentManager, private val fragments:MutableList<Fragment>): FragmentStatePagerAdapter(fm)
     {
 
-        private val NUM_ITEMS = 2
+        private val NUM_ITEMS = 3
 
 
 
@@ -153,6 +155,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         override fun getItem(position: Int): Fragment {
             when (position) {
                 1 -> return fragments[1]
+                2 -> return fragments[2]
                 else -> return fragments[0]
             }
         }
