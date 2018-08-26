@@ -15,6 +15,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
@@ -32,6 +35,8 @@ class FavoriteTeamsFragment : Fragment(), AnkoComponent<Context> {
     private lateinit var adapter: FavoriteTeamsAdapter
     private lateinit var listEvent: RecyclerView
     private lateinit var swipeRefresh: SwipeRefreshLayout
+
+    val compositeDisposable = CompositeDisposable()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -58,13 +63,19 @@ class FavoriteTeamsFragment : Fragment(), AnkoComponent<Context> {
 
 
     private fun showFavorite(){
-        dataManager.getDb().use {
-            swipeRefresh.isRefreshing = false
-            val result = select(FavoriteTeam.TABLE_FAVORITE)
-            val favorite = result.parseList(classParser<FavoriteTeam>())
-            favoriteTeams.addAll(favorite)
-            adapter.notifyDataSetChanged()
-        }
+
+        compositeDisposable.add(dataManager.db.manageFavoriteTeam.loadAll().
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).
+                doOnNext { events ->
+                    favoriteTeams.clear()
+                    favoriteTeams.addAll(events)
+                    swipeRefresh.isRefreshing = false
+                    adapter.notifyDataSetChanged()
+                }.
+                subscribe())
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -90,5 +101,10 @@ class FavoriteTeamsFragment : Fragment(), AnkoComponent<Context> {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
     }
 }

@@ -28,6 +28,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
@@ -61,6 +65,8 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
 
     private var menuItem: Menu? = null
     private var isFavorite: Boolean = false
+
+    val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -187,12 +193,7 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
 
     private fun addToFavorite(){
         try {
-            dataManager.getDb().use {
-                insert(FavoriteTeam.TABLE_FAVORITE,
-                        FavoriteTeam.TEAM_ID to teams.teamId,
-                        FavoriteTeam.TEAM_NAME to teams.teamName,
-                        FavoriteTeam.TEAM_BADGE to teams.teamBadge)
-            }
+            dataManager.db.manageFavoriteTeam.insert(teams)
             snackbar(swipeRefresh, "Added to favorite").show()
         } catch (e: SQLiteConstraintException){
             snackbar(swipeRefresh, e.localizedMessage).show()
@@ -200,15 +201,17 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
     }
 
     private fun removeFromFavorite(){
-        try {
-            dataManager.getDb().use {
-                delete(FavoriteTeam.TABLE_FAVORITE, "(TEAM_ID = {id})",
-                        "id" to id)
-            }
-            snackbar(swipeRefresh, "Removed to favorite").show()
-        } catch (e: SQLiteConstraintException){
-            snackbar(swipeRefresh, e.localizedMessage).show()
-        }
+        compositeDisposable.add(
+                dataManager.db.manageFavoriteTeam.delete(id).
+                        subscribeOn(Schedulers.io()).
+                        observeOn(AndroidSchedulers.mainThread()).
+                        doOnNext { it -> if (it){
+                            snackbar(swipeRefresh,"Remove from favorite").show()
+                        }else{
+                            snackbar(swipeRefresh,"Cannot remove from favorite").show()
+
+                        }}.
+                        subscribe())
     }
 
     private fun setFavorite() {
@@ -219,12 +222,17 @@ class HomeDetailActivity : AppCompatActivity(), TeamDetailView {
     }
 
     private fun favoriteState(){
-        dataManager.getDb().use {
-            val result = select(FavoriteTeam.TABLE_FAVORITE)
-                    .whereArgs("(TEAM_ID = {id})",
-                            "id" to id)
-            val favorite = result.parseList(classParser<FavoriteTeam>())
-            if (!favorite.isEmpty()) isFavorite = true
-        }
+        compositeDisposable.add(dataManager.db.manageFavoriteTeam.loadById(id).
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).
+                doOnNext { events -> if (!events.isEmpty()) isFavorite = true}.
+                subscribe())
+
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
     }
 }
