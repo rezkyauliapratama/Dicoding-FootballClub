@@ -19,7 +19,7 @@ class MainViewModel @Inject constructor(val dataManager: DataManager) : BaseView
 
     val leagueIdLD : MutableLiveData<String> = MutableLiveData()
 
-    val eventLD : MutableLiveData<Event> = MutableLiveData()
+    val idLD : MutableLiveData<String> = MutableLiveData()
 
 
 }
