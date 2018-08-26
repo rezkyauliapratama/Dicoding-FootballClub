@@ -12,7 +12,6 @@ import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
-import android.rezkyaulia.com.hellokotlin.ui.home.HomeDetailActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent.FavoriteEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventFragment
