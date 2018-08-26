@@ -4,8 +4,8 @@ package android.rezkyaulia.com.hellokotlin.data.database.entity
  * Created by Rezky Aulia Pratama on 25/8/18.
  */
 data class FavoriteEvent(val id: Long?, val eventId: String?, var eventDate: String?,
-                         val eventHomeTeam: String?, val eventAwayTeam: String?, val eventHomeScore: Int?,
-                         val eventAwayScore: Int?) {
+                         val eventHomeTeam: String?, val eventAwayTeam: String?, val eventHomeScore: String?,
+                         val eventAwayScore: String?) {
 
     companion object {
         const val TABLE_FAVORITE: String = "TABLE_FAVORITE_EVENT"

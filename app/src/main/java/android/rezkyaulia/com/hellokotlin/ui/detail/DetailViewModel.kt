@@ -1,6 +1,7 @@
 package android.rezkyaulia.com.hellokotlin.ui.detail
 
 import android.arch.lifecycle.MutableLiveData
+import android.database.sqlite.SQLiteConstraintException
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
 import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.data.model.Event
@@ -9,6 +10,7 @@ import android.util.TimeUtils
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_detail.*
 import org.jetbrains.anko.error
 import javax.inject.Inject
 
@@ -66,6 +68,31 @@ class DetailViewModel @Inject constructor(val dataManager: DataManager): BaseVie
                 }))
 
 
+    }
+
+    fun addToFavorite(event: Event){
+        try {
+            val b = dataManager.db.manageFavoriteEvent.insert(event)
+            if (b)
+                uiStatusLD.value = UiStatus.FAVORITE_ADD
+        } catch (e: SQLiteConstraintException){
+        }
+    }
+
+    fun removeFromFavorite(id : String){
+        compositeDisposable.add(
+                dataManager.db.manageFavoriteEvent.delete(id).
+                        subscribeOn(Schedulers.io()).
+                        observeOn(AndroidSchedulers.mainThread()).
+                        doOnNext { it ->
+                            if (it){
+                                uiStatusLD.value = UiStatus.FAVORITE_REMOVE
+                            }else{
+                                uiStatusLD.value = UiStatus.FAVORITE_NOT_REMOVE
+
+                            }
+                        }.
+                        subscribe())
     }
 
 

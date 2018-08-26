@@ -35,8 +35,8 @@ class MyDatabaseOpenHelper (ctx: Context, name :String, version : Int) : Managed
                 FavoriteEvent.EVENT_ID to TEXT + UNIQUE,
                 FavoriteEvent.EVENT_HOME_TEAM to TEXT,
                 FavoriteEvent.EVENT_AWAY_TEAM to TEXT,
-                FavoriteEvent.EVENT_HOME_SCORE to INTEGER,
-                FavoriteEvent.EVENT_AWAY_SCORE to INTEGER,
+                FavoriteEvent.EVENT_HOME_SCORE to TEXT,
+                FavoriteEvent.EVENT_AWAY_SCORE to TEXT,
                 FavoriteEvent.EVENT_DATE to TEXT)
     }
 
