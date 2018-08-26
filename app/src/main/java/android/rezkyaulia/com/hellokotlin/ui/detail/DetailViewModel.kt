@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
 import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.data.model.Event
+import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import android.util.TimeUtils
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,10 +14,30 @@ import javax.inject.Inject
 
 class DetailViewModel @Inject constructor(val dataManager: DataManager): BaseViewModel(){
 
+    val eventLD : MutableLiveData<Event> = MutableLiveData()
+    val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
     val strHomeBdgLD : MutableLiveData<String> = MutableLiveData()
     val strAwayBdgLD : MutableLiveData<String> = MutableLiveData()
 
-    fun setupEvent(event: Event?) {
+
+    fun retrieveEvent(id : String){
+        uiStatusLD.value = UiStatus.SHOW_LOADER
+        compositeDisposable.add(dataManager.getRepo().eventApi
+                .eventSpecific(id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    error { Gson().toJson(response) }
+                    if (response != null && response.events.size > 0) eventLD.value = response.events.get(0)
+                    uiStatusLD.value = UiStatus.HIDE_LOADER
+
+                }, { throwable ->
+                    error { "error : "+ Gson().toJson(throwable) }
+                    uiStatusLD.value = UiStatus.HIDE_LOADER
+
+                }))
+    }
+
+    fun setupImage(event: Event?) {
 
         error {"setupEvent"}
         compositeDisposable.add(dataManager.getRepo().teamApi

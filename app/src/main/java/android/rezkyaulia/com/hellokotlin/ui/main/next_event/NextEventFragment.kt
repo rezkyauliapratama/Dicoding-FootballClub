@@ -59,7 +59,7 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = EventRvAdapter(eventList,timeUtility) { event: Event -> eventClicked(event) }
+        adapter = EventRvAdapter(eventList,timeUtility) { id: String -> eventClicked(id) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,7 +114,7 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
         })
     }
 
-    private fun eventClicked(event: Event){
-        mainViewModel.eventLD.value = event
+    private fun eventClicked(id: String){
+        mainViewModel.idLD.value = id
     }
 }

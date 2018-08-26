@@ -12,6 +12,7 @@ import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.home.HomeDetailActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent.FavoriteEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventFragment
@@ -28,6 +29,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_activity_main.view.*
 import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.ctx
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun getLayoutId() = R.layout.activity_main
@@ -80,11 +82,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun initObserver() {
-        viewModel.eventLD.observe(this, Observer {
+        viewModel.idLD.observe(this, Observer {
             //TODO add logic to start detail activity
-            val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("event",it)
-            startActivity(intent)
+            ctx.startActivity<DetailActivity>("id" to "${it}")
+
         })
     }
 

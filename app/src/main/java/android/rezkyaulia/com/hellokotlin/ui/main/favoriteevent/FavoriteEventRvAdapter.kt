@@ -37,12 +37,10 @@ class FavoriteEventRvAdapter(private val listItem: List<FavoriteEvent>, private 
         }
         fun bindItem(favoriteEvent: FavoriteEvent, timeUtility: TimeUtility, clickListener: (FavoriteEvent) -> Unit){
 
-            if (favoriteEvent.eventDate != null){
-                val date = timeUtility.convertStringToDate(favoriteEvent.eventDate!!)
-                val strDate = date?.let { timeUtility.getUserFriendlyDate(it) }
-                favoriteEvent.eventDate = strDate
-            }
+            val date = timeUtility.convertStringToDate(favoriteEvent.eventDate!!)
+            val strDate =  timeUtility.getUserFriendlyDate(date)
 
+            listItemEventBinding.setVariable(BR.date,strDate)
 
             listItemEventBinding.setVariable(BR.event,favoriteEvent)
             listItemEventBinding.executePendingBindings()

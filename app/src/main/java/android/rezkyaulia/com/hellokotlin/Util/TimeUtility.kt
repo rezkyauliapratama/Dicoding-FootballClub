@@ -29,16 +29,10 @@ constructor() {
     }
 
 
-    fun convertStringToDate(str: String): Date? {
+    fun convertStringToDate(str: String): Date {
         val format = SimpleDateFormat("yyyy-MM-dd")
-        try {
-            return format.parse(str)
-        } catch (e: ParseException) {
-            // TODO Auto-generated catch block
-            e.printStackTrace()
-        }
+        return format.parse(str)
 
-        return null
     }
 
 
