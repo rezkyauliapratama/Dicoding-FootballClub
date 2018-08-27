@@ -1,6 +1,5 @@
 package android.rezkyaulia.com.hellokotlin.di.activity
 
-import java.lang.annotation.RetentionPolicy
 import javax.inject.Scope
 
 /**

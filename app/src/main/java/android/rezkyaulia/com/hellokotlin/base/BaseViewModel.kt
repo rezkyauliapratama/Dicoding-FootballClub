@@ -8,7 +8,7 @@ import org.jetbrains.anko.error
 /**
  * Created by Rezky Aulia Pratama on 15/8/18.
  */
-abstract class BaseViewModel() : ViewModel(), AnkoLogger {
+abstract class BaseViewModel : ViewModel(), AnkoLogger {
     var compositeDisposable: CompositeDisposable
 
     init {

@@ -67,7 +67,6 @@ dependencies {
 
     //image-handling
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
-    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
 
     //networking
     implementation "com.amitshekhar.android:android-networking:$rootProject.fanVersion"

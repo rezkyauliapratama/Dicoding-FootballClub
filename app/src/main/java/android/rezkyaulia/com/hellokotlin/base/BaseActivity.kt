@@ -2,20 +2,17 @@ package android.rezkyaulia.com.hellokotlin.base
 
 import android.app.Fragment
 import android.arch.lifecycle.ViewModel
-import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BaseApplication
 import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.di.activity.ActivityComponent
-import android.rezkyaulia.com.hellokotlin.di.activity.ActivityContext
 import android.rezkyaulia.com.hellokotlin.di.activity.ActivityModule
 import android.rezkyaulia.com.hellokotlin.di.activity.DaggerActivityComponent
 import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelFactory
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
-import android.telecom.Call
 import org.jetbrains.anko.AnkoLogger
 import javax.inject.Inject
 
@@ -52,7 +49,7 @@ abstract class BaseActivity<T : ViewDataBinding, V: ViewModel> :  AppCompatActiv
 
     abstract fun inject()
 
-    var activityComponent: ActivityComponent ?= null
+    private var activityComponent: ActivityComponent ?= null
 
     fun initActivityComponent(): ActivityComponent? {
         if (activityComponent == null)
@@ -85,7 +82,4 @@ abstract class BaseActivity<T : ViewDataBinding, V: ViewModel> :  AppCompatActiv
 
     }
 
-    override fun onAttachFragment(fragment: Fragment?) {
-        super.onAttachFragment(fragment)
-    }
 }

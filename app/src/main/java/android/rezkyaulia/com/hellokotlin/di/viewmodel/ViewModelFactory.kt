@@ -2,10 +2,8 @@ package android.rezkyaulia.com.hellokotlin.di.viewmodel
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import android.support.annotation.NonNull
 import javax.inject.Inject
 import javax.inject.Provider
-import javax.inject.Singleton
 
 /**
  * Created by Rezky Aulia Pratama on 15/8/18.
