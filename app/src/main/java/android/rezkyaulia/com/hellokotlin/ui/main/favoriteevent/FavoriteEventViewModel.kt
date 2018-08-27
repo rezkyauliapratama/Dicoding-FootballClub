@@ -14,7 +14,7 @@ import javax.inject.Inject
 /**
  * Created by Rezky Aulia Pratama on 26/8/18.
  */
-class FavoriteEventViewModel @Inject constructor(val dataManager: DataManager) : BaseViewModel(){
+class FavoriteEventViewModel @Inject constructor(private val dataManager: DataManager) : BaseViewModel(){
 
     val favEventResponseLD: MutableLiveData<List<FavoriteEvent>> = MutableLiveData()
     val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
@@ -25,7 +25,6 @@ class FavoriteEventViewModel @Inject constructor(val dataManager: DataManager) :
                 .loadAll().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    error { Gson().toJson(response) }
                     if (response != null){
                         favEventResponseLD.value = response
                     }

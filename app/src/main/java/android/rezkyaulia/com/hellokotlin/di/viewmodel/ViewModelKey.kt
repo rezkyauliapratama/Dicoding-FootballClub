@@ -1,12 +1,9 @@
 package android.rezkyaulia.com.hellokotlin.di.viewmodel
 
 import android.arch.lifecycle.ViewModel
-
-import java.lang.annotation.Documented
+import dagger.MapKey
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
-
-import dagger.MapKey
 import kotlin.reflect.KClass
 
 @MustBeDocumented

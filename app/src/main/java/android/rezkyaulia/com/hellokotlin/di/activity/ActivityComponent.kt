@@ -1,13 +1,11 @@
 package android.rezkyaulia.com.hellokotlin.di.activity
 
 import android.rezkyaulia.com.hellokotlin.di.application.ApplicationComponent
-import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelFactory
-import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelModule
 import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.MainActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent.FavoriteEventFragment
-import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventFragment
-import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.lastevent.LastEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.nextevent.NextEventFragment
 import dagger.Component
 
 /**

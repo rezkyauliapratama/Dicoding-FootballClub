@@ -6,7 +6,10 @@ import android.rezkyaulia.com.hellokotlin.data.model.Event
 import com.google.gson.Gson
 import io.reactivex.Observable
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.db.*
+import org.jetbrains.anko.db.MapRowParser
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.replace
+import org.jetbrains.anko.db.select
 import org.jetbrains.anko.error
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -47,9 +50,9 @@ class ManageFavoriteEvent @Inject constructor(val db: MyDatabaseOpenHelper) : An
 
 
     fun loadByEventId(id : String): Observable<List<FavoriteEvent>> {
-        var events = ArrayList<FavoriteEvent>()
+        val events = ArrayList<FavoriteEvent>()
         db.use {
-            val result = select(FavoriteEvent.TABLE_FAVORITE)
+            select(FavoriteEvent.TABLE_FAVORITE)
                     .whereArgs("(${FavoriteEvent.EVENT_ID} = {id})",
                             "id" to id).parseList(object : MapRowParser<List<FavoriteEvent>> {
 
@@ -71,7 +74,7 @@ class ManageFavoriteEvent @Inject constructor(val db: MyDatabaseOpenHelper) : An
                     })
 
         }
-        return Observable.fromCallable({ events })
+        return Observable.fromCallable { events }
     }
 
 
@@ -92,7 +95,6 @@ class ManageFavoriteEvent @Inject constructor(val db: MyDatabaseOpenHelper) : An
                 setTransactionSuccessful()
                 true
             } else {
-                false
                 throw RuntimeException("Fail to insert")
             }
 
@@ -103,17 +105,17 @@ class ManageFavoriteEvent @Inject constructor(val db: MyDatabaseOpenHelper) : An
 
 
     fun delete(id : String): Observable<Boolean> {
-        var isDeleted : Boolean = false
+        var isDeleted = false
         db.use {
             try {
                 beginTransaction()
                 val result = delete(FavoriteEvent.TABLE_FAVORITE, "(${FavoriteEvent.EVENT_ID} = {id})",
                         "id" to id) > 0
-                if (result) {
+                isDeleted = if (result) {
                     setTransactionSuccessful()
-                    isDeleted = true
+                    true
                 } else {
-                    isDeleted = false
+                    false
                 }
 
             } catch (e : Throwable) {
@@ -123,7 +125,7 @@ class ManageFavoriteEvent @Inject constructor(val db: MyDatabaseOpenHelper) : An
                 endTransaction()
             }
         }
-        return Observable.fromCallable({ isDeleted })
+        return Observable.fromCallable { isDeleted }
     }
 
 
