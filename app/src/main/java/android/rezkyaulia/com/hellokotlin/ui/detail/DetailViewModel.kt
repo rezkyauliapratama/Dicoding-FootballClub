@@ -1,22 +1,48 @@
 package android.rezkyaulia.com.hellokotlin.ui.detail
 
 import android.arch.lifecycle.MutableLiveData
+import android.database.sqlite.SQLiteConstraintException
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
 import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.data.model.Event
+import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import android.util.TimeUtils
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_detail.*
 import org.jetbrains.anko.error
 import javax.inject.Inject
 
 class DetailViewModel @Inject constructor(val dataManager: DataManager): BaseViewModel(){
 
+    val eventLD : MutableLiveData<Event> = MutableLiveData()
+    val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
     val strHomeBdgLD : MutableLiveData<String> = MutableLiveData()
     val strAwayBdgLD : MutableLiveData<String> = MutableLiveData()
+    val boolFavoriteLD : MutableLiveData<Boolean> = MutableLiveData()
 
-    fun setupEvent(event: Event?) {
+
+    fun retrieveEvent(id : String){
+        uiStatusLD.value = UiStatus.SHOW_LOADER
+        compositeDisposable.add(dataManager.getRepo().eventApi
+                .eventSpecific(id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    error { Gson().toJson(response) }
+                    if (response != null && response.events.size > 0) eventLD.value = response.events.get(0)
+                    uiStatusLD.value = UiStatus.HIDE_LOADER
+
+                }, { throwable ->
+                    error { "error : "+ Gson().toJson(throwable) }
+                    uiStatusLD.value = UiStatus.HIDE_LOADER
+
+                }))
+
+        favoriteState(id)
+    }
+
+    fun setupImage(event: Event?) {
 
         error {"setupEvent"}
         compositeDisposable.add(dataManager.getRepo().teamApi
@@ -47,5 +73,43 @@ class DetailViewModel @Inject constructor(val dataManager: DataManager): BaseVie
 
     }
 
+    fun addToFavorite(event: Event){
+        try {
+            val b = dataManager.db.manageFavoriteEvent.insert(event)
+            if (b)
+                uiStatusLD.value = UiStatus.FAVORITE_ADD
+        } catch (e: SQLiteConstraintException){
+        }
+    }
+
+    fun removeFromFavorite(id : String){
+        compositeDisposable.add(
+                dataManager.db.manageFavoriteEvent.delete(id).
+                        subscribeOn(Schedulers.io()).
+                        observeOn(AndroidSchedulers.mainThread()).
+                        doOnNext { it ->
+                            if (it){
+                                uiStatusLD.value = UiStatus.FAVORITE_REMOVE
+                            }else{
+                                uiStatusLD.value = UiStatus.FAVORITE_NOT_REMOVE
+
+                            }
+                        }.
+                        subscribe())
+    }
+
+
+    private fun favoriteState(id : String){
+        error { id }
+        compositeDisposable.add(dataManager.db.manageFavoriteEvent.loadByEventId(id).
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).
+                doOnNext { events ->
+                    error { "fav state: ${Gson().toJson(events)}" }
+                    boolFavoriteLD.value = !events.isEmpty()
+                }.
+                subscribe())
+
+    }
 
 }

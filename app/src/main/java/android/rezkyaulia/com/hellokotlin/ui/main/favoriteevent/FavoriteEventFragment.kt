@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.ui.main.last_event
+package android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -6,44 +6,45 @@ import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.Util.TimeUtility
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
+import android.rezkyaulia.com.hellokotlin.data.database.entity.FavoriteEvent
 import android.rezkyaulia.com.hellokotlin.data.model.Event
-import android.rezkyaulia.com.hellokotlin.databinding.FragmentPrevEventBinding
+import android.rezkyaulia.com.hellokotlin.databinding.FragmentFavoriteEventBinding
+import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import android.rezkyaulia.com.hellokotlin.ui.main.EventRvAdapter
 import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
-import android.rezkyaulia.com.hellokotlin.ui.UiStatus
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.Toast
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_prev_event.*
+import kotlinx.android.synthetic.main.fragment_favorite_event.*
+import kotlinx.android.synthetic.main.fragment_favorite_event.*
 import org.jetbrains.anko.error
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
-class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewModel>() {
+/**
+ * Created by Rezky Aulia Pratama on 26/8/18.
+ */
+class FavoriteEventFragment : BaseFragment<FragmentFavoriteEventBinding, FavoriteEventViewModel>(){
 
     @Inject
     lateinit var timeUtility: TimeUtility
 
     lateinit var mainViewModel : MainViewModel
-    lateinit var adapter : EventRvAdapter
-    val eventList : MutableList<Event> = mutableListOf()
-    var leagueId : String = ""
+    lateinit var adapter : FavoriteEventRvAdapter
+    val eventList : MutableList<FavoriteEvent> = mutableListOf()
 
     companion object {
-        fun newInstance (): LastEventFragment {
-            val lastEventFragment = LastEventFragment()
-            return lastEventFragment
+        fun newInstance (): FavoriteEventFragment {
+            val favoriteEventFragment = FavoriteEventFragment()
+            return favoriteEventFragment
         }
     }
+
+
     override fun getLayoutId(): Int {
-        return R.layout.fragment_prev_event
+        return R.layout.fragment_favorite_event
     }
 
-    override fun initViewModel(): LastEventViewModel {
-        return ViewModelProviders.of(this, viewModelFactory).get(LastEventViewModel::class.java)
+    override fun initViewModel(): FavoriteEventViewModel {
+        return ViewModelProviders.of(this, viewModelFactory).get(FavoriteEventViewModel::class.java)
     }
 
     override fun initBindingVariable(): Int {
@@ -55,10 +56,11 @@ class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewMo
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = EventRvAdapter(eventList,timeUtility = timeUtility) { id: String -> eventClicked(id) }
+        adapter = FavoriteEventRvAdapter(eventList,timeUtility = timeUtility) { favoriteEvent: FavoriteEvent -> eventClicked(favoriteEvent) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,49 +73,50 @@ class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewMo
     }
 
     private fun initView() {
-        swipe_prevEvent.setOnRefreshListener {
+        swipe_favoriteEvent.setOnRefreshListener {
             error { "onswipe" }
-            viewModel.retrieveData(leagueId)
+            viewModel.retrieveData()
         }
     }
 
     private fun initRv() {
-        rv_prevEvent.layoutManager = LinearLayoutManager(context)
+        rv_favoriteEvent.layoutManager = LinearLayoutManager(context)
 
-        rv_prevEvent.adapter = adapter
+        rv_favoriteEvent.adapter = adapter
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.retrieveData()
+
+    }
 
     fun initObserver(){
 
-        mainViewModel.leagueIdLD.observe(this, android.arch.lifecycle.Observer {
-            leagueId = it.toString()
-            it?.let { it1 -> viewModel.retrieveData(it1) }
 
-
-        })
-
-        viewModel.eventResponseLD.observe(this, android.arch.lifecycle.Observer {
+        viewModel.favEventResponseLD.observe(this, android.arch.lifecycle.Observer {
             eventList.clear()
             if (it != null) {
-                eventList.addAll(it.events)
+                eventList.addAll(it)
                 adapter.notifyDataSetChanged()
             }
         })
 
         viewModel.uiStatusLD.observe(this, android.arch.lifecycle.Observer {
             if (it == UiStatus.HIDE_LOADER){
-                swipe_prevEvent.isRefreshing = false
+                swipe_favoriteEvent.isRefreshing = false
             }else if (it == UiStatus.SHOW_LOADER){
-                swipe_prevEvent.isRefreshing = true
+                swipe_favoriteEvent.isRefreshing = true
                 eventList.clear()
                 adapter.notifyDataSetChanged()
             }
         })
     }
 
-    private fun eventClicked(id: String){
-        mainViewModel.idLD.value = id
+    private fun eventClicked(favoriteEvent: FavoriteEvent){
+        mainViewModel.idLD.value = favoriteEvent.eventId
     }
+
+
 }

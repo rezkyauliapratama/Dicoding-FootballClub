@@ -12,6 +12,7 @@ import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent.FavoriteEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventFragment
 import android.support.design.widget.TabLayout
@@ -27,6 +28,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_activity_main.view.*
 import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.ctx
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun getLayoutId() = R.layout.activity_main
@@ -79,18 +81,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun initObserver() {
-        viewModel.eventLD.observe(this, Observer {
+        viewModel.idLD.observe(this, Observer {
             //TODO add logic to start detail activity
-            val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("event",it)
-            startActivity(intent)
+            ctx.startActivity<DetailActivity>("id" to "${it}")
+
         })
     }
 
 
     /*init view pager*/
     private fun initTab() {
-        val tabs = arrayOf(content_layout.tabLayout.newTab().setText("Prev Match"), content_layout.tabLayout.newTab().setText("Next Match"))
+        val tabs = arrayOf(content_layout.tabLayout.newTab().setText("Prev Match"), content_layout.tabLayout.newTab().setText("Next Match"), content_layout.tabLayout.newTab().setText("Favorite"))
 
         for (tab in tabs) {
             val layout = LinearLayout(this)
@@ -113,8 +114,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
         content_layout.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+
                 fragment = fragments.get(tab.position)
                 content_layout.viewPager.setCurrentItem(tab.position)
+
+                if (fragment is FavoriteEventFragment){
+                    spinner.visibility = View.GONE
+                }else{
+                    spinner.visibility = View.VISIBLE
+                }
+
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -130,6 +139,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun initViewPager() {
         fragments.add(LastEventFragment.newInstance())
         fragments.add(NextEventFragment.newInstance())
+        fragments.add(FavoriteEventFragment.newInstance())
 
         fragment = fragments.get(0)
         this.tabAdapter = LfPagerAdapter(supportFragmentManager, fragments)
@@ -142,7 +152,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     class LfPagerAdapter (fm: FragmentManager, private val fragments:MutableList<Fragment>): FragmentStatePagerAdapter(fm)
     {
 
-        private val NUM_ITEMS = 2
+        private val NUM_ITEMS = 3
 
 
 
@@ -153,6 +163,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         override fun getItem(position: Int): Fragment {
             when (position) {
                 1 -> return fragments[1]
+                2 -> return fragments[2]
                 else -> return fragments[0]
             }
         }

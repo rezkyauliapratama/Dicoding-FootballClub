@@ -38,6 +38,18 @@ class EventApi @Inject constructor(val networkClient: NetworkClient) : AnkoLogge
             }
         }
     }
+    fun eventSpecific(eventId: String): Single<EventResponse> {
+            return Single.create<EventResponse> { emitter ->
+                try {
+                    val response = getSpecificEvent(eventId)
+                    error { Gson().toJson(response) }
+                    response?.let { emitter.onSuccess(it) }
+
+                } catch (e: Exception) {
+                    emitter.onError(e)
+                }
+            }
+        }
 
     private fun getEventPastByLeagueId(leagueId : String, tag: String) : EventResponse?
     {
@@ -67,6 +79,27 @@ class EventApi @Inject constructor(val networkClient: NetworkClient) : AnkoLogge
         {
             networkClient.cancelByTag(tag)
             return networkClient.withUrl(TheSportDBApi.getNextEvent(leagueId))
+                    .init(EventResponse::class.java)
+                    .setTag(tag)
+                    .getSyncFuture()
+        } catch (e: Exception) {
+            error{ "getEventPastByLeagueId Error "}
+        }
+
+        return null
+    }
+
+    private fun getSpecificEvent(eventId : String) : EventResponse?
+    {
+        if (networkClient == null) {
+            throw NullPointerException("Network client == null")
+        }
+        try
+        {
+            val tag = "specific_event"
+            networkClient.cancelByTag(tag)
+            error { TheSportDBApi.getSpecificEvent(eventId) }
+            return networkClient.withUrl(TheSportDBApi.getSpecificEvent(eventId))
                     .init(EventResponse::class.java)
                     .setTag(tag)
                     .getSyncFuture()

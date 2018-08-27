@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ApiRepository @Inject constructor(val networkClient : NetworkClient){
+class ApiRepository @Inject constructor(){
 
     @Inject
     lateinit var eventApi: EventApi

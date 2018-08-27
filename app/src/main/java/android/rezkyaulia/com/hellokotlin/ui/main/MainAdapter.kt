@@ -11,11 +11,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
 /**
  * Created by Rezky Aulia Pratama on 5/8/18.
  */
-class MainAdapter(private val teams: List<Team>)
+class MainAdapter(private val teams: List<Team>, private val clickListener : (Team) -> Unit)
     : RecyclerView.Adapter<TeamViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
@@ -25,7 +26,7 @@ class MainAdapter(private val teams: List<Team>)
     override fun getItemCount(): Int = teams.size
 
     override fun onBindViewHolder(holder: TeamViewHolder, position: Int) {
-        holder.bindItem(teams[position])
+        holder.bindItem(teams[position],clickListener)
 
     }
 
@@ -35,9 +36,11 @@ class TeamViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     private val teamBadge: ImageView = itemView.find(team_badge)
     private val teamName: TextView = itemView.find(team_name)
 
-    fun bindItem(teams: Team) {
+    fun bindItem(teams: Team, listener: (Team) -> Unit) {
         Picasso.get().load(teams.teamBadge).into(teamBadge)
         teamName.text = teams.teamName
+        itemView.onClick { listener(teams) }
+
     }
 
 }

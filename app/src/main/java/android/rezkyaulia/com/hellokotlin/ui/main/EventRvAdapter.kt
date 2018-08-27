@@ -13,7 +13,7 @@ import android.view.ViewGroup
 /**
  * Created by Rezky Aulia Pratama on 20/8/18.
  */
-class EventRvAdapter(private val listItem: List<Event>, private val timeUtility: TimeUtility, private val clickListener : (Event) -> Unit) : RecyclerView.Adapter<EventRvAdapter.ViewHolder>() {
+class EventRvAdapter(private val listItem: List<Event>, private val timeUtility: TimeUtility, private val clickListener : (String) -> Unit) : RecyclerView.Adapter<EventRvAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_event, parent, false);
@@ -34,19 +34,16 @@ class EventRvAdapter(private val listItem: List<Event>, private val timeUtility:
             listItemEventBinding =  ListItemEventBinding.bind(itemView)
 
         }
-        fun bindItem(event: Event,timeUtility: TimeUtility, clickListener: (Event) -> Unit){
+        fun bindItem(event: Event,timeUtility: TimeUtility, clickListener: (String) -> Unit){
 
-                if (event?.dateEvent != null){
-                    val date = timeUtility.convertStringToDate(event!!.dateEvent!!)
-                    val strDate = date?.let { timeUtility.getUserFriendlyDate(it) }
-                    event?.dateEvent = strDate
-                }
+            val date = timeUtility.convertStringToDate(event.dateEvent!!)
+            val strDate =  timeUtility.getUserFriendlyDate(date)
 
-
+            listItemEventBinding.setVariable(BR.date,strDate)
             listItemEventBinding.setVariable(BR.event,event)
             listItemEventBinding.executePendingBindings()
             listItemEventBinding.root.setOnClickListener{
-                clickListener(event)
+                clickListener(event.idEvent!!)
             }
         }
     }
