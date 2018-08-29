@@ -18,9 +18,10 @@ buildscript {
 
 ext {
     //kotlin & anko
-    kotlinVersion = '1.2.60'
+    kotlinVersion = '1.2.61'
     ankoVersion = '0.10.5'
     ktxVersion = '0.3'
+    coroutinesVersion = '0.23.4'
 
     // Sdk & tools
     minSdkVersion = 19

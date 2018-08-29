@@ -27,6 +27,8 @@ import com.app.infideap.stylishwidget.view.ATextView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_activity_main.view.*
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
@@ -75,8 +77,29 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         initTab()
         initViewPager()
         initObserver()
+
+        val income = async { amountOfIncome() }
+        val capital = async { amountOfCapital() }
+
+        async {
+            error{  "Your profit is ${income.await() - capital.await()}"}
+        }
+
+        if(income.isCompleted && capital.isCompleted){
+            error{  "async completed"}
+
+        }
     }
 
+    suspend fun amountOfCapital(): Int {
+        delay(10000)
+        return 1000000
+    }
+
+    suspend fun amountOfIncome(): Int {
+        delay(10000)
+        return 1200000
+    }
     private fun initObserver() {
         viewModel.idLD.observe(this, Observer {
             ctx.startActivity<DetailActivity>("id".to("${it}"))
