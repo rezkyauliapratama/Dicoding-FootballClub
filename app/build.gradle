@@ -114,9 +114,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
 
-    //library
-    implementation project(path: ':light-optimization-data')
+    //networking
+    implementation 'com.rezkyaulia.library:light-networking:0.1'
 
+    //mockito
+    testImplementation 'org.mockito:mockito-core:2.21.0'
+    testImplementation "org.mockito:mockito-inline:2.19.0"
 
 
     //preferences manager
