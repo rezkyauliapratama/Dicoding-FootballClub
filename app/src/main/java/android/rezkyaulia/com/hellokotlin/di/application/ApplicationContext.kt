@@ -1,6 +1,5 @@
 package android.rezkyaulia.com.hellokotlin.di.application
 
-import java.lang.annotation.Documented
 import javax.inject.Qualifier
 
 /**

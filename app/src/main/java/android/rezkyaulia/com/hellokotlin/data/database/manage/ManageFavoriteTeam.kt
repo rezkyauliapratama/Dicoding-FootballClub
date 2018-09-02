@@ -4,8 +4,10 @@ import android.rezkyaulia.com.hellokotlin.data.database.MyDatabaseOpenHelper
 import android.rezkyaulia.com.hellokotlin.data.database.entity.FavoriteTeam
 import android.rezkyaulia.com.hellokotlin.data.model.Team
 import io.reactivex.Observable
-import org.jetbrains.anko.db.*
-import java.util.concurrent.Callable
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.replace
+import org.jetbrains.anko.db.select
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,7 +24,7 @@ class ManageFavoriteTeam @Inject constructor(val db: MyDatabaseOpenHelper) {
             val favorite = result.parseList(classParser<FavoriteTeam>())
             events = favorite
         }
-        return Observable.fromCallable({ events })
+        return Observable.fromCallable { events }
     }
 
     fun loadById(id : String): Observable<List<FavoriteTeam>> {
@@ -34,7 +36,7 @@ class ManageFavoriteTeam @Inject constructor(val db: MyDatabaseOpenHelper) {
             val favorite = result.parseList(classParser<FavoriteTeam>())
             events = favorite
         }
-        return Observable.fromCallable({ events })
+        return Observable.fromCallable { events }
     }
 
 
@@ -50,7 +52,6 @@ class ManageFavoriteTeam @Inject constructor(val db: MyDatabaseOpenHelper) {
                 setTransactionSuccessful()
                 true
             } else {
-                false
                 throw RuntimeException("Fail to insert")
             }
 
@@ -67,11 +68,11 @@ class ManageFavoriteTeam @Inject constructor(val db: MyDatabaseOpenHelper) {
                 beginTransaction()
                 val result = delete(FavoriteTeam.TABLE_FAVORITE, "(TEAM_ID = {id})",
                         "id" to id) > 0
-                if (result) {
+                isDeleted = if (result) {
                     setTransactionSuccessful()
-                    isDeleted = true
+                    true
                 } else {
-                    isDeleted = false
+                    false
                 }
 
             } catch (e : Throwable) {
@@ -81,6 +82,6 @@ class ManageFavoriteTeam @Inject constructor(val db: MyDatabaseOpenHelper) {
                 endTransaction()
             }
         }
-        return Observable.fromCallable({ isDeleted })
+        return Observable.fromCallable { isDeleted }
     }
 }

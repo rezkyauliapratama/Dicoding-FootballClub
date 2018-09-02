@@ -1,14 +1,12 @@
 package android.rezkyaulia.com.hellokotlin.base
 
 import android.app.Activity
-import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BaseApplication
 import android.rezkyaulia.com.hellokotlin.di.activity.ActivityComponent
-import android.rezkyaulia.com.hellokotlin.di.activity.ActivityContext
 import android.rezkyaulia.com.hellokotlin.di.activity.ActivityModule
 import android.rezkyaulia.com.hellokotlin.di.activity.DaggerActivityComponent
 import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelFactory
@@ -17,7 +15,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import javax.inject.Inject
 
@@ -29,8 +26,8 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     @Inject
     lateinit var viewModelFactory : ViewModelFactory
 
-    lateinit var viewDataBinding: T
-    lateinit var viewModel : V
+    private lateinit var viewDataBinding: T
+    open lateinit var viewModel : V
 
 
     lateinit var activity: Activity
@@ -52,7 +49,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     abstract fun inject()
 
-    var activityComponent: ActivityComponent? = null
+    private var activityComponent: ActivityComponent? = null
 
     fun initActivityComponent(): ActivityComponent? {
         if (activityComponent == null){
@@ -82,9 +79,6 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         return viewDataBinding.root
     }
 
-    override fun onDetach() {
-        super.onDetach()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -10,17 +10,7 @@ import org.jetbrains.anko.db.*
  * Created by Rezky Aulia Pratama on 25/8/18.
  */
 class MyDatabaseOpenHelper (ctx: Context, name :String, version : Int) : ManagedSQLiteOpenHelper(ctx, name, null, version) {
-    /*companion object {
-        private var instance: MyDatabaseOpenHelper? = null
 
-        @Synchronized
-        fun getInstance(ctx: Context): MyDatabaseOpenHelper {
-            if (instance == null) {
-                instance = MyDatabaseOpenHelper(ctx.applicationContext)
-            }
-            return instance as MyDatabaseOpenHelper
-        }
-    }*/
 
     override fun onCreate(db: SQLiteDatabase) {
         // Here you create tables
@@ -48,8 +38,3 @@ class MyDatabaseOpenHelper (ctx: Context, name :String, version : Int) : Managed
         db.createTable(FavoriteEvent.TABLE_FAVORITE, true)
     }
 }
-
-// Access property for Context
-/*
-val Context.database: MyDatabaseOpenHelper
-    get() = MyDatabaseOpenHelper.getInstance(applicationContext)*/

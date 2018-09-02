@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.ui.main.next_event
+package android.rezkyaulia.com.hellokotlin.ui.main.lastevent
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -7,43 +7,37 @@ import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.Util.TimeUtility
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.data.model.Event
-import android.rezkyaulia.com.hellokotlin.databinding.FragmentNextEventBinding
+import android.rezkyaulia.com.hellokotlin.databinding.FragmentPrevEventBinding
+import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import android.rezkyaulia.com.hellokotlin.ui.main.EventRvAdapter
 import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
-import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import kotlinx.android.synthetic.main.fragment_next_event.*
+import kotlinx.android.synthetic.main.fragment_prev_event.*
 import org.jetbrains.anko.error
 import javax.inject.Inject
 
-/**
- * Created by Rezky Aulia Pratama on 22/8/18.
- */
-class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewModel>(){
+class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewModel>() {
 
     @Inject
     lateinit var timeUtility: TimeUtility
 
-    lateinit var mainViewModel : MainViewModel
-    lateinit var adapter : EventRvAdapter
-    val eventList : MutableList<Event> = mutableListOf()
-    var leagueId : String = ""
+    private lateinit var mainViewModel : MainViewModel
+    private lateinit var adapter : EventRvAdapter
+    private val eventList : MutableList<Event> = mutableListOf()
+    private var leagueId : String = ""
 
     companion object {
-        fun newInstance (): NextEventFragment {
-            val lastEventFragment = NextEventFragment()
-            return lastEventFragment
+        fun newInstance (): LastEventFragment {
+            return LastEventFragment()
         }
     }
-
     override fun getLayoutId(): Int {
-        return R.layout.fragment_next_event
+        return R.layout.fragment_prev_event
     }
 
-    override fun initViewModel(): NextEventViewModel {
-        return ViewModelProviders.of(this, viewModelFactory).get(NextEventViewModel::class.java)
-
+    override fun initViewModel(): LastEventViewModel {
+        return ViewModelProviders.of(this, viewModelFactory).get(LastEventViewModel::class.java)
     }
 
     override fun initBindingVariable(): Int {
@@ -55,11 +49,10 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = EventRvAdapter(eventList,timeUtility) { id: String -> eventClicked(id) }
+        adapter = EventRvAdapter(eventList,timeUtility = timeUtility) { id: String -> eventClicked(id) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,21 +65,20 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
     }
 
     private fun initView() {
-        swipe_nextEvent.setOnRefreshListener {
-            error { "onswipe" }
+        swipe_prevEvent.setOnRefreshListener {
             viewModel.retrieveData(leagueId)
         }
     }
 
     private fun initRv() {
-        rv_nextEvent.layoutManager = LinearLayoutManager(context)
+        rv_prevEvent.layoutManager = LinearLayoutManager(context)
 
-        rv_nextEvent.adapter = adapter
+        rv_prevEvent.adapter = adapter
 
     }
 
 
-    fun initObserver(){
+    private fun initObserver(){
 
         mainViewModel.leagueIdLD.observe(this, android.arch.lifecycle.Observer {
             leagueId = it.toString()
@@ -104,13 +96,17 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
         })
 
         viewModel.uiStatusLD.observe(this, android.arch.lifecycle.Observer {
-            if (it == UiStatus.HIDE_LOADER){
-                swipe_nextEvent.isRefreshing = false
-            }else if (it == UiStatus.SHOW_LOADER){
-                swipe_nextEvent.isRefreshing = true
-                eventList.clear()
-                adapter.notifyDataSetChanged()
+            when (it) {
+                UiStatus.HIDE_LOADER -> swipe_prevEvent.isRefreshing = false
+                UiStatus.SHOW_LOADER ->{ swipe_prevEvent.isRefreshing = true
+                    eventList.clear()
+                    adapter.notifyDataSetChanged()}
+
+                else -> {
+                    error { "cannot found uiStatus" }
+                }
             }
+
         })
     }
 

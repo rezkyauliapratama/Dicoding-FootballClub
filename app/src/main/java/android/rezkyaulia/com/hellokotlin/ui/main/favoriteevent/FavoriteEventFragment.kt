@@ -7,16 +7,12 @@ import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.Util.TimeUtility
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.data.database.entity.FavoriteEvent
-import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.databinding.FragmentFavoriteEventBinding
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
-import android.rezkyaulia.com.hellokotlin.ui.main.EventRvAdapter
 import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_favorite_event.*
-import kotlinx.android.synthetic.main.fragment_favorite_event.*
-import org.jetbrains.anko.error
 import javax.inject.Inject
 
 /**
@@ -27,14 +23,13 @@ class FavoriteEventFragment : BaseFragment<FragmentFavoriteEventBinding, Favorit
     @Inject
     lateinit var timeUtility: TimeUtility
 
-    lateinit var mainViewModel : MainViewModel
-    lateinit var adapter : FavoriteEventRvAdapter
-    val eventList : MutableList<FavoriteEvent> = mutableListOf()
+    private lateinit var mainViewModel : MainViewModel
+    private lateinit var adapter : FavoriteEventRvAdapter
+    private val eventList : MutableList<FavoriteEvent> = mutableListOf()
 
     companion object {
         fun newInstance (): FavoriteEventFragment {
-            val favoriteEventFragment = FavoriteEventFragment()
-            return favoriteEventFragment
+            return FavoriteEventFragment()
         }
     }
 
@@ -60,7 +55,7 @@ class FavoriteEventFragment : BaseFragment<FragmentFavoriteEventBinding, Favorit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = FavoriteEventRvAdapter(eventList,timeUtility = timeUtility) { favoriteEvent: FavoriteEvent -> eventClicked(favoriteEvent) }
+        adapter = FavoriteEventRvAdapter(eventList) { favoriteEvent: FavoriteEvent -> eventClicked(favoriteEvent) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,7 +69,6 @@ class FavoriteEventFragment : BaseFragment<FragmentFavoriteEventBinding, Favorit
 
     private fun initView() {
         swipe_favoriteEvent.setOnRefreshListener {
-            error { "onswipe" }
             viewModel.retrieveData()
         }
     }
@@ -92,7 +86,7 @@ class FavoriteEventFragment : BaseFragment<FragmentFavoriteEventBinding, Favorit
 
     }
 
-    fun initObserver(){
+    private fun initObserver(){
 
 
         viewModel.favEventResponseLD.observe(this, android.arch.lifecycle.Observer {

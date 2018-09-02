@@ -2,19 +2,17 @@ package android.rezkyaulia.com.hellokotlin.ui.main
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.R.array.league
 import android.rezkyaulia.com.hellokotlin.R.array.league_id
 import android.rezkyaulia.com.hellokotlin.base.BaseActivity
-import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent.FavoriteEventFragment
-import android.rezkyaulia.com.hellokotlin.ui.main.last_event.LastEventFragment
-import android.rezkyaulia.com.hellokotlin.ui.main.next_event.NextEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.lastevent.LastEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.nextevent.NextEventFragment
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -22,13 +20,18 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import com.app.infideap.stylishwidget.view.ATextView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_activity_main.view.*
-import org.jetbrains.anko.*
-import org.jetbrains.anko.support.v4.ctx
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
+import org.jetbrains.anko.ctx
+import org.jetbrains.anko.error
+import org.jetbrains.anko.startActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun getLayoutId() = R.layout.activity_main
@@ -50,11 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     lateinit var fragment: Fragment
 
 
-    private var teams: MutableList<Team> = mutableListOf()
-
     private lateinit var tabAdapter: LfPagerAdapter
-
-    private lateinit var leagueName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,12 +77,32 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         initTab()
         initViewPager()
         initObserver()
+
+        val income = async { amountOfIncome() }
+        val capital = async { amountOfCapital() }
+
+        async {
+            error{  "Your profit is ${income.await() - capital.await()}"}
+        }
+
+        if(income.isCompleted && capital.isCompleted){
+            error{  "async completed"}
+
+        }
     }
 
+    suspend fun amountOfCapital(): Int {
+        delay(10000)
+        return 1000000
+    }
+
+    suspend fun amountOfIncome(): Int {
+        delay(10000)
+        return 1200000
+    }
     private fun initObserver() {
         viewModel.idLD.observe(this, Observer {
-            //TODO add logic to start detail activity
-            ctx.startActivity<DetailActivity>("id" to "${it}")
+            ctx.startActivity<DetailActivity>("id".to("${it}"))
 
         })
     }
@@ -115,8 +134,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         content_layout.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
 
-                fragment = fragments.get(tab.position)
-                content_layout.viewPager.setCurrentItem(tab.position)
+                fragment = fragments[tab.position]
+                content_layout.viewPager.currentItem = tab.position
 
                 if (fragment is FavoriteEventFragment){
                     spinner.visibility = View.GONE
@@ -141,30 +160,30 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         fragments.add(NextEventFragment.newInstance())
         fragments.add(FavoriteEventFragment.newInstance())
 
-        fragment = fragments.get(0)
+        fragment = fragments[0]
         this.tabAdapter = LfPagerAdapter(supportFragmentManager, fragments)
 
-        content_layout.viewPager.setAdapter(tabAdapter)
-        content_layout.viewPager.setPagingEnabled(false)
+        content_layout.viewPager.adapter = tabAdapter
+        content_layout.viewPager.isPagingEnabled = false
         content_layout.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(content_layout.tabLayout))
     }
 
     class LfPagerAdapter (fm: FragmentManager, private val fragments:MutableList<Fragment>): FragmentStatePagerAdapter(fm)
     {
 
-        private val NUM_ITEMS = 3
+        private val NUMITEMS = 3
 
 
 
         override fun getCount(): Int {
-            return NUM_ITEMS
+            return NUMITEMS
         }
 
         override fun getItem(position: Int): Fragment {
-            when (position) {
-                1 -> return fragments[1]
-                2 -> return fragments[2]
-                else -> return fragments[0]
+            return when (position) {
+                1 -> fragments[1]
+                2 -> fragments[2]
+                else -> fragments[0]
             }
         }
 

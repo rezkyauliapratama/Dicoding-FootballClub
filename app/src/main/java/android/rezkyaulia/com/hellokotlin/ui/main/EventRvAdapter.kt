@@ -15,8 +15,8 @@ import android.view.ViewGroup
  */
 class EventRvAdapter(private val listItem: List<Event>, private val timeUtility: TimeUtility, private val clickListener : (String) -> Unit) : RecyclerView.Adapter<EventRvAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_event, parent, false);
+        val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.list_item_event, parent, false)
         return ViewHolder(view)
     }
 
@@ -28,12 +28,8 @@ class EventRvAdapter(private val listItem: List<Event>, private val timeUtility:
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        var listItemEventBinding :ListItemEventBinding
+        private var listItemEventBinding :ListItemEventBinding = ListItemEventBinding.bind(itemView)
 
-        init {
-            listItemEventBinding =  ListItemEventBinding.bind(itemView)
-
-        }
         fun bindItem(event: Event,timeUtility: TimeUtility, clickListener: (String) -> Unit){
 
             val date = timeUtility.convertStringToDate(event.dateEvent!!)

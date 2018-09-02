@@ -40,7 +40,11 @@ android {
     androidExtensions {
         experimental = true
     }
-
+    kotlin {
+        experimental {
+            coroutines "enable"
+        }
+    }
 
 
 }
@@ -61,13 +65,18 @@ dependencies {
     implementation "org.jetbrains.anko:anko:$rootProject.ankoVersion"
     implementation "org.jetbrains.anko:anko-design:$rootProject.ankoVersion"
     implementation "org.jetbrains.anko:anko-sqlite:$rootProject.ankoVersion"
+    implementation "org.jetbrains.anko:anko-coroutines:$rootProject.ankoVersion"
+    implementation "org.jetbrains.anko:anko-sdk15-coroutines:$rootProject.ankoVersion"
+    implementation "org.jetbrains.anko:anko-appcompat-v7-coroutines:$rootProject.ankoVersion"
+    implementation "org.jetbrains.anko:anko-design-coroutines:$rootProject.ankoVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.23.4"
+
     // RecyclerView-v7
     implementation "org.jetbrains.anko:anko-recyclerview-v7:$rootProject.ankoVersion"
     implementation "org.jetbrains.anko:anko-recyclerview-v7-coroutines:$rootProject.ankoVersion"
 
     //image-handling
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
-    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
 
     //networking
     implementation "com.amitshekhar.android:android-networking:$rootProject.fanVersion"
