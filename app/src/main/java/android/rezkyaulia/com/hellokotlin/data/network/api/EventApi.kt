@@ -56,7 +56,7 @@ class EventApi @Inject constructor(private val networkClient: NetworkClient) : A
         {
             networkClient.cancelByTag(tag)
             return networkClient.withUrl(TheSportDBApi.getPastEvent(leagueId))
-                    .init(EventResponse::class.java)
+                    .initAs(EventResponse::class.java)
                     .setTag(tag)
                     .syncFuture
         } catch (e: Exception) {
@@ -72,7 +72,7 @@ class EventApi @Inject constructor(private val networkClient: NetworkClient) : A
         {
             networkClient.cancelByTag(tag)
             return networkClient.withUrl(TheSportDBApi.getNextEvent(leagueId))
-                    .init(EventResponse::class.java)
+                    .initAs(EventResponse::class.java)
                     .setTag(tag)
                     .syncFuture
         } catch (e: Exception) {
@@ -90,7 +90,7 @@ class EventApi @Inject constructor(private val networkClient: NetworkClient) : A
             networkClient.cancelByTag(tag)
             error { TheSportDBApi.getSpecificEvent(eventId) }
             return networkClient.withUrl(TheSportDBApi.getSpecificEvent(eventId))
-                    .init(EventResponse::class.java)
+                    .initAs(EventResponse::class.java)
                     .setTag(tag)
                     .syncFuture
         } catch (e: Exception) {

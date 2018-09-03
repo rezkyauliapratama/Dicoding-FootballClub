@@ -34,7 +34,7 @@ class TeamApi @Inject constructor(private val networkClient: NetworkClient) : An
         {
             error { "link : " + TheSportDBApi.getSpecificTeam(teamId.toString()) }
             return networkClient.withUrl(TheSportDBApi.getSpecificTeam(teamId.toString()))
-                    .init(TeamResponse::class.java,GET)
+                    .initAs(TeamResponse::class.java,GET)
                     .syncFuture
         } catch (e: Exception) {
             error{ "getTeam Error " + Gson().toJson(e)}
