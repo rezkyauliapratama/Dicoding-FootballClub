@@ -114,6 +114,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
 
+
+    //log
+    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
     //networking
     implementation 'com.rezkyaulia.library:light-networking:0.1'
 

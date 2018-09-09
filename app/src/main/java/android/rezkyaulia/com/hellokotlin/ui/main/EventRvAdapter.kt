@@ -32,14 +32,14 @@ class EventRvAdapter(private val listItem: List<Event>, private val timeUtility:
 
         fun bindItem(event: Event,timeUtility: TimeUtility, clickListener: (String) -> Unit){
 
-            val date = timeUtility.convertStringToDate(event.dateEvent!!)
+            val date = timeUtility.convertStringToDate(event.dateEvent)
             val strDate =  timeUtility.getUserFriendlyDate(date)
 
             listItemEventBinding.setVariable(BR.date,strDate)
             listItemEventBinding.setVariable(BR.event,event)
             listItemEventBinding.executePendingBindings()
             listItemEventBinding.root.setOnClickListener{
-                clickListener(event.idEvent!!)
+                clickListener(event.idEvent)
             }
         }
     }

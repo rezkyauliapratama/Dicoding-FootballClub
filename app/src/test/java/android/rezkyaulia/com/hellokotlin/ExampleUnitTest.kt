@@ -12,6 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subscribers.TestSubscriber
+import org.hamcrest.CoreMatchers.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.junit.Test
@@ -27,6 +28,7 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito.*
+import java.lang.Exception
 
 
 /**
@@ -37,7 +39,7 @@ import org.mockito.Mockito.*
 class ExampleUnitTest  {
 
     @Rule @JvmField
-    val mockitoRule = MockitoJUnit.rule()!!
+    val mockitoRule = MockitoJUnit.rule()
 
     @Rule @JvmField var testSchedulerRule = RxImmediateSchedulerRule()
 
@@ -46,7 +48,7 @@ class ExampleUnitTest  {
 
 
     @Mock
-    var eventApi:EventApi? = null
+    lateinit var eventApi:EventApi
 
     val jsonArr : String =
             "{\n" +
@@ -110,32 +112,32 @@ class ExampleUnitTest  {
 
     @Test
     fun testDoSomething() {
-        val response = Gson().fromJson(jsonArr, EventResponse::class.java)
+//        val response = Gson().fromJson(jsonArr, EventResponse::class.java)
 
         val single:Single<EventResponse> = Single.create<EventResponse> { emitter ->
             try {
-
-                response?.let { emitter.onSuccess(it) }
+                EventResponse(emptyList()).let { emitter.onSuccess(it) }
 
             } catch (e: Exception) {
                 emitter.onError(e)
             }
         }
         `when`(eventApi
-                ?.eventPastByLeagueId("A", "A")).thenReturn(single)
+                .eventPastByLeagueId("", "")).thenReturn(single)
 
 
         val testSingle: Single<EventResponse> ? = eventApi
-                ?.eventPastByLeagueId("A","A" )
+                .eventPastByLeagueId("asdasdf","" )
 
-        testSingle?.observeOn(AndroidSchedulers.mainThread())
+        testSingle!!.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({ result ->
-                        assertEquals(response, result)
+
+                    assertThat(result.events,`is`(notNullValue()))
 
 
                 }, { throwable ->
 
-                    verify(eventApi, atLeastOnce().description("error "+ throwable.localizedMessage));
+                    verify(eventApi, atLeastOnce().description("error "+ throwable.localizedMessage))
 
                 })
     }
