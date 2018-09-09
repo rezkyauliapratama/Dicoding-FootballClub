@@ -9,9 +9,9 @@ import org.jetbrains.anko.error
 import javax.inject.Inject
 
 @Suppress("UNREACHABLE_CODE")
-class EventApi @Inject constructor(private val networkClient: NetworkClient) : AnkoLogger{
+open class EventApi @Inject constructor(private val networkClient: NetworkClient) : AnkoLogger{
 
-    fun eventPastByLeagueId(leagueId: String,tag : String): Single<EventResponse> {
+    open fun eventPastByLeagueId(leagueId: String,tag : String): Single<EventResponse> {
         return Single.create<EventResponse> { emitter ->
             try {
                 val response = getEventPastByLeagueId(leagueId,tag)
