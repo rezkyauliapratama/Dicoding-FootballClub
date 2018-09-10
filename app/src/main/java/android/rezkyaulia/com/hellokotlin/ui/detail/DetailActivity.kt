@@ -45,7 +45,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(){
         initActivityComponent()?.inject(this)
     }
 
-    private var event: Event? = null
+    lateinit var event: Event
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +79,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(){
 
         viewModel.eventLD.observe(this, Observer {
             swipe_detail.isRefreshing = false
-            event = it
+
+            if (it != null)
+                event = it
+
             viewModel.setupImage(event)
 
             val date = timeUtils.convertStringToDate(event!!.dateEvent!!)
@@ -103,8 +106,8 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(){
         })
 
         viewModel.boolFavoriteLD.observe(this, Observer { it ->
-            isFavorite = it!!
-
+            if (it != null)
+                isFavorite = it
         })
 
 
@@ -147,14 +150,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(){
 
 
     private fun addToFavorite(){
-        if (event != null)
-            viewModel.addToFavorite(event!!)
-
+            viewModel.addToFavorite(event)
     }
 
     private fun removeFromFavorite(){
-        if (event != null)
-            viewModel.removeFromFavorite(event!!.idEvent!!)
+            viewModel.removeFromFavorite(event.idEvent!!)
     }
 
     private fun setFavorite() {

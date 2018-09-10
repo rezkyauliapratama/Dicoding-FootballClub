@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 data class Event (
 
         @SerializedName("idEvent")
-        var idEvent: String? = null,
+        var idEvent: String,
         
         @SerializedName("idSoccerXML")
         var idSoccerXML: String? = null,
@@ -114,7 +114,7 @@ data class Event (
         var intAwayShots: String? = null,
         
         @SerializedName("dateEvent")
-        var dateEvent: String? = null,
+        var dateEvent: String,
         
         @SerializedName("strDate")
         var strDate: String? = null,
