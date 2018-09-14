@@ -36,11 +36,10 @@ open class EventApi @Inject constructor(private val networkClient: NetworkClient
             }
         }
     }
-    fun eventSpecific(eventId: String): Single<EventResponse> {
+    fun eventSpecific(url: String): Single<EventResponse> {
             return Single.create<EventResponse> { emitter ->
                 try {
-                    val response = getSpecificEvent(eventId)
-                    error { Gson().toJson(response) }
+                    val response = getSpecificEvent(url)
                     response?.let { emitter.onSuccess(it) }
 
                 } catch (e: Exception) {
@@ -82,14 +81,13 @@ open class EventApi @Inject constructor(private val networkClient: NetworkClient
         return null
     }
 
-    private fun getSpecificEvent(eventId : String) : EventResponse?
+    private fun getSpecificEvent(url : String) : EventResponse?
     {
         try
         {
             val tag = "specific_event"
             networkClient.cancelByTag(tag)
-            error { TheSportDBApi.getSpecificEvent(eventId) }
-            return networkClient.withUrl(TheSportDBApi.getSpecificEvent(eventId))
+            return networkClient.withUrl(url)
                     .initAs(EventResponse::class.java)
                     .setTag(tag)
                     .syncFuture

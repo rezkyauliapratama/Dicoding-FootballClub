@@ -11,7 +11,7 @@ import org.jetbrains.anko.AnkoLogger
 object  TheSportDBApi : AnkoLogger{
 
 
-    fun getPastEvent(leagueId : String): String{
+    fun getPastEvent(leagueId : String?): String{
         return Uri.parse(BuildConfig.BASE_URL).buildUpon()
                 .appendPath("api")
                 .appendPath("v1")
