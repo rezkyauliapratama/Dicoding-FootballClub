@@ -12,7 +12,7 @@ import javax.inject.Inject
 @Suppress("UNREACHABLE_CODE")
 class TeamApi @Inject constructor(private val networkClient: NetworkClient) : AnkoLogger {
 
-    fun teamById(teamId: String?): Single<TeamResponse> {
+   /* fun teamById(teamId: String?): Single<TeamResponse> {
         return Single.create<TeamResponse> { emitter ->
             try {
                 val response : TeamResponse? = getTeam(teamId)
@@ -26,8 +26,8 @@ class TeamApi @Inject constructor(private val networkClient: NetworkClient) : An
                 emitter.onError(e)
             }
         }
-    }
-    private fun getTeam(teamId : String?) : TeamResponse?
+    }*/
+  /*  private fun getTeam(teamId : String?) : TeamResponse?
     {
 
         try
@@ -41,5 +41,5 @@ class TeamApi @Inject constructor(private val networkClient: NetworkClient) : An
         }
     return null
     }
-
+*/
 }

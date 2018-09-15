@@ -25,8 +25,8 @@ class LastEventViewModel @Inject constructor(private val dataManager: DataManage
     fun retrieveData(s: String) {
         uiStatusLD.value = UiStatus.SHOW_LOADER
 
-        compositeDisposable.add(dataManager.api.eventApi
-                .eventPastByLeagueId(s,"lastEvent").subscribeOn(Schedulers.io())
+        compositeDisposable.add(dataManager.networkApi
+                .getEventPastLeague(s).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     if (response != null){

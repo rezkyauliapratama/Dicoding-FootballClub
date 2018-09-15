@@ -107,6 +107,10 @@ dependencies {
     //architecture component
     implementation "android.arch.lifecycle:extensions:$rootProject.arcCompVersion"
     implementation "android.arch.work:work-runtime:1.0.0-alpha08"
+    testImplementation "com.google.truth:truth:0.36"
+    testImplementation "org.mockito:mockito-core:2.13.0"
+    testImplementation "android.arch.core:core-testing:1.1.1"
+
 
     //test
     testImplementation "junit:junit:$rootProject.junitVersion"
@@ -119,6 +123,11 @@ dependencies {
 
     //networking
     implementation 'com.rezkyaulia.library:light-networking:0.1'
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
 
     //mockito
     testImplementation 'org.mockito:mockito-core:2.21.0'

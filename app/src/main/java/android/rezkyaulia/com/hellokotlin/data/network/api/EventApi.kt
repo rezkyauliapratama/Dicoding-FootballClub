@@ -11,7 +11,7 @@ import javax.inject.Inject
 @Suppress("UNREACHABLE_CODE")
 open class EventApi @Inject constructor(private val networkClient: NetworkClient) : AnkoLogger{
 
-    open fun eventPastByLeagueId(leagueId: String,tag : String): Single<EventResponse> {
+    /*open fun eventPastByLeagueId(leagueId: String,tag : String): Single<EventResponse> {
         return Single.create<EventResponse> { emitter ->
             try {
                 val response = getEventPastByLeagueId(leagueId,tag)
@@ -22,9 +22,9 @@ open class EventApi @Inject constructor(private val networkClient: NetworkClient
                 emitter.onError(e)
             }
         }
-    }
+    }*/
 
-    fun eventNextByLeagueId(leagueId: String,tag : String): Single<EventResponse> {
+    /*fun eventNextByLeagueId(leagueId: String,tag : String): Single<EventResponse> {
         return Single.create<EventResponse> { emitter ->
             try {
                 val response = getEventNextByLeagueId(leagueId,tag)
@@ -35,8 +35,8 @@ open class EventApi @Inject constructor(private val networkClient: NetworkClient
                 emitter.onError(e)
             }
         }
-    }
-    fun eventSpecific(url: String): Single<EventResponse> {
+    }*/
+    /*fun eventSpecific(url: String): Single<EventResponse> {
             return Single.create<EventResponse> { emitter ->
                 try {
                     val response = getSpecificEvent(url)
@@ -46,9 +46,9 @@ open class EventApi @Inject constructor(private val networkClient: NetworkClient
                     emitter.onError(e)
                 }
             }
-        }
+        }*/
 
-    private fun getEventPastByLeagueId(leagueId : String, tag: String) : EventResponse?
+    /*private fun getEventPastByLeagueId(leagueId : String, tag: String) : EventResponse?
     {
 
         try
@@ -63,9 +63,9 @@ open class EventApi @Inject constructor(private val networkClient: NetworkClient
         }
 
         return null
-    }
+    }*/
 
-    private fun getEventNextByLeagueId(leagueId : String, tag: String) : EventResponse?
+   /* private fun getEventNextByLeagueId(leagueId : String, tag: String) : EventResponse?
     {
         try
         {
@@ -80,8 +80,8 @@ open class EventApi @Inject constructor(private val networkClient: NetworkClient
 
         return null
     }
-
-    private fun getSpecificEvent(url : String) : EventResponse?
+*/
+  /*  private fun getSpecificEvent(url : String) : EventResponse?
     {
         try
         {
@@ -96,6 +96,6 @@ open class EventApi @Inject constructor(private val networkClient: NetworkClient
         }
 
         return null
-    }
+    }*/
 
 }

@@ -15,7 +15,7 @@ constructor() {
         return simpleDateFormat.format(date)
     }
 
-    fun convertStringToDate(str: String): Date {
+    fun convertStringToDate(str: String?): Date {
         val format = SimpleDateFormat("yyyy-MM-dd")
         return format.parse(str)
 

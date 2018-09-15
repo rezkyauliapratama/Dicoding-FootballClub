@@ -85,7 +85,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(){
 
             viewModel.setupImage(event)
 
-            val date = timeUtils.convertStringToDate(event!!.dateEvent!!)
+            val date = timeUtils.convertStringToDate(event.dateEvent)
             event!!.dateEvent = date.let { it1 -> timeUtils.getUserFriendlyDate(it1) }
             viewDataBinding.setVariable(BR.event,event)
             viewDataBinding.executePendingBindings()

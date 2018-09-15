@@ -23,10 +23,9 @@ class DetailViewModel @Inject constructor(private val dataManager: DataManager):
 
 
     fun retrieveEvent(id : String){
-        val url = TheSportDBApi.getSpecificEvent(id)
         uiStatusLD.value = UiStatus.SHOW_LOADER
-        compositeDisposable.add(dataManager.api.eventApi
-                .eventSpecific(url).subscribeOn(Schedulers.io())
+        compositeDisposable.add(dataManager.networkApi
+                .getSpecificEvent(id).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     error { Gson().toJson(response) }
@@ -45,8 +44,8 @@ class DetailViewModel @Inject constructor(private val dataManager: DataManager):
     fun setupImage(event: Event?) {
 
         error {"setupEvent"}
-        compositeDisposable.add(dataManager.api.teamApi
-                .teamById(event?.idHomeTeam).subscribeOn(Schedulers.io())
+        compositeDisposable.add(dataManager.networkApi
+                .getSpecificTeam(event?.idHomeTeam).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     error { Gson().toJson(response) }
@@ -58,8 +57,8 @@ class DetailViewModel @Inject constructor(private val dataManager: DataManager):
 
                 }))
 
-        compositeDisposable.add(dataManager.api.teamApi
-                .teamById(event?.idAwayTeam).subscribeOn(Schedulers.io())
+        compositeDisposable.add(dataManager.networkApi
+                .getSpecificTeam(event?.idAwayTeam).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     if (response != null) strAwayBdgLD.value = response.teams[0].teamBadge

@@ -60,6 +60,7 @@ ext {
     timberVersion = '4.7.0'
     lifecycle = '1.1.0'
     arcCompVersion = '1.1.1'
+    retrofitVersion = '2.4.0'
 
     //Test dependencies
     junitVersion = '4.12'

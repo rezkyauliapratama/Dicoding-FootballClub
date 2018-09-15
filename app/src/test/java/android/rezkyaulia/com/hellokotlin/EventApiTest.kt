@@ -1,18 +1,30 @@
 package android.rezkyaulia.com.hellokotlin
 
+import android.arch.core.executor.testing.InstantTaskExecutorRule
+import android.arch.lifecycle.Observer
+import android.rezkyaulia.com.hellokotlin.Util.AppSchedulerProvider
+import android.rezkyaulia.com.hellokotlin.data.DataManager
+import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.data.model.EventResponse
-import android.rezkyaulia.com.hellokotlin.data.network.api.EventApi
-import android.rezkyaulia.com.hellokotlin.data.network.api.TheSportDBApi
-import com.rezkyaulia.android.light_optimization_data.NetworkClient
+import android.rezkyaulia.com.hellokotlin.data.network.NetworkApi
+import android.rezkyaulia.com.hellokotlin.ui.UiStatus
+import android.rezkyaulia.com.hellokotlin.ui.main.nextevent.NextEventViewModel
+import com.nhaarman.mockitokotlin2.argumentCaptor
+import io.reactivex.Single
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
+import org.mockito.*
 import org.mockito.Mockito.*
-import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers
-import org.mockito.Mockito
-import java.util.*
+import org.mockito.junit.MockitoJUnit
+import retrofit2.HttpException
+import javax.annotation.Nullable
+import io.reactivex.observers.TestObserver
+
+
 
 
 class EventApiTest{
@@ -21,47 +33,192 @@ class EventApiTest{
     val TAG = "TAG"
     val URL = "URL"
 
+    val response = EventResponse(
+            listOf(
+                    Event("1"),
+                    Event("2"),
+                    Event("3")
+            )
+    )
+
+    @get:Rule
+    val mockitoRule = MockitoJUnit.rule()
+
+    @get:Rule
+    var rule: TestRule = InstantTaskExecutorRule()
 
 
-    lateinit var networkClientMock: NetworkClient
+    @Rule @JvmField var testSchedulerRule = RxImmediateSchedulerRule()
 
-    lateinit var SUT : EventApi
+    @Mock
+    lateinit var dataManager: DataManager
+    @Mock
+    lateinit var appSchedulerProvider: AppSchedulerProvider
+    @Mock
+    lateinit var networkApi: NetworkApi
+
+    @Mock
+    lateinit var UistatusObserver: Observer<UiStatus>
+
+    @Mock
+    lateinit var responseObserver: Observer<EventResponse>
+
+    @InjectMocks
+    lateinit var SUT : NextEventViewModel
 
     @Before
     fun setUp() {
-        networkClientMock = Mockito.mock(NetworkClient::class.java)
-        SUT = EventApi(networkClientMock)
+
+//        SUT = NextEventViewModel(networkApi)
+
         success()
     }
 
     @Test
     fun eventSpecific_success_PassedToEndPoint() {
         val ac : ArgumentCaptor<String> = ArgumentCaptor.forClass(String::class.java)
+        SUT.retrieveData(LEAGUE_ID)
+        ac.apply {
+            verify(networkApi).getEventNextLeague(capture())
 
-        SUT.eventSpecific(URL)
+            MatcherAssert.assertThat(value, CoreMatchers.`is`(LEAGUE_ID))
+        }
+    }
 
+    @Test
+    fun eventSpecific_init_showLoaderEvent() {
+        SUT.uiStatusLD.observeForever(UistatusObserver)
+        SUT.retrieveData(LEAGUE_ID)
+
+        verify(UistatusObserver).onChanged(UiStatus.SHOW_LOADER)
+
+    }
+
+    @Test
+    fun eventSpecific_success_hideLoaderEvent() {
+        SUT.uiStatusLD.observeForever(UistatusObserver)
+        SUT.retrieveData(LEAGUE_ID)
+
+        verify(UistatusObserver).onChanged(UiStatus.HIDE_LOADER)
+
+    }
+
+    @Test
+    fun eventSpecific_success_responseEvent() {
+        val ac : ArgumentCaptor<EventResponse> = ArgumentCaptor.forClass(EventResponse::class.java)
+        SUT.eventResponseLD.observeForever(responseObserver)
+        SUT.retrieveData(LEAGUE_ID)
 
         ac.apply {
-            verify(networkClientMock).withUrl(capture())
-                    .initAs(EventResponse::class.java)
-                    .setTag(capture())
-                    .syncFuture
+            verify(responseObserver).onChanged(capture())
+            MatcherAssert.assertThat(value,CoreMatchers.`is`(response))
 
-            val captures = allValues
-            MatcherAssert.assertThat(captures[0], CoreMatchers.`is`(LEAGUE_ID))
-            MatcherAssert.assertThat(captures[1], CoreMatchers.`is`(TAG))
         }
 
+    }
+
+    @Test
+    fun eventSpecific_success_sizeListValue() {
+        val ac : ArgumentCaptor<EventResponse> = ArgumentCaptor.forClass(EventResponse::class.java)
+        SUT.eventResponseLD.observeForever(responseObserver)
+        SUT.retrieveData(LEAGUE_ID)
+
+        ac.apply {
+            verify(responseObserver).onChanged(capture())
+            val eventResponse : EventResponse = value
+            MatcherAssert.assertThat(eventResponse.events.size,CoreMatchers.`is`(response.events.size))
+
+        }
+
+    }
+
+    @Test
+    fun eventSpecific_success_EmptyListValue() {
+        successReturnEmptyResponse()
+
+        val ac : ArgumentCaptor<EventResponse> = ArgumentCaptor.forClass(EventResponse::class.java)
+        SUT.eventResponseLD.observeForever(responseObserver)
+        SUT.retrieveData(LEAGUE_ID)
+
+        ac.apply {
+            verify(responseObserver).onChanged(capture())
+            val eventResponse : EventResponse = value
+            MatcherAssert.assertThat(eventResponse.events.size,CoreMatchers.`is`(0))
+
+        }
+
+    }
+
+    @Test
+    fun eventSpecific_success_noInteractionWithResponseEvent() {
+        failure()
 
 
+        SUT.retrieveData(LEAGUE_ID)
+
+
+        val testObserver = networkApi.getEventNextLeague(LEAGUE_ID).test()
+        testObserver
+                .assertError(Exception())
 
 
     }
+
+
+
 
     private fun success() {
-        `when`(networkClientMock.withUrl(any(String::class.java))
-                .initAs(Any::class.java)
-                .setTag(any(String::class.java))
-                .syncFuture).thenReturn(Any())
+        `when`(
+                networkApi.getEventNextLeague(any(String::class.java))
+
+
+        ).thenReturn(
+                Single.create<EventResponse> { emitter ->
+                    try {
+
+                        emitter.onSuccess(
+                                response
+                        )
+
+                    }catch (e: HttpException){
+                        emitter.onError(e)
+                    }
+                    catch (e: Exception) {
+                        emitter.onError(e)
+                    }
+                })
+
+
+
     }
+
+    private fun successReturnEmptyResponse() {
+        `when`(
+                networkApi.getEventNextLeague(any(String::class.java))
+
+
+        ).thenReturn(
+                Single.create<EventResponse> { emitter ->
+                    try {
+
+                        emitter.onSuccess(
+                                EventResponse(emptyList())
+                        )
+
+                    }catch (e: HttpException){
+                        emitter.onError(e)
+                    }
+                    catch (e: Exception) {
+                        emitter.onError(e)
+                    }
+                })
+
+    }
+
+    private fun failure() {
+        doThrow(Exception()).`when`(
+                networkApi).getEventNextLeague(any(String::class.java)
+        )
+    }
+
 }

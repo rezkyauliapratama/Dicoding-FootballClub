@@ -36,7 +36,7 @@ import java.lang.Exception
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest  {
+/*class ExampleUnitTest  {
 
     @Rule @JvmField
     val mockitoRule = MockitoJUnit.rule()
@@ -114,7 +114,7 @@ class ExampleUnitTest  {
     fun testDoSomething() {
 //        val response = Gson().fromJson(jsonArr, EventResponse::class.java)
 
-        val single:Single<EventResponse> = Single.create<EventResponse> { emitter ->
+      *//*  val single:Single<EventResponse> = Single.create<EventResponse> { emitter ->
             try {
                 EventResponse(emptyList()).let { emitter.onSuccess(it) }
 
@@ -123,7 +123,7 @@ class ExampleUnitTest  {
             }
         }
         `when`(eventApi
-                .eventPastByLeagueId("", "")).thenReturn(single)
+                .eventPast  ByLeagueId("", "")).thenReturn(single)
 
 
         val testSingle: Single<EventResponse> ? = eventApi
@@ -139,29 +139,6 @@ class ExampleUnitTest  {
 
                     verify(eventApi, atLeastOnce().description("error "+ throwable.localizedMessage))
 
-                })
+                })*//*
     }
-}
-
-
-class RxImmediateSchedulerRule : TestRule {
-
-    override fun apply(base: Statement, d: Description): Statement {
-        return object : Statement() {
-            @Throws(Throwable::class)
-            override fun evaluate() {
-                RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
-                RxJavaPlugins.setComputationSchedulerHandler { Schedulers.trampoline() }
-                RxJavaPlugins.setNewThreadSchedulerHandler { Schedulers.trampoline() }
-                RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
-
-                try {
-                    base.evaluate()
-                } finally {
-                    RxJavaPlugins.reset()
-                    RxAndroidPlugins.reset()
-                }
-            }
-        }
-    }
-}
+}*/
