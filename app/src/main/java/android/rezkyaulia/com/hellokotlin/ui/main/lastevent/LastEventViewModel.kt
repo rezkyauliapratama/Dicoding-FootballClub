@@ -38,7 +38,6 @@ class LastEventViewModel @Inject constructor(private val dataManager: DataManage
                     error { "error : "+ Gson().toJson(throwable) }
                     uiStatusLD.value = UiStatus.HIDE_LOADER
 
-
                 }))
 
     }

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteConstraintException
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
 import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.data.model.Event
+import android.rezkyaulia.com.hellokotlin.data.network.api.TheSportDBApi
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,9 +23,10 @@ class DetailViewModel @Inject constructor(private val dataManager: DataManager):
 
 
     fun retrieveEvent(id : String){
+        val url = TheSportDBApi.getSpecificEvent(id)
         uiStatusLD.value = UiStatus.SHOW_LOADER
         compositeDisposable.add(dataManager.api.eventApi
-                .eventSpecific(id).subscribeOn(Schedulers.io())
+                .eventSpecific(url).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     error { Gson().toJson(response) }

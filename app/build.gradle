@@ -8,7 +8,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
 
-
     compileSdkVersion rootProject.compileSdkVersion
     defaultConfig {
         applicationId "android.rezkyaulia.com.hellokotlin"
@@ -125,7 +124,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.21.0'
     testImplementation "org.mockito:mockito-inline:2.19.0"
 
-
+    testCompile "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC2"
     //preferences manager
     implementation "com.scottyab:secure-preferences-lib:$rootProject.secureprefVersion"
 }
