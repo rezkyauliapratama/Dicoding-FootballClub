@@ -14,7 +14,7 @@ interface NetworkApi{
 
         @GET(EndPoints.eventPastLeague)
         fun getEventPastLeague(
-                @Query("id") leagueId:String
+                @Query("id") leagueId:String?
                 ): Single<EventResponse>
 
         @GET(EndPoints.eventNextLeague)

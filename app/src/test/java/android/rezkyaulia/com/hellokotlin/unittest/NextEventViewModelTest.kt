@@ -1,15 +1,12 @@
-package android.rezkyaulia.com.hellokotlin
+package android.rezkyaulia.com.hellokotlin.unittest
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
-import android.rezkyaulia.com.hellokotlin.Util.AppSchedulerProvider
-import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.data.model.EventResponse
 import android.rezkyaulia.com.hellokotlin.data.network.NetworkApi
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import android.rezkyaulia.com.hellokotlin.ui.main.nextevent.NextEventViewModel
-import com.nhaarman.mockitokotlin2.argumentCaptor
 import io.reactivex.Single
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
@@ -20,18 +17,13 @@ import org.junit.rules.TestRule
 import org.mockito.*
 import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnit
-import retrofit2.HttpException
-import javax.annotation.Nullable
-import io.reactivex.observers.TestObserver
 
 
 
 
-class EventApiTest{
+class NextEventViewModelTest{
 
     val LEAGUE_ID = "LEAGUEID"
-    val TAG = "TAG"
-    val URL = "URL"
 
     val response = EventResponse(
             listOf(
@@ -51,10 +43,6 @@ class EventApiTest{
     @Rule @JvmField var testSchedulerRule = RxImmediateSchedulerRule()
 
     @Mock
-    lateinit var dataManager: DataManager
-    @Mock
-    lateinit var appSchedulerProvider: AppSchedulerProvider
-    @Mock
     lateinit var networkApi: NetworkApi
 
     @Mock
@@ -69,13 +57,11 @@ class EventApiTest{
     @Before
     fun setUp() {
 
-//        SUT = NextEventViewModel(networkApi)
-
         success()
     }
 
     @Test
-    fun eventSpecific_success_PassedToEndPoint() {
+    fun nextEvent_success_PassedToEndPoint() {
         val ac : ArgumentCaptor<String> = ArgumentCaptor.forClass(String::class.java)
         SUT.retrieveData(LEAGUE_ID)
         ac.apply {
@@ -86,7 +72,7 @@ class EventApiTest{
     }
 
     @Test
-    fun eventSpecific_init_showLoaderEvent() {
+    fun nextEvent_init_showLoaderEvent() {
         SUT.uiStatusLD.observeForever(UistatusObserver)
         SUT.retrieveData(LEAGUE_ID)
 
@@ -95,7 +81,7 @@ class EventApiTest{
     }
 
     @Test
-    fun eventSpecific_success_hideLoaderEvent() {
+    fun nextEvent_success_hideLoaderEvent() {
         SUT.uiStatusLD.observeForever(UistatusObserver)
         SUT.retrieveData(LEAGUE_ID)
 
@@ -104,7 +90,7 @@ class EventApiTest{
     }
 
     @Test
-    fun eventSpecific_success_responseEvent() {
+    fun nextEvent_success_responseLiveData() {
         val ac : ArgumentCaptor<EventResponse> = ArgumentCaptor.forClass(EventResponse::class.java)
         SUT.eventResponseLD.observeForever(responseObserver)
         SUT.retrieveData(LEAGUE_ID)
@@ -118,7 +104,7 @@ class EventApiTest{
     }
 
     @Test
-    fun eventSpecific_success_sizeListValue() {
+    fun nextEvent_success_sizeListValue() {
         val ac : ArgumentCaptor<EventResponse> = ArgumentCaptor.forClass(EventResponse::class.java)
         SUT.eventResponseLD.observeForever(responseObserver)
         SUT.retrieveData(LEAGUE_ID)
@@ -133,7 +119,7 @@ class EventApiTest{
     }
 
     @Test
-    fun eventSpecific_success_EmptyListValue() {
+    fun nextEvent_success_EmptyListValue() {
         successReturnEmptyResponse()
 
         val ac : ArgumentCaptor<EventResponse> = ArgumentCaptor.forClass(EventResponse::class.java)
@@ -150,16 +136,14 @@ class EventApiTest{
     }
 
     @Test
-    fun eventSpecific_success_noInteractionWithResponseEvent() {
+    fun nextEvent_failure_noInteractionWithResponseLiveData() {
         failure()
 
 
         SUT.retrieveData(LEAGUE_ID)
 
-
-        val testObserver = networkApi.getEventNextLeague(LEAGUE_ID).test()
-        testObserver
-                .assertError(Exception())
+        SUT.eventResponseLD.observeForever(responseObserver)
+        verifyNoMoreInteractions(responseObserver)
 
 
     }
@@ -180,10 +164,7 @@ class EventApiTest{
                                 response
                         )
 
-                    }catch (e: HttpException){
-                        emitter.onError(e)
-                    }
-                    catch (e: Exception) {
+                    }catch (e: Exception) {
                         emitter.onError(e)
                     }
                 })
@@ -205,10 +186,7 @@ class EventApiTest{
                                 EventResponse(emptyList())
                         )
 
-                    }catch (e: HttpException){
-                        emitter.onError(e)
-                    }
-                    catch (e: Exception) {
+                    }catch (e: Exception) {
                         emitter.onError(e)
                     }
                 })
@@ -216,9 +194,11 @@ class EventApiTest{
     }
 
     private fun failure() {
-        doThrow(Exception()).`when`(
-                networkApi).getEventNextLeague(any(String::class.java)
-        )
+        `when`(
+                networkApi.getEventNextLeague(any(String::class.java)))
+                .thenReturn(
+                    Single.error(Exception())
+                )
     }
 
 }

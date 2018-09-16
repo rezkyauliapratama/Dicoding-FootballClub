@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
 import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.data.model.EventResponse
+import android.rezkyaulia.com.hellokotlin.data.network.NetworkApi
 import android.rezkyaulia.com.hellokotlin.data.network.api.TheSportDBApi
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import com.google.gson.Gson
@@ -17,7 +18,7 @@ import javax.inject.Inject
 /**
  * Created by Rezky Aulia Pratama on 20/8/18.
  */
-class LastEventViewModel @Inject constructor(private val dataManager: DataManager) : BaseViewModel(){
+class LastEventViewModel @Inject constructor(private val networkApi: NetworkApi) : BaseViewModel(){
 
     val eventResponseLD: MutableLiveData<EventResponse> = MutableLiveData()
     val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
@@ -25,7 +26,7 @@ class LastEventViewModel @Inject constructor(private val dataManager: DataManage
     fun retrieveData(s: String) {
         uiStatusLD.value = UiStatus.SHOW_LOADER
 
-        compositeDisposable.add(dataManager.networkApi
+        compositeDisposable.add(networkApi
                 .getEventPastLeague(s).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->

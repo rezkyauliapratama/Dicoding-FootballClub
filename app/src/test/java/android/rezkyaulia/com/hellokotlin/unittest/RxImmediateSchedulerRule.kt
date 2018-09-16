@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin
+package android.rezkyaulia.com.hellokotlin.unittest
 
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins

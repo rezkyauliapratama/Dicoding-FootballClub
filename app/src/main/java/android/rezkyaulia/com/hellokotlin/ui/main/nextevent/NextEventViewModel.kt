@@ -29,12 +29,9 @@ class NextEventViewModel @Inject constructor(private val networkApi: NetworkApi)
                 .subscribe({ response ->
                     eventResponseLD.value = response
                     uiStatusLD.value = UiStatus.HIDE_LOADER
-                }, { throwable ->
-                    error { "error : "+ Gson().toJson(throwable) }
+                }) { throwable ->
                     uiStatusLD.value = UiStatus.HIDE_LOADER
-
-
-                }))
+                })
 
     }
 }
