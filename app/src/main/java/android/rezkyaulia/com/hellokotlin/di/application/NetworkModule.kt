@@ -5,7 +5,6 @@ import android.rezkyaulia.com.hellokotlin.BuildConfig
 import android.rezkyaulia.com.hellokotlin.data.network.NetworkApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.rezkyaulia.android.light_optimization_data.NetworkClient
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -18,12 +17,6 @@ import javax.inject.Singleton
  */
 @Module
 class NetworkModule{
-
-    @Singleton
-    @Provides
-    internal fun provideHttpClient(@ApplicationContext context: Context): NetworkClient {
-        return NetworkClient(context)
-    }
 
     @Provides
     fun provideRetrofit(gson: Gson): Retrofit {

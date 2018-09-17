@@ -2,16 +2,12 @@ package android.rezkyaulia.com.hellokotlin.ui.main.lastevent
 
 import android.arch.lifecycle.MutableLiveData
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
-import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.data.model.EventResponse
 import android.rezkyaulia.com.hellokotlin.data.network.NetworkApi
-import android.rezkyaulia.com.hellokotlin.data.network.api.TheSportDBApi
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.experimental.android.UI
-import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.error
 import javax.inject.Inject
 
