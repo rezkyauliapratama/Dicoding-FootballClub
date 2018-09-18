@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.viewcustom
+package android.rezkyaulia.com.hellokotlin.customview
 
 import android.content.Context
 import android.util.AttributeSet

@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteConstraintException
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
 import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.data.model.Event
-import android.rezkyaulia.com.hellokotlin.data.network.api.TheSportDBApi
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
