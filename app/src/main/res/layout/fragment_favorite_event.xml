@@ -4,7 +4,7 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent.FavoriteEventViewModel" />
+            type="android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent.FavoriteEventViewModel" />
 
     </data>
 

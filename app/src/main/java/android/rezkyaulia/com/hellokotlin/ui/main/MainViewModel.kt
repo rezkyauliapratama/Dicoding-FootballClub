@@ -10,7 +10,6 @@ import javax.inject.Inject
  */
 class MainViewModel @Inject constructor(val dataManager: DataManager) : BaseViewModel(){
 
-    val leagueIdLD : MutableLiveData<String> = MutableLiveData()
 
     val idLD : MutableLiveData<String> = MutableLiveData()
 

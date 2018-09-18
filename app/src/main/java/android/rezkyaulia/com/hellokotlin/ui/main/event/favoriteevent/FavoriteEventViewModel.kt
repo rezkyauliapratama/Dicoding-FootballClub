@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent
+package android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent
 
 import android.arch.lifecycle.MutableLiveData
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel

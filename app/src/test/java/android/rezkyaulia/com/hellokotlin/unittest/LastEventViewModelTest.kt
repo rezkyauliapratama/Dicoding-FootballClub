@@ -1,6 +1,6 @@
 package android.rezkyaulia.com.hellokotlin.unittest
 
-import android.rezkyaulia.com.hellokotlin.ui.main.lastevent.LastEventViewModel
+import android.rezkyaulia.com.hellokotlin.ui.main.event.lastevent.LastEventViewModel
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
