@@ -12,7 +12,6 @@ abstract class BaseViewModel : ViewModel(), AnkoLogger {
     var compositeDisposable: CompositeDisposable
 
     init {
-        error {"init"}
          compositeDisposable = CompositeDisposable()
     }
 

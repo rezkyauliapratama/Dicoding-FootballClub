@@ -114,7 +114,7 @@ data class Event (
         var intAwayShots: String? = null,
         
         @SerializedName("dateEvent")
-        var dateEvent: String,
+        var dateEvent: String ?= null,
         
         @SerializedName("strDate")
         var strDate: String? = null,
