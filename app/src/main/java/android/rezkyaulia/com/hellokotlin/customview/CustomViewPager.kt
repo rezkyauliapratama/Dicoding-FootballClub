@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 
-class AViewPager(context: Context, attrs: AttributeSet) : android.support.v4.view.ViewPager(context, attrs) {
+class CustomViewPager(context: Context, attrs: AttributeSet) : android.support.v4.view.ViewPager(context, attrs) {
     var isPagingEnabled: Boolean = false
 
     init {
