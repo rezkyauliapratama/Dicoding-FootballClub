@@ -9,7 +9,9 @@ import android.rezkyaulia.com.hellokotlin.ui.main.event.EventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent.FavoriteEventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.lastevent.LastEventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.nextevent.NextEventViewModel
+import android.rezkyaulia.com.hellokotlin.ui.main.favorite.FavoriteViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.team.TeamViewModel
+import android.rezkyaulia.com.hellokotlin.ui.main.team.favoriteteam.FavoriteTeamViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -68,5 +70,15 @@ abstract class ViewModelModule{
     @IntoMap
     @ViewModelKey(PlayerViewModel::class)
     abstract fun bindPlayerViewModel(playerViewModel: PlayerViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteTeamViewModel::class)
+    abstract fun bindFavoriteTeamViewModel(favoriteTeamViewModel: FavoriteTeamViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteViewModel::class)
+    abstract fun bindFavoriteViewModel(favoriteViewModel: FavoriteViewModel) : ViewModel
 
 }

@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.base.BaseActivity
+import android.rezkyaulia.com.hellokotlin.data.database.entity.FavoriteEvent
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.rezkyaulia.com.hellokotlin.ui.detail.event.DetailActivity
 import android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailTeamActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.event.EventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent.FavoriteEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.favorite.FavoriteFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.team.TeamFragment
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -91,7 +93,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         })
 
         viewModel.teamIdLD.observe(this, Observer { t ->
-            Toast.makeText(this,t,Toast.LENGTH_SHORT).show()
             ctx.startActivity<DetailTeamActivity>("id".to("${t}"))
 
         })
@@ -148,7 +149,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun initViewPager() {
         fragments.add(EventFragment.newInstance())
         fragments.add(TeamFragment.newInstance())
-        fragments.add(FavoriteEventFragment.newInstance())
+        fragments.add(FavoriteFragment.newInstance())
 
         fragment = fragments[0]
         this.tabAdapter = LfPagerAdapter(supportFragmentManager, fragments)

@@ -33,6 +33,7 @@ class DetailTeamPlayerViewModel @Inject constructor(val dataManager: DataManager
     var playersLD : MutableLiveData<List<Player>> = MutableLiveData()
     var teamLD : MutableLiveData<Team> = MutableLiveData()
     var playerIdLD : MutableLiveData<String> = MutableLiveData()
+    var nameLD : MutableLiveData<String> = MutableLiveData()
     var uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
 
     val boolFavoriteLD: MutableLiveData<Boolean> = MutableLiveData()
@@ -53,6 +54,8 @@ class DetailTeamPlayerViewModel @Inject constructor(val dataManager: DataManager
                         items.put(CLUB_STADIUM,team?.teamStadium)
                         items.put(CLUB_DETAIL,team?.teamDescription)
                         items.put(CLUB_IMAGE,team?.teamBadge)
+
+                        nameLD.value = team?.teamName
                     }
 
                     uiStatusLD.value = UiStatus.HIDE_LOADER

@@ -32,8 +32,10 @@ class PlayerViewModel @Inject constructor(val networkApi: NetworkApi): BaseViewM
     var items: ObservableArrayMap<String, String> = ObservableArrayMap()
 
     val uiStatusLD: MutableLiveData<UiStatus> = MutableLiveData()
+    val nameLD: MutableLiveData<String> = MutableLiveData()
 
     fun retrieveData(playerID : String){
+        uiStatusLD.value = UiStatus.SHOW_LOADER
         compositeDisposable.add(networkApi
                 .getDetailPlayer(playerID).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -46,6 +48,8 @@ class PlayerViewModel @Inject constructor(val networkApi: NetworkApi): BaseViewM
                         items.put(HEIGHT,response.player[0].strHeight)
                         items.put(POSITION,response.player[0].strPosition)
                         items.put(DESCRIPTION,response.player[0].strDescriptionEN)
+
+                        nameLD.value = response.player[0].strPlayer
                     }
                     uiStatusLD.value = UiStatus.HIDE_LOADER
 

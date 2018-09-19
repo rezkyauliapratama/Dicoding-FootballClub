@@ -25,13 +25,13 @@ class NextEventViewModelTest{
 
     val LEAGUE_ID = "LEAGUEID"
 
-    val response = EventResponse(
+    val response =
             listOf(
                     Event("1"),
                     Event("2"),
                     Event("3")
             )
-    )
+
 
     @get:Rule
     val mockitoRule = MockitoJUnit.rule()
@@ -49,7 +49,7 @@ class NextEventViewModelTest{
     lateinit var UistatusObserver: Observer<UiStatus>
 
     @Mock
-    lateinit var responseObserver: Observer<EventResponse>
+    lateinit var responseObserver: Observer<List<Event>>
 
     @InjectMocks
     lateinit var SUT : NextEventViewModel
@@ -91,7 +91,7 @@ class NextEventViewModelTest{
 
     @Test
     fun nextEvent_success_responseLiveData() {
-        val ac : ArgumentCaptor<EventResponse> = ArgumentCaptor.forClass(EventResponse::class.java)
+        val ac : ArgumentCaptor<List<Event>> = ArgumentCaptor.forClass(mutableListOf<Event>()::class.java)
         SUT.eventResponseLD.observeForever(responseObserver)
         SUT.retrieveData(LEAGUE_ID)
 
@@ -105,14 +105,14 @@ class NextEventViewModelTest{
 
     @Test
     fun nextEvent_success_sizeListValue() {
-        val ac : ArgumentCaptor<EventResponse> = ArgumentCaptor.forClass(EventResponse::class.java)
+        val ac : ArgumentCaptor<List<Event>> = ArgumentCaptor.forClass(mutableListOf<Event>()::class.java)
         SUT.eventResponseLD.observeForever(responseObserver)
         SUT.retrieveData(LEAGUE_ID)
 
         ac.apply {
             verify(responseObserver).onChanged(capture())
-            val eventResponse : EventResponse = value
-            MatcherAssert.assertThat(eventResponse.events.size,CoreMatchers.`is`(response.events.size))
+            val events : List<Event> = value
+            MatcherAssert.assertThat(events.size,CoreMatchers.`is`(response.size))
 
         }
 
@@ -122,14 +122,14 @@ class NextEventViewModelTest{
     fun nextEvent_success_EmptyListValue() {
         successReturnEmptyResponse()
 
-        val ac : ArgumentCaptor<EventResponse> = ArgumentCaptor.forClass(EventResponse::class.java)
+        val ac : ArgumentCaptor<List<Event>> = ArgumentCaptor.forClass(mutableListOf<Event>()::class.java)
         SUT.eventResponseLD.observeForever(responseObserver)
         SUT.retrieveData(LEAGUE_ID)
 
         ac.apply {
             verify(responseObserver).onChanged(capture())
-            val eventResponse : EventResponse = value
-            MatcherAssert.assertThat(eventResponse.events.size,CoreMatchers.`is`(0))
+            val events : List<Event> = value
+            MatcherAssert.assertThat(events.size,CoreMatchers.`is`(0))
 
         }
 
@@ -161,7 +161,7 @@ class NextEventViewModelTest{
                     try {
 
                         emitter.onSuccess(
-                                response
+                                EventResponse(response)
                         )
 
                     }catch (e: Exception) {

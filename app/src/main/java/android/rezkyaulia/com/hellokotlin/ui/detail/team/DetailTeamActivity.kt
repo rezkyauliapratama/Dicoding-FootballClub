@@ -12,6 +12,7 @@ import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import android.rezkyaulia.com.hellokotlin.ui.detail.player.DetailPlayerActivity
 import android.rezkyaulia.com.hellokotlin.ui.detail.team.fragment.DetailTeamFragment
 import android.rezkyaulia.com.hellokotlin.ui.detail.team.fragment.DetailTeamPlayerFragment
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -59,6 +60,8 @@ class DetailTeamActivity : BaseActivity<ActivityDetailTeamBinding,DetailTeamPlay
 
     lateinit var id: String
 
+    lateinit var name: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -71,7 +74,7 @@ class DetailTeamActivity : BaseActivity<ActivityDetailTeamBinding,DetailTeamPlay
 
         fragments = mutableListOf()
 
-
+        initView()
         initTab()
         initViewPager()
 
@@ -80,6 +83,26 @@ class DetailTeamActivity : BaseActivity<ActivityDetailTeamBinding,DetailTeamPlay
         initObserver()
 
 
+    }
+
+    private fun initView() {
+        appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+            internal var isShow = false
+            internal var scrollRange = -1
+
+            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.totalScrollRange
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsing_toolbar.title = name
+                    isShow = true
+                } else if (isShow) {
+                    collapsing_toolbar.title = ""
+                    isShow = false
+                }
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -157,6 +180,11 @@ class DetailTeamActivity : BaseActivity<ActivityDetailTeamBinding,DetailTeamPlay
         viewModel.boolFavoriteLD.observe(this, Observer { it ->
             if (it != null)
                 isFavorite = it
+        })
+
+        viewModel.nameLD.observe(this, Observer {
+            if (it != null)
+                name = it
         })
 
 

@@ -80,13 +80,13 @@ class TeamFragment : BaseFragment<FragmentTeamBinding,TeamViewModel>(){
 
     private fun initRv() {
         rv_team.layoutManager = LinearLayoutManager(context)
-        adapter = TeamRvAdapter(this,viewModel) { id: String -> teamClicked(id) }
+        adapter = TeamRvAdapter(this,viewModel) { id: String? -> teamClicked(id) }
 
         rv_team.adapter = adapter
 
     }
 
-    private fun teamClicked(id: String) {
+    private fun teamClicked(id: String?) {
             mainViewModel.teamIdLD.value = id
     }
 }
