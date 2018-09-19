@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.ui.main.nextevent
+package android.rezkyaulia.com.hellokotlin.ui.main.event.nextevent
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -9,12 +9,17 @@ import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.databinding.FragmentNextEventBinding
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
-import android.rezkyaulia.com.hellokotlin.ui.main.EventRvAdapter
+import android.rezkyaulia.com.hellokotlin.ui.main.event.EventRvAdapter
 import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_next_event.*
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.error
+import org.jetbrains.anko.support.v4.ctx
 import javax.inject.Inject
 
 /**
@@ -58,7 +63,7 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = EventRvAdapter(eventList,timeUtility) { id: String -> eventClicked(id) }
+        adapter = EventRvAdapter(eventList, timeUtility) { id: String -> eventClicked(id) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,6 +76,21 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
     }
 
     private fun initView() {
+
+        val spinnerItems = resources.getStringArray(R.array.league)
+        val arrLeagueId = resources.getStringArray(R.array.league_id)
+        val spinnerAdapter = ArrayAdapter(ctx, R.layout.support_simple_spinner_dropdown_item, spinnerItems)
+        spinnerNext.adapter = spinnerAdapter
+
+        error { Gson().toJson(arrLeagueId) }
+        spinnerNext.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+               viewModel.retrieveData(arrLeagueId[position])
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
         swipe_nextEvent.setOnRefreshListener {
             viewModel.retrieveData(leagueId)
         }
@@ -85,13 +105,6 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
 
 
     private fun initObserver(){
-
-        mainViewModel.leagueIdLD.observe(this, android.arch.lifecycle.Observer {
-            leagueId = it.toString()
-            it?.let { it1 -> viewModel.retrieveData(it1) }
-
-
-        })
 
         viewModel.eventResponseLD.observe(this, android.arch.lifecycle.Observer {
             eventList.clear()

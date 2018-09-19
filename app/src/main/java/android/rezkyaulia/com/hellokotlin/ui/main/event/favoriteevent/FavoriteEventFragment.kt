@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent
+package android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle

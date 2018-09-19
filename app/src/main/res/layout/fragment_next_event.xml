@@ -5,15 +5,20 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="android.rezkyaulia.com.hellokotlin.ui.main.nextevent.NextEventViewModel" />
+            type="android.rezkyaulia.com.hellokotlin.ui.main.event.nextevent.NextEventViewModel" />
 
     </data>
 
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:tools="http://schemas.android.com/tools">
+        android:orientation="vertical">
+        <Spinner
+            android:id="@+id/spinnerNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_nextEvent"
@@ -25,5 +30,5 @@
                 android:layout_height="match_parent"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>
-    </FrameLayout>
+    </LinearLayout>
 </layout>

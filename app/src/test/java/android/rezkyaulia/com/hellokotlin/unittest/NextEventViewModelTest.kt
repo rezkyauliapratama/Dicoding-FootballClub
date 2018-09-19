@@ -6,7 +6,7 @@ import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.data.model.EventResponse
 import android.rezkyaulia.com.hellokotlin.data.network.NetworkApi
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
-import android.rezkyaulia.com.hellokotlin.ui.main.nextevent.NextEventViewModel
+import android.rezkyaulia.com.hellokotlin.ui.main.event.nextevent.NextEventViewModel
 import io.reactivex.Single
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert

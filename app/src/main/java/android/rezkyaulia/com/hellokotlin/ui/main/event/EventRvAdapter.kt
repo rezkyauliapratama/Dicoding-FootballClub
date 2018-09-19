@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.ui.main
+package android.rezkyaulia.com.hellokotlin.ui.main.event
 
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R

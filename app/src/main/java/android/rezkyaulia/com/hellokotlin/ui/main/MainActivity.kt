@@ -10,9 +10,10 @@ import android.rezkyaulia.com.hellokotlin.R.array.league_id
 import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
-import android.rezkyaulia.com.hellokotlin.ui.main.favoriteevent.FavoriteEventFragment
-import android.rezkyaulia.com.hellokotlin.ui.main.lastevent.LastEventFragment
-import android.rezkyaulia.com.hellokotlin.ui.main.nextevent.NextEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.event.EventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent.FavoriteEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.event.lastevent.LastEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.event.nextevent.NextEventFragment
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -59,19 +60,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         super.onCreate(savedInstanceState)
 
 
-        val spinnerItems = resources.getStringArray(league)
-        val arrLeagueId = resources.getStringArray(league_id)
-        val spinnerAdapter = ArrayAdapter(ctx, R.layout.support_simple_spinner_dropdown_item, spinnerItems)
-        spinner.adapter = spinnerAdapter
 
-        error { Gson().toJson(arrLeagueId) }
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                viewModel.leagueIdLD.value = arrLeagueId[position]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
 
         fragments = mutableListOf()
         initTab()
@@ -110,7 +99,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     /*init view pager*/
     private fun initTab() {
-        val tabs = arrayOf(content_layout.tabLayout.newTab().setText("Prev Match"), content_layout.tabLayout.newTab().setText("Next Match"), content_layout.tabLayout.newTab().setText("Favorite"))
+        val tabs = arrayOf(content_layout.tabLayout.newTab().setText("Match"), content_layout.tabLayout.newTab().setText("Favorite"))
 
         for (tab in tabs) {
             val layout = LinearLayout(this)
@@ -137,11 +126,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 fragment = fragments[tab.position]
                 content_layout.viewPager.currentItem = tab.position
 
-                if (fragment is FavoriteEventFragment){
-                    spinner.visibility = View.GONE
-                }else{
-                    spinner.visibility = View.VISIBLE
-                }
+
 
             }
 
@@ -156,8 +141,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun initViewPager() {
-        fragments.add(LastEventFragment.newInstance())
-        fragments.add(NextEventFragment.newInstance())
+        fragments.add(EventFragment.newInstance())
         fragments.add(FavoriteEventFragment.newInstance())
 
         fragment = fragments[0]
@@ -171,7 +155,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     class LfPagerAdapter (fm: FragmentManager, private val fragments:MutableList<Fragment>): FragmentStatePagerAdapter(fm)
     {
 
-        private val NUMITEMS = 3
+        private val NUMITEMS = 2
 
 
 
@@ -182,11 +166,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         override fun getItem(position: Int): Fragment {
             return when (position) {
                 1 -> fragments[1]
-                2 -> fragments[2]
                 else -> fragments[0]
             }
         }
 
 
-}}
+    }
+}
 
