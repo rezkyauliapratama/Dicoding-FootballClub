@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.ui.detail
+package android.rezkyaulia.com.hellokotlin.ui.detail.event
 
 import android.arch.lifecycle.MutableLiveData
 import android.database.sqlite.SQLiteConstraintException

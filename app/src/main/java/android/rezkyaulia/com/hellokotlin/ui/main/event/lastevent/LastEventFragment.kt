@@ -15,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_prev_event.*
 import org.jetbrains.anko.error
 import org.jetbrains.anko.support.v4.ctx
@@ -28,7 +27,7 @@ class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewMo
 
     private lateinit var mainViewModel : MainViewModel
     private lateinit var adapter : EventRvAdapter
-    private val eventList : MutableList<Event> = mutableListOf()
+    private lateinit var eventList : MutableList<Event>
     private var leagueId : String = ""
 
     companion object {
@@ -55,7 +54,7 @@ class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewMo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        eventList = mutableListOf()
         adapter = EventRvAdapter(eventList, timeUtility = timeUtility) { id: String -> eventClicked(id) }
     }
 
@@ -74,10 +73,10 @@ class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewMo
         val spinnerAdapter = ArrayAdapter(ctx, R.layout.support_simple_spinner_dropdown_item, spinnerItems)
         spinnerPrev.adapter = spinnerAdapter
 
-        error { Gson().toJson(arrLeagueId) }
         spinnerPrev.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                viewModel.retrieveData(arrLeagueId[position])
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                leagueId = arrLeagueId[position]
+                viewModel.retrieveData(leagueId)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -100,7 +99,7 @@ class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewMo
         viewModel.eventResponseLD.observe(this, android.arch.lifecycle.Observer {
             eventList.clear()
             if (it != null) {
-                eventList.addAll(it.events)
+                eventList.addAll(it)
                 adapter.notifyDataSetChanged()
             }
         })
@@ -121,6 +120,7 @@ class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewMo
     }
 
     private fun eventClicked(id: String){
-        mainViewModel.idLD.value = id
+        mainViewModel.eventIdLD.value = id
     }
+
 }

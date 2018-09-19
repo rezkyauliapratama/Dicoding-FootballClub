@@ -18,6 +18,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.app.infideap.stylishwidget.view.ATextView
 import kotlinx.android.synthetic.main.fragment_event.*
+import org.jetbrains.anko.error
 
 /**
  * Created by Rezky Aulia Pratama on 18/9/18.
@@ -60,7 +61,6 @@ class EventFragment : BaseFragment<FragmentEventBinding,EventViewModel>(){
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initTab()
         initViewPager()
     }
@@ -119,7 +119,6 @@ class EventFragment : BaseFragment<FragmentEventBinding,EventViewModel>(){
         this.tabAdapter = LfPagerAdapter(requireFragmentManager(), fragments)
 
         viewPagerEvent.adapter = tabAdapter
-        viewPagerEvent.isPagingEnabled = false
         viewPagerEvent.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayoutEvent))
     }
 
@@ -142,4 +141,5 @@ class EventFragment : BaseFragment<FragmentEventBinding,EventViewModel>(){
 
 
     }
+
 }

@@ -1,9 +1,8 @@
-package android.rezkyaulia.com.hellokotlin.ui.main.event.lastevent
+package android.rezkyaulia.com.hellokotlin.ui.main.team
 
 import android.arch.lifecycle.MutableLiveData
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
-import android.rezkyaulia.com.hellokotlin.data.model.Event
-import android.rezkyaulia.com.hellokotlin.data.model.EventResponse
+import android.rezkyaulia.com.hellokotlin.data.model.Team
 import android.rezkyaulia.com.hellokotlin.data.network.NetworkApi
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import com.google.gson.Gson
@@ -13,26 +12,25 @@ import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.error
 import javax.inject.Inject
 
-/**
- * Created by Rezky Aulia Pratama on 20/8/18.
- */
-class LastEventViewModel @Inject constructor(private val networkApi: NetworkApi) : BaseViewModel(){
+class TeamViewModel @Inject constructor(val networkApi: NetworkApi) : BaseViewModel(){
 
-    val eventResponseLD: MutableLiveData<List<Event>> = MutableLiveData()
+    val teamsLD : MutableLiveData<List<Team>> = MutableLiveData()
     val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
 
-    fun retrieveData(s: String) {
+    fun retrieveData(league: String) {
         uiStatusLD.value = UiStatus.SHOW_LOADER
 
         compositeDisposable.add(networkApi
-                .getEventPastLeague(s).subscribeOn(Schedulers.io())
+                .getSearchAllTeams(league).subscribeOn(Schedulers.io())
                 .flatMap{t ->
-                    Single.just(t.events)
+                   Single.just(t.teams)
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
+                    error { "response : "+ Gson().toJson(response) }
+
                     if (response != null){
-                        eventResponseLD.value = response
+                        teamsLD.value = response
                     }
                     uiStatusLD.value = UiStatus.HIDE_LOADER
 
@@ -43,4 +41,5 @@ class LastEventViewModel @Inject constructor(private val networkApi: NetworkApi)
                 }))
 
     }
+
 }

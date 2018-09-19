@@ -7,10 +7,14 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+
+
 
 /**
  * Created by Rezky Aulia Pratama on 6/8/18.
@@ -19,16 +23,26 @@ import javax.inject.Singleton
 class NetworkModule{
 
     @Provides
-    fun provideRetrofit(gson: Gson): Retrofit {
-        return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(BuildConfig.BASE_URL).build()
+    fun provideOkHttpClient(): OkHttpClient{
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient.Builder().addInterceptor(interceptor).build()
     }
+
 
     @Provides
     fun providesGson(): Gson {
         return GsonBuilder().create()
     }
+
+    @Provides
+    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson))
+                .client(okHttpClient)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(BuildConfig.BASE_URL).build()
+    }
+
 
     // This function need Retrofit object which we are passing in argument.
     // We will not create Retrofit object in this function.

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailTeamPlayerViewModel" />
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                   />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/margin_normal"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax"
+                    android:minHeight="100dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <android.rezkyaulia.com.hellokotlin.customview.UrlImageView
+                        android:layout_width="@dimen/size_image_92dp"
+                        android:layout_height="@dimen/size_image_92dp"
+                        app:url="@{viewModel.items[viewModel.CLUB_IMAGE]}"
+                        />
+
+                    <com.app.infideap.stylishwidget.view.ATextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.items[viewModel.CLUB_NAME]}"
+                        android:textAppearance="@style/TextStyle.Display2"/>
+
+
+                    <com.app.infideap.stylishwidget.view.ATextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.items[viewModel.CLUB_YEAR]}"
+                        android:textAppearance="@style/TextStyle.Medium"/>
+
+
+                    <com.app.infideap.stylishwidget.view.ATextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.items[viewModel.CLUB_STADIUM]}"
+                        android:textAppearance="@style/TextStyle.Medium" />
+                </LinearLayout>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <include layout="@layout/content_activity_detail_team" android:id="@+id/content_layout"/>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+
+</layout>

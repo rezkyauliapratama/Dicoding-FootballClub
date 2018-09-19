@@ -10,6 +10,9 @@ object EndPoints{
 
     const val eventPastLeague = "$base_path/eventspastleague.php"
     const val eventNextLeague = "$base_path/eventsnextleague.php"
+    const val searchTeam = "$base_path/search_all_teams.php"
     const val lookupTeam = "$base_path/lookupteam.php"
     const val lookupEvent = "$base_path/lookupevent.php"
+    const val allPlayerInTeam = "$base_path/lookup_all_players.php"
+    const val lookupPlayer= "$base_path/lookupplayer.php"
 }

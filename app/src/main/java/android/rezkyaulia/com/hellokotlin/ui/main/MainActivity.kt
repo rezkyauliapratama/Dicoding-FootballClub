@@ -5,34 +5,29 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
-import android.rezkyaulia.com.hellokotlin.R.array.league
-import android.rezkyaulia.com.hellokotlin.R.array.league_id
 import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
-import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.detail.event.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailTeamActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.event.EventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent.FavoriteEventFragment
-import android.rezkyaulia.com.hellokotlin.ui.main.event.lastevent.LastEventFragment
-import android.rezkyaulia.com.hellokotlin.ui.main.event.nextevent.NextEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.team.TeamFragment
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.app.infideap.stylishwidget.view.ATextView
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_activity_main.view.*
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import org.jetbrains.anko.ctx
-import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun getLayoutId() = R.layout.activity_main
@@ -71,11 +66,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         val capital = async { amountOfCapital() }
 
         async {
-            error{  "Your profit is ${income.await() - capital.await()}"}
+//            error{  "Your profit is ${income.await() - capital.await()}"}
         }
 
         if(income.isCompleted && capital.isCompleted){
-            error{  "async completed"}
+//            error{  "async completed"}
 
         }
     }
@@ -90,8 +85,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         return 1200000
     }
     private fun initObserver() {
-        viewModel.idLD.observe(this, Observer {
+        viewModel.eventIdLD.observe(this, Observer {
             ctx.startActivity<DetailActivity>("id".to("${it}"))
+
+        })
+
+        viewModel.teamIdLD.observe(this, Observer { t ->
+            Toast.makeText(this,t,Toast.LENGTH_SHORT).show()
+            ctx.startActivity<DetailTeamActivity>("id".to("${t}"))
 
         })
     }
@@ -99,7 +100,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     /*init view pager*/
     private fun initTab() {
-        val tabs = arrayOf(content_layout.tabLayout.newTab().setText("Match"), content_layout.tabLayout.newTab().setText("Favorite"))
+        val tabs = arrayOf(
+                content_layout.tabLayout.newTab().setText("Match"),
+                content_layout.tabLayout.newTab().setText("Team"),
+                content_layout.tabLayout.newTab().setText("Favorite")
+        )
 
         for (tab in tabs) {
             val layout = LinearLayout(this)
@@ -142,11 +147,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private fun initViewPager() {
         fragments.add(EventFragment.newInstance())
+        fragments.add(TeamFragment.newInstance())
         fragments.add(FavoriteEventFragment.newInstance())
 
         fragment = fragments[0]
         this.tabAdapter = LfPagerAdapter(supportFragmentManager, fragments)
 
+        content_layout.viewPager.offscreenPageLimit = 3
         content_layout.viewPager.adapter = tabAdapter
         content_layout.viewPager.isPagingEnabled = false
         content_layout.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(content_layout.tabLayout))
@@ -155,7 +162,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     class LfPagerAdapter (fm: FragmentManager, private val fragments:MutableList<Fragment>): FragmentStatePagerAdapter(fm)
     {
 
-        private val NUMITEMS = 2
+        private val NUMITEMS = 3
 
 
 
@@ -166,6 +173,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         override fun getItem(position: Int): Fragment {
             return when (position) {
                 1 -> fragments[1]
+                2 -> fragments[2]
                 else -> fragments[0]
             }
         }

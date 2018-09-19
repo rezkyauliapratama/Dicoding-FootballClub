@@ -109,7 +109,7 @@ class FavoriteEventFragment : BaseFragment<FragmentFavoriteEventBinding, Favorit
     }
 
     private fun eventClicked(favoriteEvent: FavoriteEvent){
-        mainViewModel.idLD.value = favoriteEvent.eventId
+        mainViewModel.eventIdLD.value = favoriteEvent.eventId
     }
 
 
