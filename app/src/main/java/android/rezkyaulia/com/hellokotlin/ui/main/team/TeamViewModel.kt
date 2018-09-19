@@ -27,7 +27,6 @@ class TeamViewModel @Inject constructor(val networkApi: NetworkApi) : BaseViewMo
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    error { "response : "+ Gson().toJson(response) }
 
                     if (response != null){
                         teamsLD.value = response

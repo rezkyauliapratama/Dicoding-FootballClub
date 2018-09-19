@@ -40,13 +40,13 @@ class ManageFavoriteTeam @Inject constructor(val db: MyDatabaseOpenHelper) {
     }
 
 
-    fun insert(team: Team) : Boolean = db.use {
+    fun insert(team: Team?) : Boolean = db.use {
         try {
             beginTransaction()
             val insertedId =  replace(FavoriteTeam.TABLE_FAVORITE,
-                    FavoriteTeam.TEAM_ID to team.teamId,
-                    FavoriteTeam.TEAM_NAME to team.teamName,
-                    FavoriteTeam.TEAM_BADGE to team.teamBadge)
+                    FavoriteTeam.TEAM_ID to team?.teamId,
+                    FavoriteTeam.TEAM_NAME to team?.teamName,
+                    FavoriteTeam.TEAM_BADGE to team?.teamBadge)
 
             if (insertedId != -1L) {
                 setTransactionSuccessful()

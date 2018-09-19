@@ -79,6 +79,16 @@
 
         <include layout="@layout/content_activity_detail_team" android:id="@+id/content_layout"/>
 
+        <FrameLayout
+            android:id="@+id/layoutProgress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+        </FrameLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

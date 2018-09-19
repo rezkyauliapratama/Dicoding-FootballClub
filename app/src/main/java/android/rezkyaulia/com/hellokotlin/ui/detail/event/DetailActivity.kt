@@ -61,7 +61,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(){
         viewModel.retrieveEvent(id)
 
         swipe_detail.setOnRefreshListener {
-            error{ "onswipe" }
             viewModel.retrieveEvent(id)
         }
 
