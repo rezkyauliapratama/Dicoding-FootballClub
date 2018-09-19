@@ -2,6 +2,7 @@ package android.rezkyaulia.com.hellokotlin.di.viewmodel
 
 import android.arch.lifecycle.ViewModel
 import android.rezkyaulia.com.hellokotlin.ui.detail.event.DetailViewModel
+import android.rezkyaulia.com.hellokotlin.ui.detail.player.PlayerViewModel
 import android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailTeamPlayerViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.EventViewModel
@@ -63,5 +64,9 @@ abstract class ViewModelModule{
     @ViewModelKey(DetailTeamPlayerViewModel::class)
     abstract fun bindDetailPlayerViewModel(detailTeamPlayerViewModel: DetailTeamPlayerViewModel) : ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlayerViewModel::class)
+    abstract fun bindPlayerViewModel(playerViewModel: PlayerViewModel) : ViewModel
 
 }

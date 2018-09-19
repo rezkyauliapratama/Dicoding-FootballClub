@@ -2,6 +2,7 @@ package android.rezkyaulia.com.hellokotlin.ui.detail.team
 
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableArrayMap
+import android.databinding.ObservableParcelable
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
 import android.rezkyaulia.com.hellokotlin.data.model.Player
 import android.rezkyaulia.com.hellokotlin.data.model.Team
@@ -28,6 +29,7 @@ class DetailTeamPlayerViewModel @Inject constructor(val api: NetworkApi): BaseVi
 
     var playersLD : MutableLiveData<List<Player>> = MutableLiveData()
     var teamLD : MutableLiveData<Team> = MutableLiveData()
+    var playerIdLD : MutableLiveData<String> = MutableLiveData()
 
     fun retrieveData(idTeam: String) {
         compositeDisposable.add(api.getSpecificTeam(idTeam)

@@ -2,6 +2,7 @@ package android.rezkyaulia.com.hellokotlin.di.activity
 
 import android.rezkyaulia.com.hellokotlin.di.application.ApplicationComponent
 import android.rezkyaulia.com.hellokotlin.ui.detail.event.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.detail.player.DetailPlayerActivity
 import android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailTeamActivity
 import android.rezkyaulia.com.hellokotlin.ui.detail.team.fragment.DetailTeamFragment
 import android.rezkyaulia.com.hellokotlin.ui.detail.team.fragment.DetailTeamPlayerFragment
@@ -30,4 +31,5 @@ interface ActivityComponent{
     fun inject(detailTeamPlayerFragment: DetailTeamPlayerFragment)
     fun inject(detailTeamFragment: DetailTeamFragment)
     fun inject(detailTeamActivity: DetailTeamActivity)
+    fun inject(detailPlayerActivity: DetailPlayerActivity)
 }

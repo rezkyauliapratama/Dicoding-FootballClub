@@ -8,6 +8,7 @@ import android.rezkyaulia.com.hellokotlin.databinding.FragmentDetailTeamBinding
 import android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailTeamPlayerViewModel
 
 class DetailTeamFragment : BaseFragment<FragmentDetailTeamBinding, DetailTeamPlayerViewModel>(){
+
     override fun getLayoutId(): Int {
         return R.layout.fragment_detail_team
     }
