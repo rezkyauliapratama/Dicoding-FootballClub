@@ -15,9 +15,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_next_event.*
-import org.jetbrains.anko.ctx
 import org.jetbrains.anko.error
 import org.jetbrains.anko.support.v4.ctx
 import javax.inject.Inject
@@ -129,6 +127,6 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
     }
 
     private fun eventClicked(id: String){
-        mainViewModel.idLD.value = id
+        mainViewModel.eventIdLD.value = id
     }
 }

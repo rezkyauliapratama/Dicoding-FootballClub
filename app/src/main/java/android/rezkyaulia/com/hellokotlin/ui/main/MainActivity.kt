@@ -8,9 +8,10 @@ import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.base.BaseActivity
 import android.rezkyaulia.com.hellokotlin.databinding.ActivityMainBinding
 import android.rezkyaulia.com.hellokotlin.ui.detail.event.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailTeamActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.event.EventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent.FavoriteEventFragment
-import android.rezkyaulia.com.hellokotlin.ui.team.TeamFragment
+import android.rezkyaulia.com.hellokotlin.ui.main.team.TeamFragment
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -18,6 +19,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.app.infideap.stylishwidget.view.ATextView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_activity_main.view.*
@@ -25,6 +27,7 @@ import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun getLayoutId() = R.layout.activity_main
@@ -82,8 +85,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         return 1200000
     }
     private fun initObserver() {
-        viewModel.idLD.observe(this, Observer {
+        viewModel.eventIdLD.observe(this, Observer {
             ctx.startActivity<DetailActivity>("id".to("${it}"))
+
+        })
+
+        viewModel.teamIdLD.observe(this, Observer { t ->
+            Toast.makeText(this,t,Toast.LENGTH_SHORT).show()
+            ctx.startActivity<DetailTeamActivity>("id".to("${t}"))
 
         })
     }

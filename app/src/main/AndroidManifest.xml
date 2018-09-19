@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.detail.event.DetailActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.detail.team.DetailTeamActivity" android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(val dataManager: DataManager) : BaseViewModel(){
 
 
-    val idLD : MutableLiveData<String> = MutableLiveData()
-
+    val eventIdLD : MutableLiveData<String> = MutableLiveData()
+    val teamIdLD : MutableLiveData<String> = MutableLiveData()
 
 }

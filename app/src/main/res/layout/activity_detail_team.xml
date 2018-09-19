@@ -7,7 +7,7 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailPlayerViewModel" />
+            type="android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailTeamPlayerViewModel" />
 
     </data>
 
@@ -35,9 +35,9 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_scrollFlags="scroll|enterAlways" />
+                    app:layout_collapseMode="pin"
+                   />
                 <LinearLayout
-                    app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/margin_normal"
@@ -50,6 +50,7 @@
                     <android.rezkyaulia.com.hellokotlin.customview.UrlImageView
                         android:layout_width="@dimen/size_image_92dp"
                         android:layout_height="@dimen/size_image_92dp"
+                        app:url="@{viewModel.items[viewModel.CLUB_IMAGE]}"
                         />
 
                     <com.app.infideap.stylishwidget.view.ATextView

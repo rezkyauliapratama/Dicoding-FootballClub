@@ -5,7 +5,7 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailPlayerViewModel" />
+            type="android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailTeamPlayerViewModel" />
 
     </data>
 

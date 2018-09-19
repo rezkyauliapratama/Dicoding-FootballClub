@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.ui.team
+package android.rezkyaulia.com.hellokotlin.ui.main.team
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -6,15 +6,12 @@ import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.databinding.FragmentTeamBinding
-import android.rezkyaulia.com.hellokotlin.ui.UiStatus
+import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import com.google.gson.Gson
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_team.*
 import org.jetbrains.anko.error
 import org.jetbrains.anko.support.v4.ctx
@@ -46,8 +43,12 @@ class TeamFragment : BaseFragment<FragmentTeamBinding,TeamViewModel>(){
         initActivityComponent()?.inject(this)
     }
 
+    private lateinit var mainViewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainViewModel =  ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -90,6 +91,6 @@ class TeamFragment : BaseFragment<FragmentTeamBinding,TeamViewModel>(){
     }
 
     private fun teamClicked(id: String) {
-        Toast.makeText(context,"League ID  "+id, Toast.LENGTH_SHORT).show()
+            mainViewModel.teamIdLD.value = id
     }
 }

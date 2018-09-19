@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.ui.team
+package android.rezkyaulia.com.hellokotlin.ui.main.team
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
