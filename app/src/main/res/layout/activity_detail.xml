@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="android.rezkyaulia.com.hellokotlin.ui.detail.DetailViewModel" />
+            type="android.rezkyaulia.com.hellokotlin.ui.detail.event.DetailViewModel" />
 
 
     </data>

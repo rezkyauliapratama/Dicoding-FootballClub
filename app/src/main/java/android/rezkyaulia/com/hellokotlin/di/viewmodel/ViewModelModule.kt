@@ -1,12 +1,14 @@
 package android.rezkyaulia.com.hellokotlin.di.viewmodel
 
 import android.arch.lifecycle.ViewModel
-import android.rezkyaulia.com.hellokotlin.ui.detail.DetailViewModel
+import android.rezkyaulia.com.hellokotlin.ui.detail.event.DetailViewModel
+import android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailPlayerViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.EventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent.FavoriteEventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.lastevent.LastEventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.nextevent.NextEventViewModel
+import android.rezkyaulia.com.hellokotlin.ui.team.TeamViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -51,6 +53,15 @@ abstract class ViewModelModule{
     abstract fun bindEventViewModel(eventViewModel: EventViewModel) : ViewModel
 
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(TeamViewModel::class)
+    abstract fun bindTeamViewModel(teamViewModel: TeamViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailPlayerViewModel::class)
+    abstract fun bindDetailPlayerViewModel(detailPlayerViewModel: DetailPlayerViewModel) : ViewModel
 
 
 }

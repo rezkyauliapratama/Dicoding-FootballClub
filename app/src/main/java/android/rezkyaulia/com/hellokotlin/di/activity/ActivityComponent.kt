@@ -1,12 +1,13 @@
 package android.rezkyaulia.com.hellokotlin.di.activity
 
 import android.rezkyaulia.com.hellokotlin.di.application.ApplicationComponent
-import android.rezkyaulia.com.hellokotlin.ui.detail.DetailActivity
+import android.rezkyaulia.com.hellokotlin.ui.detail.event.DetailActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.MainActivity
 import android.rezkyaulia.com.hellokotlin.ui.main.event.EventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent.FavoriteEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.event.lastevent.LastEventFragment
 import android.rezkyaulia.com.hellokotlin.ui.main.event.nextevent.NextEventFragment
+import android.rezkyaulia.com.hellokotlin.ui.team.TeamFragment
 import dagger.Component
 
 /**
@@ -22,4 +23,5 @@ interface ActivityComponent{
     fun inject(detailActivity: DetailActivity)
     fun inject(favoriteEventFragment: FavoriteEventFragment)
     fun inject(eventFragment: EventFragment)
+    fun inject(teamFragment: TeamFragment)
 }

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  */
 data class Team(
         @SerializedName("idTeam")
-        var teamId: String? = null,
+        val teamId: String,
 
         @SerializedName("strTeam")
         var teamName: String? = null,
