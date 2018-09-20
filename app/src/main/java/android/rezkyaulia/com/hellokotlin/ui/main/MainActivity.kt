@@ -35,13 +35,14 @@ import android.support.v4.view.MenuItemCompat.getActionView
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
+import android.view.MenuItem
 import android.view.View
 import org.jetbrains.anko.error
 
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
-    lateinit var mSearchView : SearchView
-    lateinit var menu : Menu
+    var mSearchView : SearchView ? = null
+    var menu : Menu ?= null
 
     override fun getLayoutId() = R.layout.activity_main
 
@@ -76,24 +77,36 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.search_menu, menu)
         this.menu = menu
         val mSearch = menu.findItem(R.id.action_search)
 
         mSearchView = mSearch.getActionView() as SearchView
-        mSearchView.setQueryHint("Search")
+        mSearchView?.setQueryHint("Search")
 
-        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        mSearchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
+                error { "qeury : $newText" }
                 if (fragment is TeamFragment){
                     viewModel.teamSearchQueryLD.value = newText
+                }else if (fragment is EventFragment){
+                    viewModel.eventSearchQueryLD.value = newText
                 }
                 return true
+            }
+        })
+
+        mSearchView?.setOnSearchClickListener(View.OnClickListener {
+            //perform your click operation here
+            if (fragment is EventFragment){
+
+
             }
         })
 
@@ -148,16 +161,27 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 fragment = fragments[tab.position]
                 content_layout.viewPager.currentItem = tab.position
 
+                mSearchView?.apply { setQuery("", false) }
+           /*     if (!mSearchView.isIconified()) {
+                    mSearchView.setIconified(true);
+                }*/
+
                 if (fragment is FavoriteFragment){
-                    menu.findItem(R.id.action_search).isVisible = false
-                    mSearchView.visibility  = View.GONE
+                    menu?.findItem(R.id.action_search)?.isVisible = false
+                    mSearchView?.visibility  = View.GONE
 
-                }else{
-                    menu.findItem(R.id.action_search).isVisible = true
-                    if (!mSearchView.isIconified()) {
-                        mSearchView.setIconified(true);
-                    }
 
+                }else if (fragment is TeamFragment){
+                    menu?.findItem(R.id.action_search)?.isVisible = true
+                    mSearchView?.visibility  = View.VISIBLE
+
+                    viewModel.teamSearchQueryLD.value = ""
+
+                }else if (fragment is EventFragment){
+                    menu?.findItem(R.id.action_search)?.isVisible = true
+                    menu?.findItem(R.id.action_search)?.collapseActionView()
+                    mSearchView?.visibility  = View.VISIBLE
+                    viewModel.eventSearchQueryLD.value = ""
                 }
 
 

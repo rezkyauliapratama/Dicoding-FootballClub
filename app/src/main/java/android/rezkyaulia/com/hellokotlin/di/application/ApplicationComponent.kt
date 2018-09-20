@@ -1,7 +1,7 @@
 package android.rezkyaulia.com.hellokotlin.di.application
 
 import android.rezkyaulia.com.hellokotlin.BaseApplication
-import android.rezkyaulia.com.hellokotlin.Util.TimeUtility
+import android.rezkyaulia.com.hellokotlin.util.TimeUtility
 import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelFactory
 import android.rezkyaulia.com.hellokotlin.di.viewmodel.ViewModelModule

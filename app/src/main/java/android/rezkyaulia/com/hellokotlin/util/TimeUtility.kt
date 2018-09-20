@@ -1,4 +1,4 @@
-package android.rezkyaulia.com.hellokotlin.Util
+package android.rezkyaulia.com.hellokotlin.util
 
 import java.text.SimpleDateFormat
 import java.util.*

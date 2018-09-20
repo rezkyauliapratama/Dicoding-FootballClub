@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
-import android.rezkyaulia.com.hellokotlin.Util.TimeUtility
+import android.rezkyaulia.com.hellokotlin.util.TimeUtility
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.databinding.FragmentNextEventBinding
@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.fragment_next_event.*
+import kotlinx.android.synthetic.main.fragment_prev_event.*
 import org.jetbrains.anko.error
 import org.jetbrains.anko.support.v4.ctx
 import javax.inject.Inject
@@ -91,6 +92,9 @@ class NextEventFragment : BaseFragment<FragmentNextEventBinding, NextEventViewMo
         swipe_nextEvent.setOnRefreshListener {
             viewModel.retrieveData(leagueId)
         }
+
+        swipe_nextEvent.isEnabled = false
+
     }
 
     private fun initRv() {

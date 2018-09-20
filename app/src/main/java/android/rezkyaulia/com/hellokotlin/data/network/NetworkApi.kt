@@ -55,6 +55,11 @@ interface NetworkApi{
         fun searchTeamByName(
                 @Query("t") name:String?
         ): Observable<TeamResponse>
+        @GET(EndPoints.searchEventByName)
+
+        fun searchEventByName(
+                @Query("e") name:String?
+        ): Observable<EventResponse>
 
 
 }

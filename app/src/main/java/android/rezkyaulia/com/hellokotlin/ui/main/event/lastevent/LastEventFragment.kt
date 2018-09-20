@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
-import android.rezkyaulia.com.hellokotlin.Util.TimeUtility
+import android.rezkyaulia.com.hellokotlin.util.TimeUtility
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.databinding.FragmentPrevEventBinding
@@ -84,6 +84,8 @@ class LastEventFragment : BaseFragment<FragmentPrevEventBinding, LastEventViewMo
         swipe_prevEvent.setOnRefreshListener {
             viewModel.retrieveData(leagueId)
         }
+
+        swipe_prevEvent.isEnabled = false
     }
 
     private fun initRv() {

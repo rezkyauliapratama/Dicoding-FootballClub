@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
-import android.rezkyaulia.com.hellokotlin.Util.TimeUtility
+import android.rezkyaulia.com.hellokotlin.util.TimeUtility
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.data.database.entity.FavoriteEvent
 import android.rezkyaulia.com.hellokotlin.databinding.FragmentFavoriteEventBinding

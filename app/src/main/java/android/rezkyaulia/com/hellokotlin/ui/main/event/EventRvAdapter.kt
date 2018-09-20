@@ -2,7 +2,7 @@ package android.rezkyaulia.com.hellokotlin.ui.main.event
 
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
-import android.rezkyaulia.com.hellokotlin.Util.TimeUtility
+import android.rezkyaulia.com.hellokotlin.util.TimeUtility
 import android.rezkyaulia.com.hellokotlin.data.model.Event
 import android.rezkyaulia.com.hellokotlin.databinding.ListItemEventBinding
 import android.support.v7.widget.RecyclerView

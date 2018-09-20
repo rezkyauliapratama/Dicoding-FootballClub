@@ -9,5 +9,7 @@ enum class UiStatus{
     FAVORITE_NOT_REMOVE,
     EMPTY,
     NO_NETWORK,
-    ERROR_LOAD
+    ERROR_LOAD,
+    SHOW_RESULT,
+    HIDE_RESULT
 }

@@ -1,18 +1,14 @@
 package android.rezkyaulia.com.hellokotlin.ui.main.event.nextevent
 
 import android.arch.lifecycle.MutableLiveData
-import android.rezkyaulia.com.hellokotlin.Util.AppSchedulerProvider
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
-import android.rezkyaulia.com.hellokotlin.data.DataManager
 import android.rezkyaulia.com.hellokotlin.data.model.Event
-import android.rezkyaulia.com.hellokotlin.data.model.EventResponse
 import android.rezkyaulia.com.hellokotlin.data.network.NetworkApi
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
-import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.error
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 /**
@@ -22,7 +18,12 @@ class NextEventViewModel @Inject constructor(private val networkApi: NetworkApi)
     val eventResponseLD: MutableLiveData<List<Event>> = MutableLiveData()
     val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
 
+    val subject = PublishSubject.create<String>()
+    var query = ""
+    var eventId = ""
+
     fun retrieveData(s: String) {
+        eventId = s
         uiStatusLD.value = UiStatus.SHOW_LOADER
         compositeDisposable.add(networkApi
                 .getEventNextLeague(s)

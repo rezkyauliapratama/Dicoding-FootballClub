@@ -12,28 +12,40 @@
 
     </data>
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-       >
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayoutEvent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            app:tabBackground="@color/colorPrimary"
-            app:tabIndicatorColor="@color/colorWhite"
-            app:tabMode="fixed"
-            app:tabGravity="fill"
-            app:tabMaxWidth="0dp"
-            app:tabTextColor="@color/colorWhite"
-            />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayoutEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                app:tabBackground="@color/colorPrimary"
+                app:tabIndicatorColor="@color/colorWhite"
+                app:tabMode="fixed"
+                app:tabGravity="fill"
+                app:tabMaxWidth="0dp"
+                app:tabTextColor="@color/colorWhite"
+                />
 
-        <android.rezkyaulia.com.hellokotlin.customview.CustomViewPager
-            android:id="@+id/viewPagerEvent"
+            <android.rezkyaulia.com.hellokotlin.customview.CustomViewPager
+                android:id="@+id/viewPagerEvent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_event"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:background="@color/colorWhite"
+            android:visibility="gone"/>
+    </FrameLayout>
 
-    </LinearLayout>
 </layout>
