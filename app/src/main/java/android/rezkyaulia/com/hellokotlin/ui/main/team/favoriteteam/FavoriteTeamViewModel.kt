@@ -1,35 +1,33 @@
-package android.rezkyaulia.com.hellokotlin.ui.main.team
+package android.rezkyaulia.com.hellokotlin.ui.main.team.favoriteteam
 
 import android.arch.lifecycle.MutableLiveData
 import android.rezkyaulia.com.hellokotlin.base.BaseViewModel
-import android.rezkyaulia.com.hellokotlin.data.model.Team
-import android.rezkyaulia.com.hellokotlin.data.network.NetworkApi
+import android.rezkyaulia.com.hellokotlin.data.DataManager
+import android.rezkyaulia.com.hellokotlin.data.database.entity.FavoriteEvent
+import android.rezkyaulia.com.hellokotlin.data.database.entity.FavoriteTeam
 import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import com.google.gson.Gson
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.error
 import javax.inject.Inject
 
-class TeamViewModel @Inject constructor(val networkApi: NetworkApi) : BaseViewModel(){
+/**
+ * Created by Rezky Aulia Pratama on 26/8/18.
+ */
+class FavoriteTeamViewModel @Inject constructor(private val dataManager: DataManager) : BaseViewModel(){
 
-    val teamsLD : MutableLiveData<List<Team>> = MutableLiveData()
+    val favTeamResponseLD: MutableLiveData<List<FavoriteTeam>> = MutableLiveData()
     val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
 
-    fun retrieveData(league: String) {
+    fun retrieveData() {
         uiStatusLD.value = UiStatus.SHOW_LOADER
-
-        compositeDisposable.add(networkApi
-                .getSearchAllTeams(league).subscribeOn(Schedulers.io())
-                .flatMap{t ->
-                   Single.just(t.teams)
-                }
+        compositeDisposable.add(dataManager.db.manageFavoriteTeam
+                .loadAll().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-
                     if (response != null){
-                        teamsLD.value = response
+                        favTeamResponseLD.value = response
                     }
                     uiStatusLD.value = UiStatus.HIDE_LOADER
 
@@ -40,5 +38,4 @@ class TeamViewModel @Inject constructor(val networkApi: NetworkApi) : BaseViewMo
                 }))
 
     }
-
 }

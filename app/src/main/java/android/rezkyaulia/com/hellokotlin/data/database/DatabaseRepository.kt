@@ -14,4 +14,8 @@ class DatabaseRepository @Inject constructor() {
     @Inject
     lateinit var manageFavoriteEvent: ManageFavoriteEvent
 
+
+    @Inject
+    lateinit var manageFavoriteTeam: ManageFavoriteTeam
+
 }

@@ -27,7 +27,6 @@ class DetailViewModel @Inject constructor(private val dataManager: DataManager):
                 .getSpecificEvent(id).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    error { Gson().toJson(response) }
                     if (response != null && response.events.isNotEmpty()) eventLD.value = response.events.get(0)
                     uiStatusLD.value = UiStatus.HIDE_LOADER
 

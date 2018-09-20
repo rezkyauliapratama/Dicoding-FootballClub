@@ -44,11 +44,11 @@ class DetailTeamPlayerFragment: BaseFragment<FragmentDetailTeamPlayerBinding, De
         rvPlayer.layoutManager = LinearLayoutManager(context)
         val adapter = PlayerRvAdapter(this,viewModel) { id: String -> teamClicked(id) }
 
-        rv_team.adapter = adapter
+        rvPlayer.adapter = adapter
 
     }
 
     private fun teamClicked(idPlayer: String) {
-        Toast.makeText(context,"Player ID  "+id, Toast.LENGTH_SHORT).show()
+        viewModel.playerIdLD.value = idPlayer
     }
 }

@@ -65,13 +65,9 @@ class TeamFragment : BaseFragment<FragmentTeamBinding,TeamViewModel>(){
         val spinnerAdapter = ArrayAdapter(ctx, R.layout.support_simple_spinner_dropdown_item, spinnerItems)
         spinnerTeam.adapter = spinnerAdapter
 
-        error{"test0"}
         spinnerTeam.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                error { "test1" }
                 league = arrLeague[position]
-                error { "test2" }
-
                 viewModel.retrieveData(league)
             }
 
@@ -84,13 +80,13 @@ class TeamFragment : BaseFragment<FragmentTeamBinding,TeamViewModel>(){
 
     private fun initRv() {
         rv_team.layoutManager = LinearLayoutManager(context)
-        adapter = TeamRvAdapter(this,viewModel) { id: String -> teamClicked(id) }
+        adapter = TeamRvAdapter(this,viewModel) { id: String? -> teamClicked(id) }
 
         rv_team.adapter = adapter
 
     }
 
-    private fun teamClicked(id: String) {
+    private fun teamClicked(id: String?) {
             mainViewModel.teamIdLD.value = id
     }
 }

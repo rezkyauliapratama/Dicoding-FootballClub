@@ -2,13 +2,16 @@ package android.rezkyaulia.com.hellokotlin.di.viewmodel
 
 import android.arch.lifecycle.ViewModel
 import android.rezkyaulia.com.hellokotlin.ui.detail.event.DetailViewModel
+import android.rezkyaulia.com.hellokotlin.ui.detail.player.PlayerViewModel
 import android.rezkyaulia.com.hellokotlin.ui.detail.team.DetailTeamPlayerViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.EventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.favoriteevent.FavoriteEventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.lastevent.LastEventViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.event.nextevent.NextEventViewModel
+import android.rezkyaulia.com.hellokotlin.ui.main.favorite.FavoriteViewModel
 import android.rezkyaulia.com.hellokotlin.ui.main.team.TeamViewModel
+import android.rezkyaulia.com.hellokotlin.ui.main.team.favoriteteam.FavoriteTeamViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -63,5 +66,19 @@ abstract class ViewModelModule{
     @ViewModelKey(DetailTeamPlayerViewModel::class)
     abstract fun bindDetailPlayerViewModel(detailTeamPlayerViewModel: DetailTeamPlayerViewModel) : ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlayerViewModel::class)
+    abstract fun bindPlayerViewModel(playerViewModel: PlayerViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteTeamViewModel::class)
+    abstract fun bindFavoriteTeamViewModel(favoriteTeamViewModel: FavoriteTeamViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteViewModel::class)
+    abstract fun bindFavoriteViewModel(favoriteViewModel: FavoriteViewModel) : ViewModel
 
 }
