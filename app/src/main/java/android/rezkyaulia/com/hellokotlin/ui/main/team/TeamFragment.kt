@@ -22,7 +22,7 @@ class TeamFragment : BaseFragment<FragmentTeamBinding,TeamViewModel>(){
 
     private lateinit var adapter : TeamRvAdapter
 
-    lateinit var league : String
+    private lateinit var league : String
 
     companion object {
         fun newInstance (): TeamFragment {

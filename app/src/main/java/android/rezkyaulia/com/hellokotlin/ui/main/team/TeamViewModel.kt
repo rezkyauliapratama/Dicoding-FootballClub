@@ -24,9 +24,9 @@ class TeamViewModel @Inject constructor(val networkApi: NetworkApi) : BaseViewMo
     val teamsLD : MutableLiveData<List<Team>> = MutableLiveData()
     val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
 
-    val subject = PublishSubject.create<String>()
-    var query = ""
-    var league = ""
+    private val subject = PublishSubject.create<String>()
+    private var query = ""
+    private var league = ""
 
     init {
         compositeDisposable.add(

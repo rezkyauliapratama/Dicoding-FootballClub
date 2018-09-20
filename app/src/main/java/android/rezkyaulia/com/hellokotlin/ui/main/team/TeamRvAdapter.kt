@@ -13,7 +13,7 @@ import android.view.ViewGroup
 
 class TeamRvAdapter(lifecycleOwner: LifecycleOwner, teamViewModel: TeamViewModel, private val clickListener : (String) -> Unit) : RecyclerView.Adapter<TeamRvAdapter.ViewHolder>() {
 
-    val listItem : MutableList<Team> = mutableListOf()
+    private val listItem : MutableList<Team> = mutableListOf()
 
     init {
         teamViewModel.teamsLD.observe(lifecycleOwner, Observer {

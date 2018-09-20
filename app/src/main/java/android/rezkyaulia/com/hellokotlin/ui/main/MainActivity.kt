@@ -41,8 +41,8 @@ import org.jetbrains.anko.error
 
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
-    var mSearchView : SearchView ? = null
-    var menu : Menu ?= null
+    private var mSearchView : SearchView ? = null
+    private var menu : Menu ?= null
 
     override fun getLayoutId() = R.layout.activity_main
 
@@ -58,8 +58,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     }
 
-    lateinit var fragments: MutableList<Fragment>
-    lateinit var fragment: Fragment
+    private lateinit var fragments: MutableList<Fragment>
+    private lateinit var fragment: Fragment
 
 
     private lateinit var tabAdapter: LfPagerAdapter

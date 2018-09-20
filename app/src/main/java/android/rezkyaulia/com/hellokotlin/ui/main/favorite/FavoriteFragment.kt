@@ -24,8 +24,8 @@ import kotlinx.android.synthetic.main.fragment_favorite.*
  */
 class FavoriteFragment: BaseFragment<FragmentFavoriteBinding,FavoriteViewModel>(){
 
-    lateinit var fragments: MutableList<Fragment>
-    lateinit var fragment: Fragment
+    private lateinit var fragments: MutableList<Fragment>
+    private lateinit var fragment: Fragment
     private lateinit var tabAdapter: LfPagerAdapter
 
     companion object {

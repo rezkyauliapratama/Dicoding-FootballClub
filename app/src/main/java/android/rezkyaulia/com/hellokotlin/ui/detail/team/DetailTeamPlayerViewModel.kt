@@ -38,7 +38,7 @@ class DetailTeamPlayerViewModel @Inject constructor(val dataManager: DataManager
 
     val boolFavoriteLD: MutableLiveData<Boolean> = MutableLiveData()
 
-    var team : Team ?= null
+    private var team : Team ?= null
     fun retrieveData(idTeam: String) {
         uiStatusLD.value = UiStatus.SHOW_LOADER
         compositeDisposable.add(dataManager.networkApi.getSpecificTeam(idTeam)

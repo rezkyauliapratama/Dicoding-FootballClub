@@ -19,7 +19,7 @@ import android.view.ViewGroup
  */
 
 class FavoriteTeamRvAdapter(private val lifecycleOwner: LifecycleOwner,private val favoriteTeamViewModel: FavoriteTeamViewModel , private val clickListener: (FavoriteTeam) -> Unit) : RecyclerView.Adapter<FavoriteTeamRvAdapter.ViewHolder>() {
-    val listItem: MutableList<FavoriteTeam> = mutableListOf()
+    private  val listItem: MutableList<FavoriteTeam> = mutableListOf()
 
     init {
         favoriteTeamViewModel.favTeamResponseLD.observe(lifecycleOwner, Observer {

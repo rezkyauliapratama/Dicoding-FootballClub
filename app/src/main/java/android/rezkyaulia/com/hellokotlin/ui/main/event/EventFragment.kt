@@ -33,8 +33,8 @@ import javax.inject.Inject
 class EventFragment : BaseFragment<FragmentEventBinding,EventViewModel>(){
 
 
-    lateinit var fragments: MutableList<Fragment>
-    lateinit var fragment: Fragment
+    private lateinit var fragments: MutableList<Fragment>
+    private lateinit var fragment: Fragment
     private lateinit var tabAdapter: LfPagerAdapter
     private lateinit var mainViewModel : MainViewModel
     private lateinit var eventList : MutableList<Event>

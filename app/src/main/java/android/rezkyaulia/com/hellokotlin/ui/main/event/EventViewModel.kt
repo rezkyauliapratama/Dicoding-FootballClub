@@ -29,8 +29,8 @@ class EventViewModel @Inject constructor(networkApi: NetworkApi) : BaseViewModel
     val eventResponseLD: MutableLiveData<List<Event>> = MutableLiveData()
     val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
 
-    val subject = PublishSubject.create<String>()
-    var query = ""
+    private val subject = PublishSubject.create<String>()
+    private var query = ""
 
 
     init {

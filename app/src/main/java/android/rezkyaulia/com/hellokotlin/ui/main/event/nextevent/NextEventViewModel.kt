@@ -18,9 +18,9 @@ class NextEventViewModel @Inject constructor(private val networkApi: NetworkApi)
     val eventResponseLD: MutableLiveData<List<Event>> = MutableLiveData()
     val uiStatusLD : MutableLiveData<UiStatus> = MutableLiveData()
 
-    val subject = PublishSubject.create<String>()
-    var query = ""
-    var eventId = ""
+    private val subject = PublishSubject.create<String>()
+    private var query = ""
+    private var eventId = ""
 
     fun retrieveData(s: String) {
         eventId = s
