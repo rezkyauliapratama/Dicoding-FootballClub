@@ -30,10 +30,20 @@ import kotlinx.coroutines.experimental.delay
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
+import android.support.v4.view.MenuItemCompat.getActionView
+import android.support.v7.widget.SearchView
+import android.view.Menu
+import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
+import android.view.View
+import org.jetbrains.anko.error
+
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
-    override fun getLayoutId() = R.layout.activity_main
+    lateinit var mSearchView : SearchView
+    lateinit var menu : Menu
 
+    override fun getLayoutId() = R.layout.activity_main
 
     override fun initViewModel() = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
 
@@ -64,28 +74,34 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         initViewPager()
         initObserver()
 
-        val income = async { amountOfIncome() }
-        val capital = async { amountOfCapital() }
-
-        async {
-//            error{  "Your profit is ${income.await() - capital.await()}"}
-        }
-
-        if(income.isCompleted && capital.isCompleted){
-//            error{  "async completed"}
-
-        }
     }
 
-    suspend fun amountOfCapital(): Int {
-        delay(10000)
-        return 1000000
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.search_menu, menu)
+        this.menu = menu
+        val mSearch = menu.findItem(R.id.action_search)
+
+        mSearchView = mSearch.getActionView() as SearchView
+        mSearchView.setQueryHint("Search")
+
+        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (fragment is TeamFragment){
+                    viewModel.teamSearchQueryLD.value = newText
+                }
+                return true
+            }
+        })
+
+
+        return super.onCreateOptionsMenu(menu)
     }
 
-    suspend fun amountOfIncome(): Int {
-        delay(10000)
-        return 1200000
-    }
+
     private fun initObserver() {
         viewModel.eventIdLD.observe(this, Observer {
             ctx.startActivity<DetailActivity>("id".to("${it}"))
@@ -132,6 +148,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 fragment = fragments[tab.position]
                 content_layout.viewPager.currentItem = tab.position
 
+                if (fragment is FavoriteFragment){
+                    menu.findItem(R.id.action_search).isVisible = false
+                    mSearchView.visibility  = View.GONE
+
+                }else{
+                    menu.findItem(R.id.action_search).isVisible = true
+                    if (!mSearchView.isIconified()) {
+                        mSearchView.setIconified(true);
+                    }
+
+                }
 
 
             }

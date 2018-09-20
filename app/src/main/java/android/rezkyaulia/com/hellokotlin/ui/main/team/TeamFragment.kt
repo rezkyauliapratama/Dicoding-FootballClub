@@ -1,11 +1,13 @@
 package android.rezkyaulia.com.hellokotlin.ui.main.team
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.rezkyaulia.com.hellokotlin.BR
 import android.rezkyaulia.com.hellokotlin.R
 import android.rezkyaulia.com.hellokotlin.base.BaseFragment
 import android.rezkyaulia.com.hellokotlin.databinding.FragmentTeamBinding
+import android.rezkyaulia.com.hellokotlin.ui.UiStatus
 import android.rezkyaulia.com.hellokotlin.ui.main.MainViewModel
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -57,6 +59,26 @@ class TeamFragment : BaseFragment<FragmentTeamBinding,TeamViewModel>(){
         initView()
         initRv()
 
+        initObserver()
+
+    }
+
+    private fun initObserver() {
+        mainViewModel.teamSearchQueryLD.observe(this, Observer {
+            it?.apply { viewModel.search(it)}
+        })
+
+        viewModel.uiStatusLD.observe(this, android.arch.lifecycle.Observer {
+            when (it) {
+                UiStatus.HIDE_LOADER -> swipe_team.isRefreshing = false
+                UiStatus.SHOW_LOADER ->  swipe_team.isRefreshing = true
+
+                else -> {
+                    error { "cannot found uiStatus" }
+                }
+            }
+
+        })
     }
 
     private fun initView() {
@@ -73,9 +95,14 @@ class TeamFragment : BaseFragment<FragmentTeamBinding,TeamViewModel>(){
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-        swipe_team.setOnRefreshListener {
+        /*swipe_team.setOnRefreshListener {
             viewModel.retrieveData(league)
+
         }
+        */
+
+        swipe_team.isEnabled = false
+
     }
 
     private fun initRv() {

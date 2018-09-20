@@ -15,4 +15,5 @@ object EndPoints{
     const val lookupEvent = "$base_path/lookupevent.php"
     const val allPlayerInTeam = "$base_path/lookup_all_players.php"
     const val lookupPlayer= "$base_path/lookupplayer.php"
+    const val searchTeamByName= "$base_path/searchteams.php"
 }

@@ -3,6 +3,8 @@ package android.rezkyaulia.com.hellokotlin.data.network
 import android.rezkyaulia.com.hellokotlin.data.model.EventResponse
 import android.rezkyaulia.com.hellokotlin.data.model.PlayerResponse
 import android.rezkyaulia.com.hellokotlin.data.model.TeamResponse
+import io.reactivex.Observable
+import io.reactivex.ObservableSource
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -48,6 +50,11 @@ interface NetworkApi{
                 @Query("id") playerId:String?
         ): Single<PlayerResponse>
 
+
+        @GET(EndPoints.searchTeamByName)
+        fun searchTeamByName(
+                @Query("t") name:String?
+        ): Observable<TeamResponse>
 
 
 }
